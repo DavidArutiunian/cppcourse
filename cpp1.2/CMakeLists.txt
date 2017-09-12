@@ -1,4 +1,6 @@
-cmake_minimum_required(VERSION 3.6.2)
+cmake_minimum_required(VERSION 3.6.2 FATAL_ERROR)
+
+project(hello_err)
 
 set(SOURCES hello_err.cpp)
 
