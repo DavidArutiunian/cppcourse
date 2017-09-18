@@ -2,7 +2,6 @@
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 #include <math.h>
-#include <iostream>
 #include <vector>
 
 float OFFSET = 20;
