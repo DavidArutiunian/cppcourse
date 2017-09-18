@@ -7,8 +7,8 @@ float OFFSET = 20;
 
 sf::Color COLOR = sf::Color(0xFF, 0xFF, 0xFF);
 
-float windowWidth = (270 + 2 * OFFSET);
-float windowHeight = (170 + 2 * OFFSET);
+float WINDOW_WIDTH = (270 + 2 * OFFSET);
+float WINDOW_HEIGHT = (170 + 2 * OFFSET);
 
 std::vector<sf::Vector2f> calcCubicBezier(
     const sf::Vector2f &start,
@@ -128,10 +128,10 @@ void drawRLetter(sf::RenderWindow *window)
 
 int main()
 {
-    sf::VideoMode videoMode = sf::VideoMode({(unsigned int)windowWidth,
-                                             (unsigned int)windowHeight});
+    sf::VideoMode videoMode = sf::VideoMode({(unsigned int)WINDOW_WIDTH,
+                                             (unsigned int)WINDOW_HEIGHT});
 
-    sf::RenderWindow window(videoMode, "My Name");
+    sf::RenderWindow window(videoMode, "ADR");
 
     window.clear();
 
@@ -141,5 +141,5 @@ int main()
 
     window.display();
 
-    sf::sleep(sf::seconds(1));
+    sf::sleep(sf::seconds(5));
 }
