@@ -5,6 +5,7 @@ project(sfml1.2)
 add_subdirectory(00)
 add_subdirectory(01)
 add_subdirectory(02)
+add_subdirectory(03)
 
 set(SOURCES main.cpp)
 
