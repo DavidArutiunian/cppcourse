@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
 project(sfml1.2)
 
 add_subdirectory(00)
+add_subdirectory(01)
 
 set(SOURCES main.cpp)
 
