@@ -1,8 +1,7 @@
-#include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
-#include <math.h>
-#include <vector>
+#include <SFML/Graphics.hpp>
+#include <cmath>
 
 float OFFSET = 20;
 
@@ -13,25 +12,25 @@ struct Shape
 {
   sf::RectangleShape shape;
   sf::Color color;
-  float width;
-  float height;
-  float x;
-  float y;
+  float width{};
+  float height{};
+  float x{};
+  float y{};
 };
 
 struct CircleShape
 {
   sf::CircleShape shape;
   sf::Color color;
-  float x;
-  float y;
-  float r;
+  float x{};
+  float y{};
+  float r{};
 };
 
 struct ConvexShape : Shape
 {
   sf::ConvexShape shape;
-  float offset;
+  float offset{};
 };
 
 Shape drawWalls(sf::RenderWindow *window)
@@ -63,7 +62,7 @@ Shape drawDoor(sf::RenderWindow *window, Shape *wall)
   Shape door;
 
   door.width = wall->width / 5;
-  door.height = wall->height / 1.5;
+  door.height = static_cast<float>(wall->height / 1.5);
 
   door.x = wall->width / 10 + wall->x;
   door.y = wall->y + wall->height - door.height;
@@ -87,7 +86,7 @@ ConvexShape drawRoof(sf::RenderWindow *window, Shape *wall)
   ConvexShape roof;
 
   roof.width = wall->width;
-  roof.height = wall->height / 2.25;
+  roof.height = static_cast<float>(wall->height / 2.25);
 
   roof.x = wall->x;
   roof.y = wall->y - roof.height;
@@ -190,14 +189,14 @@ int main()
   ConvexShape chimney;
   std::vector<CircleShape> smoke;
 
-  sf::VideoMode videoMode = sf::VideoMode({(unsigned int)WINDOW_WIDTH + (unsigned int)(2 * OFFSET),
-                                           (unsigned int)WINDOW_HEIGHT + (unsigned int)(2 * OFFSET)});
+  sf::VideoMode videoMode = sf::VideoMode((unsigned int)WINDOW_WIDTH + (unsigned int)(2 * OFFSET),
+                                          (unsigned int)WINDOW_HEIGHT + (unsigned int)(2 * OFFSET));
 
   sf::RenderWindow window(videoMode, "Home, sweet home");
 
   while (window.isOpen())
   {
-    sf::Event event;
+    sf::Event event{};
     while (window.pollEvent(event))
     {
       if (event.type == sf::Event::Closed)

@@ -1,7 +1,5 @@
 #include <iostream>
-#include <math.h>
-
-using namespace std;
+#include <cmath>
 
 int main()
 {
@@ -9,28 +7,28 @@ int main()
     float b = 0;
     float c = 0;
 
-    cout << "Enter a,b and c for `ax^2 + bx + c=0`: ";
-    cin >> a >> b >> c;
+    std::cout << "Enter a,b and c for `ax^2 + bx + c=0`: ";
+    std::cin >> a >> b >> c;
 
-    float d = pow(b, 2) - (4 * a * c);
+    auto d = static_cast<float>(pow(b, 2) - (4 * a * c));
 
-    cout << "D: " << d << endl;
+    std::cout << "D: " << d << std::endl;
 
     if (d < 0)
     {
-        cout << "No roots" << endl;
+        std::cout << "No roots" << std::endl;
         return 0;
     }
 
-    float x1 = (-b - sqrt(d)) / (2 * a);
-    float x2 = (-b + sqrt(d)) / (2 * a);
+    auto x1 = static_cast<float>((-b - sqrt(d)) / (2 * a));
+    auto x2 = static_cast<float>((-b + sqrt(d)) / (2 * a));
 
     if (x1 == x2)
     {
-        cout << "Solution: " << x1 << endl;
+        std::cout << "Solution: " << x1 << std::endl;
     }
     else
     {
-        cout << "Solutions: " << x1 << " and " << x2 << endl;
+        std::cout << "Solutions: " << x1 << " and " << x2 << std::endl;
     }
 }

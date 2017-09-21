@@ -1,11 +1,11 @@
-#include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
-#include <math.h>
+#include <SFML/Graphics.hpp>
+#include <cmath>
 
 float OFFSET = 20;
 
-sf::Color COLOR = sf::Color(0xFF, 0xFF, 0xFF);
+auto COLOR = sf::Color(0xFF, 0xFF, 0xFF);
 
 float WINDOW_WIDTH = (270 + 2 * OFFSET);
 float WINDOW_HEIGHT = (170 + 2 * OFFSET);
@@ -38,7 +38,7 @@ std::vector<sf::Vector2f> calcCubicBezier(
 
 float calcToDegrees(float deg)
 {
-    return deg * M_PI / 180;
+    return static_cast<float>(deg * M_PI / 180);
 }
 
 void drawDLetter(sf::RenderWindow *window)
@@ -57,11 +57,8 @@ void drawDLetter(sf::RenderWindow *window)
         sf::Vector2f(OFFSET + 200, OFFSET + 120),
         25);
 
-    for (std::vector<sf::Vector2f>::const_iterator a = points.begin();
-         a != points.end();
-         ++a)
-    {
-        d2.append(sf::Vertex(*a, sf::Color::White));
+    for (auto &point : points) {
+        d2.append(sf::Vertex(point, sf::Color::White));
     }
 
     window->draw(d1);
@@ -71,21 +68,21 @@ void drawDLetter(sf::RenderWindow *window)
 void drawALetter(sf::RenderWindow *window)
 {
     sf::RectangleShape a1;
-    a1.setSize({1, abs(150 / cos(calcToDegrees(15)))});
+    a1.setSize({1, std::abs(150 / std::cos(calcToDegrees(15)))});
     a1.setFillColor(COLOR);
     a1.setPosition({OFFSET + 50, OFFSET});
     a1.setRotation(15);
 
     sf::RectangleShape a2;
-    a2.setSize({1, abs(150 / cos(calcToDegrees(15)))});
+    a2.setSize({1, std::abs(150 / std::cos(calcToDegrees(15)))});
     a2.setFillColor(COLOR);
     a2.setPosition({OFFSET + 50, OFFSET});
     a2.setRotation(-15);
 
     sf::RectangleShape a3;
-    a3.setSize({abs(150 / sin(calcToDegrees(75))) / 4, 1});
+    a3.setSize({std::abs(150 / std::sin(calcToDegrees(75))) / 4, 1});
     a3.setFillColor(COLOR);
-    a3.setPosition({OFFSET + 50 - abs(75 * tan(calcToDegrees(15))) + 1, OFFSET + 75});
+    a3.setPosition({OFFSET + 50 - std::abs(75 * std::tan(calcToDegrees(15))) + 1, OFFSET + 75});
 
     window->draw(a1);
     window->draw(a2);
@@ -108,15 +105,12 @@ void drawRLetter(sf::RenderWindow *window)
         sf::Vector2f(OFFSET + 260, OFFSET + 50),
         25);
 
-    for (std::vector<sf::Vector2f>::const_iterator a = points.begin();
-         a != points.end();
-         ++a)
-    {
-        r2.append(sf::Vertex(*a, sf::Color::White));
+    for (auto &point : points) {
+        r2.append(sf::Vertex(point, sf::Color::White));
     }
 
     sf::RectangleShape r3;
-    r3.setSize({1, abs(90 / cos(calcToDegrees(20)))});
+    r3.setSize({1, std::abs(90 / std::cos(calcToDegrees(20)))});
     r3.setFillColor(COLOR);
     r3.setPosition({OFFSET + 220, OFFSET + 60});
     r3.setRotation(-20);
@@ -128,8 +122,8 @@ void drawRLetter(sf::RenderWindow *window)
 
 int main()
 {
-    sf::VideoMode videoMode = sf::VideoMode({(unsigned int)WINDOW_WIDTH,
-                                             (unsigned int)WINDOW_HEIGHT});
+    sf::VideoMode videoMode = sf::VideoMode((unsigned int)WINDOW_WIDTH,
+                                             (unsigned int)WINDOW_HEIGHT);
 
     sf::RenderWindow window(videoMode, "ADR");
 

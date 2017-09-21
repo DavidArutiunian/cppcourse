@@ -1,6 +1,6 @@
-#include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
+#include <SFML/Graphics.hpp>
 
 int main()
 {
@@ -11,8 +11,8 @@ int main()
     float width = (2 * circleRadius + 2 * offset);
     float height = (6 * circleRadius + 4 * offset);
 
-    unsigned int videoWidth = (unsigned int)(width + offset);
-    unsigned int videoHeight = (unsigned int)(height + offset);
+    auto videoWidth = static_cast<unsigned int>(width + offset);
+    auto videoHeight = static_cast<unsigned int>(height + offset);
 
     sf::RectangleShape backgroundRect;
     sf::CircleShape greenCircle(circleRadius);

@@ -1,6 +1,6 @@
-#include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
+#include <SFML/Graphics.hpp>
 #include <cmath>
 
 constexpr unsigned WINDOW_WIDTH = 800;
@@ -10,7 +10,7 @@ int main()
 {
   constexpr float BALL_SIZE = 40;
 
-  sf::RenderWindow window(sf::VideoMode({WINDOW_WIDTH, WINDOW_HEIGHT}), "Wave Moving Ball");
+  sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Wave Moving Ball");
   sf::Clock clock;
 
   const sf::Vector2f position = {10, 350};
@@ -20,7 +20,7 @@ int main()
 
   while (window.isOpen())
   {
-    sf::Event event;
+    sf::Event event{};
     while (window.pollEvent(event))
     {
       if (event.type == sf::Event::Closed)

@@ -1,7 +1,4 @@
 #include <iostream>
-#include <cstdio>
-
-using namespace std;
 
 int main()
 {
@@ -9,9 +6,9 @@ int main()
     float b = 0;
     float c = 0;
 
-    cout << "Enter a, b and c: ";
-    cin >> a >> b >> c;
+    std::cout << "Enter a, b and c: ";
+    std::cin >> a >> b >> c;
 
     float result = a + b + c;
-    cout << "Total: " << result << endl;
+    std::cout << "Total: " << result << std::endl;
 }
