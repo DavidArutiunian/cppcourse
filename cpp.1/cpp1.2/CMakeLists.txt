@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.6.2 FATAL_ERROR)
 
-project(hello_err)
+project(cpp1.2)
 
 set(SOURCES hello_err.cpp)
 
-add_executable(hello_err ${SOURCES})
+add_executable(cpp1.2 ${SOURCES})
