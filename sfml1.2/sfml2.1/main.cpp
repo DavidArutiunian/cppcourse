@@ -17,7 +17,7 @@ int main()
   sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Wave Moving Ball 2");
   sf::Clock clock;
 
-  sf::Vector2f position = {0, window.getSize().y / 2 - AMPLITUDE / 2};
+  sf::Vector2f position = {0, WINDOW_HEIGHT / 2 - AMPLITUDE / 2};
 
   sf::CircleShape shape(BALL_SIZE);
   shape.setFillColor(sf::Color(0xFF, 0xFF, 0xFF));
