@@ -10,7 +10,7 @@ int main() {
 
     sf::Vector2f speed = {50.f, 15.f};
 
-    sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Moving ball");
+    sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Moving Ball");
     sf::Clock clock;
 
     sf::CircleShape shape(BALL_SIZE);

@@ -2,7 +2,6 @@
 
 int main()
 {
-  int num = 1;
   for (int num = 1; num <= 100; num++)
   {
     if ((num % 3 == 0) && (num % 5 == 0))

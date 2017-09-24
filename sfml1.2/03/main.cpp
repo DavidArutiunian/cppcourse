@@ -1,5 +1,6 @@
-#include <SFML/Graphics.hpp>
+#include <SFML/System.hpp>
 #include <SFML/Window.hpp>
+#include <SFML/Graphics.hpp>
 #include <cmath>
 
 int main()
@@ -10,7 +11,7 @@ int main()
   sf::ContextSettings settings;
   settings.antialiasingLevel = 8;
 
-  sf::RenderWindow window(sf::VideoMode({800, 600}), "Elipse", sf::Style::Default, settings);
+  sf::RenderWindow window(sf::VideoMode(800, 600), "Elipse", sf::Style::Default, settings);
 
   sf::ConvexShape elipse;
   elipse.setPosition({400, 300});
@@ -23,12 +24,12 @@ int main()
     sf::Vector2f point = sf::Vector2f{
         elipseRadius.x * std::sin(angle),
         elipseRadius.y * std::cos(angle)};
-    elipse.setPoint(pointNo, point);
+    elipse.setPoint(static_cast<size_t>(pointNo), point);
   }
 
   while (window.isOpen())
   {
-    sf::Event event;
+    sf::Event event{};
     while (window.pollEvent(event))
     {
       if (event.type == sf::Event::Closed)

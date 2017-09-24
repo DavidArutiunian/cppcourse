@@ -37,8 +37,7 @@ int main()
     const float wavePhase = time * float(2 * M_PI);
     const float x = speedX * time;
     const float y = amplitudeY * std::sin(wavePhase / periodY);
-    const sf::Vector2f offset = {x,
-                                 y};
+    const sf::Vector2f offset = {x, y};
 
     ball.setPosition(position + offset);
 
