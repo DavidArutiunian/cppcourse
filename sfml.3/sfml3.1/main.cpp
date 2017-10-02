@@ -2,10 +2,14 @@
 
 int main()
 {
+#ifdef _WIN32
+  ShowWindow(GetConsoleWindow(), SW_HIDE);
+#endif
+
   sf::ContextSettings settings;
-  settings.antialiasingLevel = 8;
+  settings.antialiasingLevel = ANTIALIASING_LEVEL;
   sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), WINDOW_TITLE, sf::Style::Default, settings);
-  window.setFramerateLimit(60);
+  window.setFramerateLimit(MAX_FPS);
 
   sf::Clock clock;
   sf::ConvexShape pointer;
@@ -27,13 +31,13 @@ void update(const sf::Vector2f &mousePosition, sf::ConvexShape &pointer, float d
 {
   const sf::Vector2f delta = mousePosition - pointer.getPosition();
   auto angle = static_cast<float>(atan2(delta.y, delta.x));
-  if (angle < 0.f) // TODO: fix 0 degree intersection bug
+  if (angle < 0) // TODO: fix 0 degree intersection bug
   {
     angle += 2 * M_PI;
   }
   angle = toDegrees(angle);
-  const float maxDegreesPerFrame = MAX_ANGULAR_VELOCITY / 1000.f * deltaTime;
-  const float degreesPerFrame = std::abs((angle - pointer.getRotation()) / 1000.f * deltaTime);
+  const float maxDegreesPerFrame = MAX_ANGULAR_VELOCITY / 1000 * deltaTime;
+  const float degreesPerFrame = std::abs((angle - pointer.getRotation()) / 1000 * deltaTime);
   if (std::ceil(angle) != std::ceil(pointer.getRotation()))
   {
     if (std::ceil(angle) > std::ceil(pointer.getRotation()))
@@ -45,8 +49,6 @@ void update(const sf::Vector2f &mousePosition, sf::ConvexShape &pointer, float d
       pointer.setRotation(pointer.getRotation() - std::min(degreesPerFrame, maxDegreesPerFrame));
     }
   }
-
-  std::cout << "pointer angle=" << pointer.getRotation() << std::endl;
 }
 
 void pollEvents(sf::RenderWindow &window, sf::Vector2f &mousePosition)
@@ -83,10 +85,15 @@ void redrawFrame(sf::RenderWindow &window, sf::ConvexShape &pointer, sf::Rectang
 
 void init(sf::ConvexShape &pointer, sf::RectangleShape &background)
 {
-  pointer.setPointCount(3);
-  pointer.setPoint(0, {40, 0});
-  pointer.setPoint(1, {-20, -20});
-  pointer.setPoint(2, {-20, 20});
+  pointer.setPointCount(POINTS_SET.size());
+  for (auto iterator = POINTS_SET.begin(); iterator != POINTS_SET.end(); ++iterator)
+  {
+    const auto index = static_cast<const int>(std::distance(POINTS_SET.begin(), iterator));
+    if (index < POINTS_SET.size())
+    {
+      pointer.setPoint((size_t) index, POINTS_SET.at((unsigned long long int) index));
+    }
+  }
   pointer.setPosition(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
   pointer.setFillColor(POINTER_COLOR);
 
