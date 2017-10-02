@@ -31,7 +31,7 @@ void update(const sf::Vector2f &mousePosition, sf::ConvexShape &pointer, float d
 {
   const sf::Vector2f delta = mousePosition - pointer.getPosition();
   auto angle = static_cast<float>(atan2(delta.y, delta.x));
-  if (angle < 0) // TODO: fix 0 degree intersection bug
+  if (angle < 0)
   {
     angle += 2 * M_PI;
   }
@@ -42,11 +42,25 @@ void update(const sf::Vector2f &mousePosition, sf::ConvexShape &pointer, float d
   {
     if (std::ceil(angle) > std::ceil(pointer.getRotation()))
     {
-      pointer.setRotation(pointer.getRotation() + std::min(degreesPerFrame, maxDegreesPerFrame));
+      if (std::ceil(angle - 180) > std::ceil(pointer.getRotation()))
+      {
+        pointer.setRotation(pointer.getRotation() - std::min(degreesPerFrame, maxDegreesPerFrame));
+      }
+      else
+      {
+        pointer.setRotation(pointer.getRotation() + std::min(degreesPerFrame, maxDegreesPerFrame));
+      }
     }
     else
     {
-      pointer.setRotation(pointer.getRotation() - std::min(degreesPerFrame, maxDegreesPerFrame));
+      if (std::ceil(angle + 180) < std::ceil(pointer.getRotation()))
+      {
+        pointer.setRotation(pointer.getRotation() + std::min(degreesPerFrame, maxDegreesPerFrame));
+      }
+      else
+      {
+        pointer.setRotation(pointer.getRotation() - std::min(degreesPerFrame, maxDegreesPerFrame));
+      }
     }
   }
 }
