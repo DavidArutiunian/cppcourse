@@ -1,37 +1,29 @@
-#include <SFML/System.hpp>
-#include <SFML/Window.hpp>
-#include <SFML/Graphics.hpp>
-#include <cmath>
-#include <iostream>
 #include "main.hpp"
 
 int main()
 {
-  constexpr unsigned int WINDOW_WIDTH = 800;
-  constexpr unsigned int WINDOW_HEIGHT = 600;
-
   sf::ContextSettings settings;
   settings.antialiasingLevel = 8;
-  sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_WIDTH),
-                          "Pointer follows mouse",
-                          sf::Style::Default,
-                          settings);
+  sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), WINDOW_TITLE, sf::Style::Default, settings);
   window.setFramerateLimit(60);
 
+  sf::Clock clock;
   sf::ConvexShape pointer;
+  sf::RectangleShape background;
   sf::Vector2f mousePosition;
 
-  init(pointer);
+  init(pointer, background);
 
   while (window.isOpen())
   {
+    const float deltaTime = clock.restart().asMilliseconds();
     pollEvents(window, mousePosition);
-    update(mousePosition, pointer);
-    redrawFrame(window, pointer);
+    update(mousePosition, pointer, deltaTime);
+    redrawFrame(window, pointer, background);
   }
 }
 
-void update(const sf::Vector2f &mousePosition, sf::ConvexShape &pointer)
+void update(const sf::Vector2f &mousePosition, sf::ConvexShape &pointer, float deltaTime)
 {
   const sf::Vector2f delta = mousePosition - pointer.getPosition();
   auto angle = static_cast<float>(atan2(delta.y, delta.x));
@@ -40,8 +32,8 @@ void update(const sf::Vector2f &mousePosition, sf::ConvexShape &pointer)
     angle += 2 * M_PI;
   }
   angle = toDegrees(angle);
-  const float maxDegreesPerFrame = 15.f / 1000.f * 16.f;
-  const float degreesPerFrame = std::abs((angle - pointer.getRotation()) / 1000.f * 16.f);
+  const float maxDegreesPerFrame = MAX_ANGULAR_VELOCITY / 1000.f * deltaTime;
+  const float degreesPerFrame = std::abs((angle - pointer.getRotation()) / 1000.f * deltaTime);
   if (std::ceil(angle) != std::ceil(pointer.getRotation()))
   {
     if (std::ceil(angle) > std::ceil(pointer.getRotation()))
@@ -81,29 +73,29 @@ void onMouseMove(const sf::Event::MouseMoveEvent &event, sf::Vector2f &mousePosi
   mousePosition = {static_cast<float>(event.x), static_cast<float>(event.y)};
 }
 
-void redrawFrame(sf::RenderWindow &window, sf::ConvexShape &pointer)
+void redrawFrame(sf::RenderWindow &window, sf::ConvexShape &pointer, sf::RectangleShape &background)
 {
   window.clear();
+  window.draw(background);
   window.draw(pointer);
   window.display();
 }
 
-void init(sf::ConvexShape &pointer)
+void init(sf::ConvexShape &pointer, sf::RectangleShape &background)
 {
   pointer.setPointCount(3);
   pointer.setPoint(0, {40, 0});
   pointer.setPoint(1, {-20, -20});
   pointer.setPoint(2, {-20, 20});
-  pointer.setPosition({400, 300});
-  pointer.setFillColor(sf::Color(0xFF, 0x80, 0x00));
+  pointer.setPosition(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
+  pointer.setFillColor(POINTER_COLOR);
+
+  background.setSize({WINDOW_WIDTH, WINDOW_HEIGHT});
+  background.setPosition(0, 0);
+  background.setFillColor(BACKGROUND_COLOR);
 }
 
 float toDegrees(float radians)
 {
   return static_cast<float>(static_cast<double>(radians) * 180 / M_PI);
-}
-
-float toRadians(float degrees)
-{
-  return static_cast<float>(static_cast<double>(degrees) * M_PI / 180);
 }
