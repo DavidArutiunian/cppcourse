@@ -1,3 +1,5 @@
+#include <SFML/System.hpp>
+#include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include <cmath>
 #include <iostream>
@@ -59,8 +61,8 @@ void redrawFrame(sf::RenderWindow &window, sf::ConvexShape &pointer)
 
 int main()
 {
-  constexpr unsigned WINDOW_WIDTH = 800;
-  constexpr unsigned WINDOW_HEIGHT = 600;
+  constexpr unsigned int WINDOW_WIDTH = 800;
+  constexpr unsigned int WINDOW_HEIGHT = 600;
 
   sf::ContextSettings settings;
   settings.antialiasingLevel = 8;

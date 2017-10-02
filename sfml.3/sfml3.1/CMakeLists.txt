@@ -1,4 +1,4 @@
-set(SOURCES main.cpp)
+set(SOURCES main.cpp main.hpp)
 
 add_executable(sfml3.1 ${SOURCES})
 

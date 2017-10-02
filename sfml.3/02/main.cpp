@@ -1,10 +1,12 @@
+#include <SFML/System.hpp>
+#include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
 int main()
 {
-  constexpr unsigned WINDOW_WIDTH = 800;
-  constexpr unsigned WINDOW_HEIGHT = 600;
+  constexpr unsigned int WINDOW_WIDTH = 800;
+  constexpr unsigned int WINDOW_HEIGHT = 600;
 
   sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Prints mouse events to terminal");
 
@@ -26,9 +28,9 @@ int main()
           break;
         case sf::Event::MouseButtonReleased:
           std::cout << "mouse released,"
-                    << " x=" << event.mouseButton.x
-                    << " y=" << event.mouseButton.y
-                    << std::endl;
+              << " x=" << event.mouseButton.x
+              << " y=" << event.mouseButton.y
+              << std::endl;
           break;
         default:
           break;
