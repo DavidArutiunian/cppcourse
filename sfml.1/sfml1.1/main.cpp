@@ -1,49 +1,49 @@
+#include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
-#include <SFML/Graphics.hpp>
 
 int main()
 {
-    float offset = 20;
+	float offset = 20;
 
-    float circleRadius = 80;
+	float circleRadius = 80;
 
-    float width = (2 * circleRadius + 2 * offset);
-    float height = (6 * circleRadius + 4 * offset);
+	float width = (2 * circleRadius + 2 * offset);
+	float height = (6 * circleRadius + 4 * offset);
 
-    auto videoWidth = static_cast<unsigned int>(width + offset);
-    auto videoHeight = static_cast<unsigned int>(height + offset);
+	auto videoWidth = static_cast<unsigned int>(width + offset);
+	auto videoHeight = static_cast<unsigned int>(height + offset);
 
-    sf::RectangleShape backgroundRect;
-    sf::CircleShape greenCircle(circleRadius);
-    sf::CircleShape yellowCircle(circleRadius);
-    sf::CircleShape redCircle(circleRadius);
+	sf::RectangleShape backgroundRect;
+	sf::CircleShape greenCircle(circleRadius);
+	sf::CircleShape yellowCircle(circleRadius);
+	sf::CircleShape redCircle(circleRadius);
 
-    backgroundRect.setPosition({offset / 2, offset / 2});
-    backgroundRect.setSize({width, height});
-    backgroundRect.setFillColor(sf::Color(0x67, 0x67, 0x67));
+	backgroundRect.setPosition({ offset / 2, offset / 2 });
+	backgroundRect.setSize({ width, height });
+	backgroundRect.setFillColor(sf::Color(0x67, 0x67, 0x67));
 
-    greenCircle.setPosition({offset + offset / 2, offset + offset / 2});
-    greenCircle.setFillColor(sf::Color(0, 0xE1, 0xF));
+	greenCircle.setPosition({ offset + offset / 2, offset + offset / 2 });
+	greenCircle.setFillColor(sf::Color(0, 0xE1, 0xF));
 
-    yellowCircle.setPosition({offset + offset / 2, 2 * offset + 2 * circleRadius + offset / 2});
-    yellowCircle.setFillColor(sf::Color(0xFF, 0xCC, 0x26));
+	yellowCircle.setPosition({ offset + offset / 2, 2 * offset + 2 * circleRadius + offset / 2 });
+	yellowCircle.setFillColor(sf::Color(0xFF, 0xCC, 0x26));
 
-    redCircle.setPosition({offset + offset / 2, 3 * offset + 4 * circleRadius + offset / 2});
-    redCircle.setFillColor(sf::Color(0xF2, 0, 0));
+	redCircle.setPosition({ offset + offset / 2, 3 * offset + 4 * circleRadius + offset / 2 });
+	redCircle.setFillColor(sf::Color(0xF2, 0, 0));
 
-    sf::VideoMode videoMode = sf::VideoMode({videoWidth, videoHeight});
+	sf::VideoMode videoMode = sf::VideoMode({ videoWidth, videoHeight });
 
-    sf::RenderWindow window(videoMode, "Traffic Light");
+	sf::RenderWindow window(videoMode, "Traffic Light");
 
-    window.clear();
+	window.clear();
 
-    window.draw(backgroundRect);
-    window.draw(greenCircle);
-    window.draw(yellowCircle);
-    window.draw(redCircle);
+	window.draw(backgroundRect);
+	window.draw(greenCircle);
+	window.draw(yellowCircle);
+	window.draw(redCircle);
 
-    window.display();
+	window.display();
 
-    sf::sleep(sf::seconds(5));
+	sf::sleep(sf::seconds(5));
 }
