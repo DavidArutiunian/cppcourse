@@ -11,7 +11,6 @@
 #define WINDOW_HEIGHT 600
 #define WINDOW_TITLE "Pointer follows mouse with limited speed (15 deg/sec)"
 #define POINTER_COLOR sf::Color(255, 152, 0)
-#define BACKGROUND_COLOR sf::Color(33, 33, 33)
 #define MAX_FPS 60
 #define ANTIALIASING_LEVEL 8
 
@@ -19,7 +18,7 @@ const std::vector<sf::Vector2f> POINTS_SET = { { 40, 0 },
 	{ -20, -20 },
 	{ -20, 20 } };
 
-void init(sf::ConvexShape& pointer, sf::RectangleShape& background);
+void init(sf::ConvexShape& pointer);
 
 float toDegrees(float radians);
 
@@ -29,4 +28,4 @@ void pollEvents(sf::RenderWindow& window, sf::Vector2f& mousePosition);
 
 void update(const sf::Vector2f& mousePosition, sf::ConvexShape& pointer, float deltaTime);
 
-void redrawFrame(sf::RenderWindow& window, sf::ConvexShape& pointer, sf::RectangleShape& background);
+void redrawFrame(sf::RenderWindow& window, sf::ConvexShape& pointer);

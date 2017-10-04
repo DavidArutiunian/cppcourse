@@ -13,17 +13,16 @@ int main()
 
 	sf::Clock clock;
 	sf::ConvexShape pointer;
-	sf::RectangleShape background;
 	sf::Vector2f mousePosition;
 
-	init(pointer, background);
+	init(pointer);
 
 	while (window.isOpen())
 	{
 		const float deltaTime = clock.restart().asMilliseconds();
 		pollEvents(window, mousePosition);
 		update(mousePosition, pointer, deltaTime);
-		redrawFrame(window, pointer, background);
+		redrawFrame(window, pointer);
 	}
 }
 
@@ -89,15 +88,14 @@ void onMouseMove(const sf::Event::MouseMoveEvent& event, sf::Vector2f& mousePosi
 	mousePosition = { static_cast<float>(event.x), static_cast<float>(event.y) };
 }
 
-void redrawFrame(sf::RenderWindow& window, sf::ConvexShape& pointer, sf::RectangleShape& background)
+void redrawFrame(sf::RenderWindow& window, sf::ConvexShape& pointer)
 {
 	window.clear();
-	window.draw(background);
 	window.draw(pointer);
 	window.display();
 }
 
-void init(sf::ConvexShape& pointer, sf::RectangleShape& background)
+void init(sf::ConvexShape& pointer)
 {
 	pointer.setPointCount(POINTS_SET.size());
 	for (auto iterator = POINTS_SET.begin(); iterator != POINTS_SET.end(); ++iterator)
@@ -110,10 +108,6 @@ void init(sf::ConvexShape& pointer, sf::RectangleShape& background)
 	}
 	pointer.setPosition(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
 	pointer.setFillColor(POINTER_COLOR);
-
-	background.setSize({ WINDOW_WIDTH, WINDOW_HEIGHT });
-	background.setPosition(0, 0);
-	background.setFillColor(BACKGROUND_COLOR);
 }
 
 float toDegrees(float radians)
