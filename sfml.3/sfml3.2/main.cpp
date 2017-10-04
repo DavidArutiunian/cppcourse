@@ -36,6 +36,12 @@ void update(const sf::Vector2f& mousePosition, Eye& leftEye, Eye& rightEye)
 	rightEye.updateElement();
 }
 
+void Eye::updateElement()
+{
+	const sf::Vector2f offset = toEuclidian(this->radius.x / 3, this->radius.y / 3, this->rotation);
+	this->orb.setPosition(this->position + offset);
+}
+
 void pollEvents(sf::RenderWindow& window, sf::Vector2f& mousePosition)
 {
 	sf::Event event{};
@@ -115,12 +121,6 @@ void Eye::setPoints()
 		sf::Vector2f point = { (this->radius.x / 4) * std::sin(angle), (this->radius.y / 4) * std::cos(angle) };
 		this->orb.setPoint(static_cast<size_t>(j), point);
 	}
-}
-
-void Eye::updateElement()
-{
-	const sf::Vector2f offset = toEuclidian(this->radius.x / 3, this->radius.y / 3, this->rotation);
-	this->orb.setPosition(this->position + offset);
 }
 
 float toDegrees(float radians)
