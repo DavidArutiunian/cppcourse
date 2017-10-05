@@ -13,6 +13,7 @@ int main()
 
 	float speed = 500.f;
 	float time = 0;
+	float x = 0;
 
 	sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Wave Moving Ball 2");
 	sf::Clock clock;
@@ -37,8 +38,8 @@ int main()
 
 		time = time + deltaTime;
 
+		x = x + speed * deltaTime;
 		const float wavePhase = time * static_cast<float>(2 * M_PI);
-		const float x = x + speed * deltaTime;
 		const float y = AMPLITUDE * std::sin(wavePhase / PERIOD);
 		const sf::Vector2f offset = { x, y };
 
