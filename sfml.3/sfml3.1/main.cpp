@@ -36,29 +36,30 @@ void update(const sf::Vector2f& mousePosition, sf::ConvexShape& pointer, float d
 	}
 	angle = toDegrees(angle);
 	const float maxDegreesPerFrame = MAX_ANGULAR_VELOCITY / 1000 * deltaTime;
-	const float degreesPerFrame = std::abs((angle - pointer.getRotation()) / 1000 * deltaTime);
-	if (std::ceil(angle) != std::ceil(pointer.getRotation()))
+	const float previousRotation = pointer.getRotation();
+	const float degreesPerFrame = std::abs((angle - previousRotation) / 1000 * deltaTime);
+	if (angle != previousRotation)
 	{
-		if (std::ceil(angle) > std::ceil(pointer.getRotation()))
+		if (angle > previousRotation)
 		{
-			if (std::ceil(angle - 180) > std::ceil(pointer.getRotation()))
+			if (std::ceil(angle - 180) > previousRotation)
 			{
-				pointer.setRotation(pointer.getRotation() - std::min(degreesPerFrame, maxDegreesPerFrame));
+				pointer.setRotation(previousRotation - std::min(degreesPerFrame, maxDegreesPerFrame));
 			}
 			else
 			{
-				pointer.setRotation(pointer.getRotation() + std::min(degreesPerFrame, maxDegreesPerFrame));
+				pointer.setRotation(previousRotation + std::min(degreesPerFrame, maxDegreesPerFrame));
 			}
 		}
 		else
 		{
-			if (std::ceil(angle + 180) < std::ceil(pointer.getRotation()))
+			if (std::ceil(angle + 180) < previousRotation)
 			{
-				pointer.setRotation(pointer.getRotation() + std::min(degreesPerFrame, maxDegreesPerFrame));
+				pointer.setRotation(previousRotation + std::min(degreesPerFrame, maxDegreesPerFrame));
 			}
 			else
 			{
-				pointer.setRotation(pointer.getRotation() - std::min(degreesPerFrame, maxDegreesPerFrame));
+				pointer.setRotation(previousRotation - std::min(degreesPerFrame, maxDegreesPerFrame));
 			}
 		}
 	}
