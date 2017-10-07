@@ -6,7 +6,7 @@
 
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
-#define WINDOW_TITLE "Looking Eyes v2.0"
+#define WINDOW_TITLE "Arrow"
 #define MAX_FPS 60
 #define ANTIALIASING_LEVEL 8
 #define BACKGROUND_COLOR sf::Color(255, 255, 255)

@@ -13,7 +13,7 @@ int main()
 	sf::Clock clock;
 
 	Arrow arrow;
-	sf::Vector2f mousePosition;
+	sf::Vector2f mousePosition = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 };
 
 	init(arrow);
 
@@ -36,7 +36,7 @@ void update(sf::Vector2f& mousePosition, Arrow& arrow, float deltaTime)
 
 void Arrow::updateRotation(Arrow& arrow, const sf::Vector2f delta, float deltaTime)
 {
-	auto angle = static_cast<float>(atan2(delta.y, delta.x) + (M_PI / 2));
+	auto angle = static_cast<float>(atan2(delta.y, delta.x));
 	if (angle < 0)
 	{
 		angle = static_cast<float>(angle + 2 * M_PI);
@@ -75,7 +75,11 @@ void Arrow::updateRotation(Arrow& arrow, const sf::Vector2f delta, float deltaTi
 void Arrow::updatePosition(Arrow& arrow, const sf::Vector2f delta, float deltaTime)
 {
 	const auto deltaLength = static_cast<float>(std::sqrt(std::pow(delta.x, 2) + std::pow(delta.y, 2)));
-	const sf::Vector2f direction = { delta.x / deltaLength, delta.y / deltaLength };
+	sf::Vector2f direction = { 0, 0 };
+	if (deltaLength != 0)
+	{
+		direction = { delta.x / deltaLength, delta.y / deltaLength };
+	}
 	const float speed = 20 * deltaTime;
 	arrow.position = arrow.position + direction * speed;
 }
@@ -92,13 +96,13 @@ void Arrow::setPoints()
 	this->shape.setPosition(this->position);
 	this->shape.setFillColor(this->arrowColor);
 	this->shape.setPointCount(this->pointCount);
-	this->shape.setPoint(0, { 0, -40 });
+	this->shape.setPoint(0, { 0, 40 });
 	this->shape.setPoint(1, { 40, 0 });
-	this->shape.setPoint(2, { 20, 0 });
-	this->shape.setPoint(3, { 20, 40 });
-	this->shape.setPoint(4, { -20, 40 });
-	this->shape.setPoint(5, { -20, 0 });
-	this->shape.setPoint(6, { -40, 0 });
+	this->shape.setPoint(2, { 0, -40 });
+	this->shape.setPoint(3, { 0, -20 });
+	this->shape.setPoint(4, { -40, -20 });
+	this->shape.setPoint(5, { -40, 20 });
+	this->shape.setPoint(6, { 0, 20 });
 	this->shape.setOutlineColor(this->outlineColor);
 	this->shape.setOutlineThickness(this->outlineThickness);
 }
