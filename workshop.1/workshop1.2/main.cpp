@@ -10,6 +10,7 @@ int main()
 	settings.antialiasingLevel = ANTIALIASING_LEVEL;
 	sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), WINDOW_TITLE, sf::Style::Default, settings);
 	window.setFramerateLimit(MAX_FPS);
+	sf::Clock clock;
 
 	Arrow arrow;
 	sf::Vector2f mousePosition;
@@ -19,24 +20,70 @@ int main()
 	while (window.isOpen())
 	{
 		pollEvents(window, mousePosition);
-		update(mousePosition, arrow);
+		float deltaTime = clock.restart().asSeconds();
+		update(mousePosition, arrow, deltaTime);
 		redrawFrame(window, arrow);
 	}
 }
 
-// TODO: calculate rotation & position
-void update(const sf::Vector2f& mousePosition, Arrow& arrow)
+void update(sf::Vector2f& mousePosition, Arrow& arrow, float deltaTime)
 {
 	const sf::Vector2f delta = mousePosition - arrow.position;
-	const auto path = static_cast<float>(std::sqrt(std::pow(delta.x, 2) - std::pow(delta.y, 2)));
-	arrow.position = mousePosition;
+	arrow.updateRotation(arrow, delta, deltaTime);
+	arrow.updatePosition(arrow, delta, deltaTime);
 	arrow.updateElement();
 }
 
-// TODO: set rotation & position
+void Arrow::updateRotation(Arrow& arrow, const sf::Vector2f delta, float deltaTime)
+{
+	auto angle = static_cast<float>(atan2(delta.y, delta.x) + (M_PI / 2));
+	if (angle < 0)
+	{
+		angle = static_cast<float>(angle + 2 * M_PI);
+	}
+	angle = toDegrees(angle);
+	const float maxDegreesPerFrame = 90 * deltaTime;
+	const float previousRotation = arrow.shape.getRotation();
+	const float degreesPerFrame = std::abs(angle - previousRotation);
+	if (angle != previousRotation)
+	{
+		if (angle > previousRotation)
+		{
+			if ((angle - 180) > previousRotation)
+			{
+				arrow.rotation = previousRotation - std::min(maxDegreesPerFrame, degreesPerFrame);
+			}
+			else
+			{
+				arrow.rotation = previousRotation + std::min(maxDegreesPerFrame, degreesPerFrame);
+			}
+		}
+		else
+		{
+			if ((angle + 180) < previousRotation)
+			{
+				arrow.rotation = previousRotation + std::min(maxDegreesPerFrame, degreesPerFrame);
+			}
+			else
+			{
+				arrow.rotation = previousRotation - std::min(maxDegreesPerFrame, degreesPerFrame);
+			}
+		}
+	}
+}
+
+void Arrow::updatePosition(Arrow& arrow, const sf::Vector2f delta, float deltaTime)
+{
+	const auto deltaLength = static_cast<float>(std::sqrt(std::pow(delta.x, 2) + std::pow(delta.y, 2)));
+	const sf::Vector2f direction = { delta.x / deltaLength, delta.y / deltaLength };
+	const float speed = 20 * deltaTime;
+	arrow.position = arrow.position + direction * speed;
+}
+
 void Arrow::updateElement()
 {
 	this->shape.setPosition(this->position);
+	this->shape.setRotation(this->rotation);
 }
 
 void Arrow::setPoints()
@@ -90,4 +137,9 @@ void redrawFrame(sf::RenderWindow& window, Arrow& arrow)
 void onMouseMove(const sf::Event::MouseMoveEvent& event, sf::Vector2f& mousePosition)
 {
 	mousePosition = { static_cast<float>(event.x), static_cast<float>(event.y) };
+}
+
+float toDegrees(float radians)
+{
+	return float(double(radians) * 180.0 / M_PI);
 }

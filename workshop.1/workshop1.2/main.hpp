@@ -23,6 +23,10 @@ struct Arrow
 	float rotation = 0;
 	sf::Vector2f position;
 
+	void updateRotation(Arrow& arrow, sf::Vector2f delta, float deltaTime);
+
+	void updatePosition(Arrow& arrow, sf::Vector2f delta, float deltaTime);
+
 	void setPoints();
 
 	void updateElement();
@@ -32,14 +36,10 @@ void init(Arrow& arrow);
 
 float toDegrees(float radians);
 
-double checkElipseIntersection(const sf::Vector2f& mousePosition, const sf::Vector2f& position, float a, float b);
-
-sf::Vector2f toEuclidian(float a, float b, float angle);
-
 void onMouseMove(const sf::Event::MouseMoveEvent& event, sf::Vector2f& mousePosition);
 
 void pollEvents(sf::RenderWindow& window, sf::Vector2f& mousePosition);
 
-void update(const sf::Vector2f& mousePosition, Arrow& arrow);
+void update(sf::Vector2f& mousePosition, Arrow& arrow, float deltaTime);
 
 void redrawFrame(sf::RenderWindow& window, Arrow& arrow);
