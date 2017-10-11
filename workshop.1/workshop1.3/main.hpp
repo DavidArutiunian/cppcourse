@@ -9,4 +9,4 @@
 #define WINDOW_TITLE "Kitty"
 #define MAX_FPS 60
 #define BACKGROUND_COLOR sf::Color(255, 255, 255)
-#define SPRITE_PATH "./img/cat.png"
+#define SPRITE_PATH "./img/kitty.png"
