@@ -44,16 +44,12 @@ void Kitty::updatePosition(sf::Vector2f delta, float deltaTime)
 
 	if (angle < 0)
 	{
-		angle = static_cast<float>(angle + 2 * M_PI);
+		angle = fmodf(static_cast<float>(angle + 2 * M_PI), static_cast<float>(2 * M_PI));
 	}
 
 	angle = toDegrees(angle);
 
-	if ((angle > 0) && (angle < 180))
-	{
-		this->scale = { 1, 1 };
-	}
-	else if (angle == 0)
+	if ((angle >= 0) && (angle < 180))
 	{
 		this->scale = { 1, 1 };
 	}
@@ -70,7 +66,7 @@ void Kitty::updatePosition(sf::Vector2f delta, float deltaTime)
 		direction = { delta.x / deltaLength, delta.y / deltaLength };
 	}
 
-	const float speed = std::min(deltaLength, 100.f) * deltaTime;
+	const float speed = std::min(deltaLength, 100.f * deltaTime);
 
 	this->position = this->position + direction * speed;
 }
