@@ -63,29 +63,39 @@ void Ball::updateElement()
 
 void Ball::init(std::vector<Ball>& balls)
 {
-	balls.at(0).color = sf::Color(128, 64, 255);
-	balls.at(1).color = sf::Color(255, 64, 128);
-	balls.at(2).color = sf::Color(128, 255, 64);
-	balls.at(3).color = sf::Color(64, 128, 255);
+	const std::vector<sf::Color> colors = {
+		sf::Color(128, 64, 255),
+		sf::Color(255, 64, 128),
+		sf::Color(128, 255, 64),
+		sf::Color(64, 128, 255),
+	};
+	const std::vector<sf::Vector2f> speeds = {
+		{ 200.f, 60.f },
+		{ 60.f, 200.f },
+		{ 100.f, 120.f },
+		{ 120.f, 100.f },
+	};
+	const std::vector<float> sizes = {
+		40,
+		50,
+		60,
+		70
+	};
+	const std::vector<sf::Vector2f> positions = {
+		{ 0, 0 },
+		{ WINDOW_WIDTH - 2 * sizes.at(1), 0 },
+		{ 0, WINDOW_HEIGHT - 2 * sizes.at(2) },
+		{ WINDOW_WIDTH - 2 * sizes.at(3), WINDOW_HEIGHT - 2 * sizes.at(3) },
+	};
 
-	balls.at(0).size = 40;
-	balls.at(1).size = 50;
-	balls.at(2).size = 60;
-	balls.at(3).size = 70;
-
-	balls.at(0).speed = { 200.f, 60.f };
-	balls.at(1).speed = { 60.f, 200.f };
-	balls.at(2).speed = { 100.f, 120.f };
-	balls.at(3).speed = { 120.f, 100.f };
-
-	balls.at(0).position = { 0, 0 };
-	balls.at(1).position = { WINDOW_WIDTH - 2 * balls.at(1).size, 0 };
-	balls.at(2).position = { 0, WINDOW_HEIGHT - 2 * balls.at(2).size };
-	balls.at(3).position = { WINDOW_WIDTH - 2 * balls.at(3).size, WINDOW_HEIGHT - 2 * balls.at(3).size };
-
-	for (auto&& ball : balls)
+	for (auto iterator = balls.begin(); iterator != balls.end(); ++iterator)
 	{
-		ball.shape.setPosition(ball.position);
+		const auto distance = static_cast<unsigned int>(std::distance(balls.begin(), iterator));
+		balls.at(distance).color = colors.at(distance);
+		balls.at(distance).size = sizes.at(distance);
+		balls.at(distance).speed = speeds.at(distance);
+		balls.at(distance).position = positions.at(distance);
+		balls.at(distance).shape.setPosition(balls.at(distance).position);
 	}
 }
 
