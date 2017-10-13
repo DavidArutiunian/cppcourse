@@ -1,4 +1,5 @@
 #include "main.hpp"
+#include <iostream>
 
 int main()
 {
@@ -51,6 +52,35 @@ void Ball::updatePosition(float deltaTime)
 	}
 }
 
+void Ball::checkCollisions(std::vector<Ball>& balls)
+{
+	std::vector<bool> shouldReflect = { false, false, false, false };
+	for (auto parentIterator = balls.begin(); parentIterator != balls.end(); ++parentIterator)
+	{
+		const auto i = static_cast<unsigned int>(std::distance(balls.begin(), parentIterator));
+		for (auto childIterator = balls.begin(); childIterator != balls.end(); ++childIterator)
+		{
+			const auto j = static_cast<unsigned int>(std::distance(balls.begin(), childIterator));
+			if (balls.at(i) == balls.at(j))
+			{
+				continue;
+			}
+
+			const sf::Vector2f delta = balls.at(i).shape.getPosition() - balls.at(j).shape.getPosition();
+			const auto deltaLength = static_cast<float>(std::sqrt(std::pow(delta.x, 2) + std::pow(delta.y, 2)));
+			const float radiusSum = balls.at(i).size + balls.at(j).size;
+
+			const sf::Vector2f normal = { -delta.y, delta.x };
+			const auto normalLength = static_cast<float>(std::sqrt(std::pow(normal.x, 2) + std::pow(normal.y, 2)));
+
+			if (deltaLength <= radiusSum)
+			{
+				std::cout << i << " " << j << std::endl;
+			}
+		}
+	}
+}
+
 void Ball::updateElement()
 {
 	this->shape.setPosition(this->position);
@@ -66,9 +96,9 @@ void Ball::init(std::vector<Ball>& balls)
 	};
 	const std::vector<sf::Vector2f> speeds = {
 		{ 100.f, 100.f },
-		{ 150.f, 150.f },
-		{ 200.f, 200.f },
-		{ 250.f, 250.f },
+		{ 100.f, 100.f },
+		{ 100.f, 100.f },
+		{ 100.f, 100.f },
 	};
 	const std::vector<float> sizes = {
 		40,
@@ -86,6 +116,7 @@ void Ball::init(std::vector<Ball>& balls)
 	for (auto iterator = balls.begin(); iterator != balls.end(); ++iterator)
 	{
 		const auto i = static_cast<unsigned int>(std::distance(balls.begin(), iterator));
+		balls.at(i).id = i;
 		balls.at(i).color = colors.at(i);
 		balls.at(i).size = sizes.at(i);
 		balls.at(i).speed = speeds.at(i);
@@ -93,6 +124,11 @@ void Ball::init(std::vector<Ball>& balls)
 		balls.at(i).shape.setPosition(balls.at(i).position);
 		balls.at(i).shape.setOrigin(balls.at(i).size, balls.at(i).size);
 	}
+}
+
+bool Ball::operator==(Ball& toCompare)
+{
+	return this->id == toCompare.id;
 }
 
 void init(std::vector<Ball>& balls)
@@ -124,6 +160,7 @@ void update(std::vector<Ball>& balls, float deltaTime)
 {
 	for (auto&& ball : balls)
 	{
+		Ball::checkCollisions(balls);
 		ball.updatePosition(deltaTime);
 		ball.updateElement();
 	}
