@@ -1,4 +1,4 @@
-set(SOURCES main.cpp main.hpp)
+set(SOURCES main.cpp main.hpp Ball.cpp Ball.hpp)
 
 add_executable(workshop2.2 ${SOURCES})
 

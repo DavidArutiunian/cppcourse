@@ -1,0 +1,104 @@
+#include "main.hpp"
+
+void Ball::updatePosition(float deltaTime)
+{
+	this->position = this->shape.getPosition();
+	this->position += this->speed * deltaTime;
+
+	if ((this->position.x + this->size >= WINDOW_WIDTH) && (this->speed.x > 0))
+	{
+		this->speed.x = -this->speed.x;
+	}
+	if ((this->position.x - this->size < 0) && (this->speed.x < 0))
+	{
+		this->speed.x = -this->speed.x;
+	}
+	if ((this->position.y + this->size >= WINDOW_HEIGHT) && (this->speed.y > 0))
+	{
+		this->speed.y = -this->speed.y;
+	}
+	if ((this->position.y - this->size < 0) && (this->speed.y < 0))
+	{
+		this->speed.y = -this->speed.y;
+	}
+}
+
+void Ball::checkCollisions(std::vector<Ball>& balls, float deltaTime)
+{
+	for (auto parentIterator = balls.begin(); parentIterator != balls.end(); ++parentIterator)
+	{
+		const auto i = static_cast<unsigned int>(std::distance(balls.begin(), parentIterator));
+		for (auto childIterator = balls.begin(); childIterator != balls.end(); ++childIterator)
+		{
+			const auto j = static_cast<unsigned int>(std::distance(balls.begin(), childIterator));
+			if (balls.at(i) == balls.at(j))
+			{
+				continue;
+			}
+
+			const sf::Vector2f delta = balls.at(i).shape.getPosition() - balls.at(j).shape.getPosition();
+			const auto deltaLength = static_cast<float>(std::sqrt(std::pow(delta.x, 2) + std::pow(delta.y, 2)));
+			const float radiusSum = balls.at(i).size + balls.at(j).size;
+
+			if (deltaLength <= radiusSum)
+			{
+				balls.at(i).speed = -balls.at(i).speed;
+				balls.at(j).speed = -balls.at(j).speed;
+				balls.at(i).updatePosition(deltaTime);
+				balls.at(j).updatePosition(deltaTime);
+				balls.at(i).updateElement();
+				balls.at(j).updateElement();
+			}
+		}
+	}
+}
+
+void Ball::updateElement()
+{
+	this->shape.setPosition(this->position);
+}
+
+void Ball::init(std::vector<Ball>& balls)
+{
+	const std::vector<sf::Color> colors = {
+		sf::Color(128, 64, 255),
+		sf::Color(255, 64, 128),
+		sf::Color(128, 255, 64),
+		sf::Color(64, 128, 255),
+	};
+	const std::vector<sf::Vector2f> speeds = {
+		{ 50.f, 100.f },
+		{ 150.f, 200.f },
+		{ 250.f, 300.f },
+		{ 350.f, 400.f },
+	};
+	const std::vector<float> sizes = {
+		40,
+		50,
+		60,
+		70
+	};
+	const std::vector<sf::Vector2f> positions = {
+		{ sizes.at(0), sizes.at(0) },
+		{ WINDOW_WIDTH - sizes.at(1), sizes.at(0) },
+		{ sizes.at(2), WINDOW_HEIGHT - sizes.at(2) },
+		{ WINDOW_WIDTH - sizes.at(3), WINDOW_HEIGHT - sizes.at(3) },
+	};
+
+	for (auto iterator = balls.begin(); iterator != balls.end(); ++iterator)
+	{
+		const auto i = static_cast<unsigned int>(std::distance(balls.begin(), iterator));
+		balls.at(i).id = i;
+		balls.at(i).color = colors.at(i);
+		balls.at(i).size = sizes.at(i);
+		balls.at(i).speed = speeds.at(i);
+		balls.at(i).position = positions.at(i);
+		balls.at(i).shape.setPosition(balls.at(i).position);
+		balls.at(i).shape.setOrigin(balls.at(i).size, balls.at(i).size);
+	}
+}
+
+bool Ball::operator==(Ball& toCompare)
+{
+	return this->id == toCompare.id;
+}
