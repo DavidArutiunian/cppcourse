@@ -4,11 +4,12 @@
 #include <vector>
 #include <windows.h>
 
-#define WINDOW_TITLE "Moving Balls"
-#define ANTIALIASING_LEVEL 8
-#define MAX_FPS 60
-#define WINDOW_WIDTH 800
-#define WINDOW_HEIGHT 600
+static const unsigned BALLS_COUNT = 4;
+static const std::string WINDOW_TITLE = "Moving Balls";
+static const unsigned ANTIALIASING_LEVEL = 8;
+static const unsigned MAX_FPS = 60;
+static const unsigned WINDOW_WIDTH = 800;
+static const unsigned WINDOW_HEIGHT = 600;
 
 struct Ball
 {

@@ -13,7 +13,7 @@ int main()
 
 	sf::Clock clock;
 
-	std::vector<Ball> balls = { Ball(), Ball(), Ball(), Ball() };
+	std::vector<Ball> balls(BALLS_COUNT, Ball());
 
 	Ball::init(balls);
 
@@ -78,14 +78,14 @@ void Ball::init(std::vector<Ball>& balls)
 	};
 	const std::vector<sf::Vector2f> positions = {
 		{ sizes.at(0), sizes.at(0) },
-		{ WINDOW_WIDTH - sizes.at(1), sizes.at(0) },
+		{ WINDOW_WIDTH - sizes.at(1), sizes.at(1) },
 		{ sizes.at(2), WINDOW_HEIGHT - sizes.at(2) },
 		{ WINDOW_WIDTH - sizes.at(3), WINDOW_HEIGHT - sizes.at(3) },
 	};
 
 	for (auto iterator = balls.begin(); iterator != balls.end(); ++iterator)
 	{
-		const auto i = static_cast<unsigned int>(std::distance(balls.begin(), iterator));
+		const auto i = static_cast<std::size_t>(std::distance(balls.begin(), iterator));
 		balls.at(i).color = colors.at(i);
 		balls.at(i).size = sizes.at(i);
 		balls.at(i).speed = speeds.at(i);
