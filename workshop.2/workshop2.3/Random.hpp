@@ -11,6 +11,6 @@ struct PRNG
 
 void initGenerator(PRNG& generator);
 
-unsigned int random_int(PRNG& generator, unsigned int minValue, unsigned int maxValue);
+unsigned random_int(PRNG& generator, unsigned minValue, unsigned maxValue);
 
 float random_float(PRNG& generator, float minValue, float maxValue);
