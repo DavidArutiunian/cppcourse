@@ -10,7 +10,7 @@ struct Ball
 	sf::Vector2f position;
 
 	float size;
-	std::size_t id;
+	size_t id;
 	sf::Vector2f speed;
 	sf::Color color;
 

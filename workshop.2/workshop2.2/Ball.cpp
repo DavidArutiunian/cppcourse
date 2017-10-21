@@ -25,32 +25,28 @@ void Ball::updatePosition(float deltaTime)
 
 void Ball::checkCollisions(std::vector<Ball>& balls, float deltaTime)
 {
-	constexpr auto length = [](sf::Vector2f vector) -> float {
+	constexpr auto length = [&](sf::Vector2f vector) -> float {
 		return static_cast<float>(std::sqrt(std::pow(vector.x, 2) + std::pow(vector.y, 2)));
 	};
 
-	constexpr auto dot = [](sf::Vector2f left, sf::Vector2f right) -> float {
+	constexpr auto dot = [&](sf::Vector2f left, sf::Vector2f right) -> float {
 		return left.x * right.x + left.y * right.y;
 	};
 
-	constexpr auto index = [](std::vector<Ball>& vector, std::vector<Ball>::iterator& iterator) -> std::size_t {
-		return static_cast<std::size_t>(std::distance(vector.begin(), iterator));
-	};
-
-	constexpr auto reflect = [](Ball& a, Ball& b) -> sf::Vector2f {
+	constexpr auto reflect = [&](Ball& a, Ball& b) -> sf::Vector2f {
 		const sf::Vector2f deltaPosition = a.position - b.position;
 		const sf::Vector2f deltaSpeed = a.speed - b.speed;
 		const auto squareLength = static_cast<float>(std::pow(length((deltaPosition)), 2));
-		const float argument = dot(deltaSpeed, deltaPosition) / squareLength;
-		return a.speed - argument * deltaPosition;
+		const float leftSide = dot(deltaSpeed, deltaPosition) / squareLength;
+		return a.speed - leftSide * deltaPosition;
 	};
 
-	for (auto parentIterator = balls.begin(); parentIterator != balls.end(); ++parentIterator)
+	const auto size = static_cast<unsigned int>(std::distance(balls.begin(), balls.end()));
+
+	for (size_t i = 0; i < size; ++i)
 	{
-		const std::size_t i = index(balls, parentIterator);
-		for (auto childIterator = balls.begin(); childIterator != balls.end(); ++childIterator)
+		for (size_t j = i + 1; j < size; ++j)
 		{
-			const std::size_t j = index(balls, childIterator);
 			if (balls.at(i) == balls.at(j))
 			{
 				continue;
@@ -108,7 +104,7 @@ void Ball::init(std::vector<Ball>& balls)
 
 	for (auto iterator = balls.begin(); iterator != balls.end(); ++iterator)
 	{
-		const auto i = static_cast<std::size_t>(std::distance(balls.begin(), iterator));
+		const auto i = static_cast<size_t>(std::distance(balls.begin(), iterator));
 		balls.at(i).id = i;
 		balls.at(i).color = colors.at(i);
 		balls.at(i).size = sizes.at(i);
