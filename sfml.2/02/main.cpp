@@ -3,11 +3,10 @@
 #include <SFML/Window.hpp>
 #include <cmath>
 
-constexpr unsigned WINDOW_WIDTH = 800;
-constexpr unsigned WINDOW_HEIGHT = 600;
-
 int main()
 {
+	constexpr unsigned WINDOW_WIDTH = 800;
+	constexpr unsigned WINDOW_HEIGHT = 600;
 	constexpr float BALL_SIZE = 40;
 
 	sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Wave Moving Ball");
@@ -34,7 +33,7 @@ int main()
 		constexpr float periodY = 2;
 
 		const float time = clock.getElapsedTime().asSeconds();
-		const float wavePhase = time * float(2 * M_PI);
+		const float wavePhase = time * static_cast<float>(2 * M_PI);
 		const float x = speedX * time;
 		const float y = amplitudeY * std::sin(wavePhase / periodY);
 		const sf::Vector2f offset = { x, y };

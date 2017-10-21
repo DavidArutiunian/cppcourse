@@ -7,8 +7,8 @@ int main()
 {
 	constexpr unsigned WINDOW_WIDTH = 800;
 	constexpr unsigned WINDOW_HEIGHT = 600;
-	constexpr int DEFAULT_RADIUS = 150;
-	constexpr int POINT_COUNT = 200;
+	constexpr unsigned DEFAULT_RADIUS = 150;
+	constexpr unsigned POINT_COUNT = 200;
 	constexpr float AMPLITUDE = 80.f;
 	constexpr float PERIOD = 2.f;
 
@@ -28,7 +28,7 @@ int main()
 	shape.setPointCount(POINT_COUNT);
 	for (int i = 0; i < POINT_COUNT; ++i)
 	{
-		float angle = float(2 * M_PI * i) / float(POINT_COUNT);
+		float angle = static_cast<float>(2 * M_PI * i) / static_cast<float>(POINT_COUNT);
 		float RADIUS = DEFAULT_RADIUS * std::sin(6 * angle);
 		sf::Vector2f point = sf::Vector2f{ RADIUS * std::sin(angle), RADIUS * std::cos(angle) };
 		shape.setPoint(static_cast<size_t>(i), point);

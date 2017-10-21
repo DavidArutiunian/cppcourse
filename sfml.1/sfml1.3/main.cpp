@@ -3,10 +3,9 @@
 #include <SFML/Window.hpp>
 #include <cmath>
 
-float OFFSET = 20;
-
-float WINDOW_WIDTH = 800;
-float WINDOW_HEIGHT = 600;
+static const float OFFSET = 20;
+static const unsigned WINDOW_WIDTH = 800;
+static const unsigned WINDOW_HEIGHT = 600;
 
 struct Shape
 {
@@ -189,8 +188,8 @@ int main()
 	ConvexShape chimney;
 	std::vector<CircleShape> smoke;
 
-	sf::VideoMode videoMode = sf::VideoMode((unsigned)WINDOW_WIDTH + (unsigned)(2 * OFFSET),
-		(unsigned)WINDOW_HEIGHT + (unsigned)(2 * OFFSET));
+	sf::VideoMode videoMode = sf::VideoMode(WINDOW_WIDTH + static_cast<unsigned>(2 * OFFSET),
+		WINDOW_HEIGHT + static_cast<unsigned>(2 * OFFSET));
 
 	sf::RenderWindow window(videoMode, "Home, sweet home");
 

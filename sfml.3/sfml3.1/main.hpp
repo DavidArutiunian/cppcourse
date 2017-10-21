@@ -3,18 +3,18 @@
 #include <SFML/Window.hpp>
 #include <algorithm>
 #include <cmath>
+#include <string>
 #include <vector>
 #include <windows.h>
 
-#define MAX_ANGULAR_VELOCITY 15.f
-#define WINDOW_WIDTH 800
-#define WINDOW_HEIGHT 600
-#define WINDOW_TITLE "Pointer follows mouse with limited speed (15 deg/sec)"
-#define POINTER_COLOR sf::Color(255, 152, 0)
-#define MAX_FPS 60
-#define ANTIALIASING_LEVEL 8
-
-const std::vector<sf::Vector2f> POINTS_SET = { { 40, 0 },
+static const float MAX_ANGULAR_VELOCITY = 15.f;
+static const unsigned WINDOW_WIDTH = 800;
+static const unsigned WINDOW_HEIGHT = 600;
+static const std::string WINDOW_TITLE = "Pointer follows mouse with limited speed (15 deg/sec)";
+static const sf::Color POINTER_COLOR = sf::Color(255, 152, 0);
+static const unsigned MAX_FPS = 60;
+static const unsigned ANTIALIASING_LEVEL = 8;
+static const std::vector<sf::Vector2f> POINTS_SET = { { 40, 0 },
 	{ -20, -20 },
 	{ -20, 20 } };
 

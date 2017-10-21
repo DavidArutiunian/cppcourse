@@ -5,7 +5,6 @@
 int main()
 {
 	float offset = 20;
-
 	float circleRadius = 80;
 
 	float width = (2 * circleRadius + 2 * offset);

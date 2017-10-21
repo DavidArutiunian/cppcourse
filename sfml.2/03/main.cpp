@@ -20,7 +20,7 @@ int main()
 	elipse.setPointCount(pointCount);
 	for (int pointNo = 0; pointNo < pointCount; ++pointNo)
 	{
-		float angle = float(2 * M_PI * pointNo) / float(pointCount);
+		float angle = static_cast<float>(2 * M_PI * pointNo) / static_cast<float>(pointCount);
 		sf::Vector2f point = sf::Vector2f{
 			elipseRadius.x * std::sin(angle),
 			elipseRadius.y * std::cos(angle)

@@ -2,6 +2,7 @@
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 #include <cmath>
+#include <string>
 #include <windows.h>
 
 static const unsigned WINDOW_WIDTH = 800;
