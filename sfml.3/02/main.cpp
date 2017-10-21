@@ -5,8 +5,8 @@
 
 int main()
 {
-	constexpr unsigned int WINDOW_WIDTH = 800;
-	constexpr unsigned int WINDOW_HEIGHT = 600;
+	constexpr unsigned WINDOW_WIDTH = 800;
+	constexpr unsigned WINDOW_HEIGHT = 600;
 
 	sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Prints mouse events to terminal");
 

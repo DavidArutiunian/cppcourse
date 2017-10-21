@@ -2,20 +2,21 @@
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 #include <cmath>
+#include <string>
 #include <windows.h>
 
-#define WINDOW_WIDTH 800
-#define WINDOW_HEIGHT 600
-#define WINDOW_TITLE "Looking Eyes v2.0"
-#define MAX_FPS 60
-#define ANTIALIASING_LEVEL 8
+static const unsigned WINDOW_WIDTH = 800;
+static const unsigned WINDOW_HEIGHT = 600;
+static const std::string WINDOW_TITLE = "Looking Eyes v2.0";
+static const unsigned MAX_FPS = 60;
+static const unsigned ANTIALIASING_LEVEL = 8;
 
 struct Eye
 {
 	sf::ConvexShape back;
 	sf::ConvexShape orb;
 
-	const unsigned int pointCount = 200;
+	const unsigned pointCount = 200;
 	const sf::Vector2f radius = { 50.f, 80.f };
 	const sf::Color eyeColor = sf::Color(255, 255, 255);
 	const sf::Color orbColor = sf::Color(0, 0, 0);

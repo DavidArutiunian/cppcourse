@@ -5,7 +5,7 @@
 
 int main()
 {
-	constexpr int pointCount = 200;
+	constexpr unsigned pointCount = 200;
 	const sf::Vector2f elipseRadius = { 200.f, 80.f };
 
 	sf::ContextSettings settings;

@@ -2,21 +2,22 @@
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 #include <cmath>
+#include <string>
 #include <windows.h>
 
-#define WINDOW_WIDTH 800
-#define WINDOW_HEIGHT 600
-#define WINDOW_TITLE "Arrow++"
-#define MAX_FPS 60
-#define ANTIALIASING_LEVEL 8
-#define BACKGROUND_COLOR sf::Color(255, 255, 255)
+static const unsigned WINDOW_WIDTH = 800;
+static const unsigned WINDOW_HEIGHT = 600;
+static const std::string WINDOW_TITLE = "Arrow++";
+static const unsigned MAX_FPS = 60;
+static const unsigned ANTIALIASING_LEVEL = 8;
+static const sf::Color BACKGROUND_COLOR = sf::Color(255, 255, 255);
 
 struct Arrow
 {
 	sf::ConvexShape shape;
 
 	const unsigned pointCount = 7;
-	const unsigned int outlineThickness = 2;
+	const unsigned outlineThickness = 2;
 	sf::Color outlineColor = sf::Color(0, 0, 0);
 	sf::Color arrowColor = sf::Color(255, 255, 0);
 

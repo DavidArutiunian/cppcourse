@@ -5,8 +5,8 @@
 
 int main()
 {
-	constexpr unsigned int WINDOW_WIDTH = 800;
-	constexpr unsigned int WINDOW_HEIGHT = 600;
+	constexpr unsigned WINDOW_WIDTH = 800;
+	constexpr unsigned WINDOW_HEIGHT = 600;
 	constexpr int DEFAULT_RADIUS = 150;
 	constexpr int POINT_COUNT = 200;
 	constexpr float AMPLITUDE = 80.f;

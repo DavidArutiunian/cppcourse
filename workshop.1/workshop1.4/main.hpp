@@ -2,13 +2,14 @@
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 #include <cmath>
+#include <string>
 #include <windows.h>
 
-#define WINDOW_WIDTH 800
-#define WINDOW_HEIGHT 600
-#define WINDOW_TITLE "Kitty++"
-#define MAX_FPS 60
-#define BACKGROUND_COLOR sf::Color(255, 255, 255)
+static const unsigned WINDOW_WIDTH = 800;
+static const unsigned WINDOW_HEIGHT = 600;
+static const std::string WINDOW_TITLE = "Kitty++";
+static const unsigned MAX_FPS = 60;
+static const sf::Color BACKGROUND_COLOR = sf::Color(255, 255, 255);
 
 struct Pointer
 {

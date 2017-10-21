@@ -4,11 +4,11 @@
 #include <cmath>
 #include <windows.h>
 
-#define WINDOW_WIDTH 800
-#define WINDOW_HEIGHT 600
-#define WINDOW_TITLE "Arrow"
-#define MAX_FPS 60
-#define ANTIALIASING_LEVEL 8
-#define BACKGROUND_COLOR sf::Color(255, 255, 255)
-#define ARROW_COLOR sf::Color(255, 255, 0)
-#define OUTLINE_COLOR sf::Color(0, 0, 0)
+static const unsigned WINDOW_WIDTH = 800;
+static const unsigned WINDOW_HEIGHT = 600;
+static const std::string WINDOW_TITLE = "Arrow";
+static const unsigned MAX_FPS = 60;
+static const unsigned ANTIALIASING_LEVEL = 8;
+static const sf::Color BACKGROUND_COLOR = sf::Color(255, 255, 255);
+static const sf::Color ARROW_COLOR = sf::Color(255, 255, 0);
+static const sf::Color OUTLINE_COLOR = sf::Color(0, 0, 0);

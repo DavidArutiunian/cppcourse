@@ -48,7 +48,7 @@ void pollEvents(sf::RenderWindow& window, sf::Vector2f& mousePosition)
 void update(const sf::Vector2f& mousePosition, sf::ConvexShape& pointer)
 {
 	const sf::Vector2f delta = mousePosition - pointer.getPosition();
-	const auto angle = static_cast<const float>(atan2(delta.y, delta.x));
+	const auto angle = static_cast<float>(atan2(delta.y, delta.x));
 	pointer.setRotation(toDegrees(angle));
 }
 
@@ -61,8 +61,8 @@ void redrawFrame(sf::RenderWindow& window, sf::ConvexShape& pointer)
 
 int main()
 {
-	constexpr unsigned int WINDOW_WIDTH = 800;
-	constexpr unsigned int WINDOW_HEIGHT = 600;
+	constexpr unsigned WINDOW_WIDTH = 800;
+	constexpr unsigned WINDOW_HEIGHT = 600;
 
 	sf::ContextSettings settings;
 	settings.antialiasingLevel = 8;

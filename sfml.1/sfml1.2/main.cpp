@@ -3,12 +3,11 @@
 #include <SFML/Window.hpp>
 #include <cmath>
 
-float OFFSET = 20;
+static const float OFFSET = 20;
+static const auto COLOR = sf::Color(0xFF, 0xFF, 0xFF);
 
-auto COLOR = sf::Color(0xFF, 0xFF, 0xFF);
-
-float WINDOW_WIDTH = (270 + 2 * OFFSET);
-float WINDOW_HEIGHT = (170 + 2 * OFFSET);
+static const float WINDOW_WIDTH = (270 + 2 * OFFSET);
+static const float WINDOW_HEIGHT = (170 + 2 * OFFSET);
 
 std::vector<sf::Vector2f> calcCubicBezier(
 	const sf::Vector2f& start,
@@ -122,8 +121,8 @@ void drawRLetter(sf::RenderWindow* window)
 
 int main()
 {
-	sf::VideoMode videoMode = sf::VideoMode((unsigned int)WINDOW_WIDTH,
-		(unsigned int)WINDOW_HEIGHT);
+	sf::VideoMode videoMode = sf::VideoMode((unsigned)WINDOW_WIDTH,
+		(unsigned)WINDOW_HEIGHT);
 
 	sf::RenderWindow window(videoMode, "ADR");
 

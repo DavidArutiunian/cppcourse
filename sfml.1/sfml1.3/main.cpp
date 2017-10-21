@@ -189,8 +189,8 @@ int main()
 	ConvexShape chimney;
 	std::vector<CircleShape> smoke;
 
-	sf::VideoMode videoMode = sf::VideoMode((unsigned int)WINDOW_WIDTH + (unsigned int)(2 * OFFSET),
-		(unsigned int)WINDOW_HEIGHT + (unsigned int)(2 * OFFSET));
+	sf::VideoMode videoMode = sf::VideoMode((unsigned)WINDOW_WIDTH + (unsigned)(2 * OFFSET),
+		(unsigned)WINDOW_HEIGHT + (unsigned)(2 * OFFSET));
 
 	sf::RenderWindow window(videoMode, "Home, sweet home");
 

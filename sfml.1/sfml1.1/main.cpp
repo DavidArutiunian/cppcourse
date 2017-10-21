@@ -11,8 +11,8 @@ int main()
 	float width = (2 * circleRadius + 2 * offset);
 	float height = (6 * circleRadius + 4 * offset);
 
-	auto videoWidth = static_cast<unsigned int>(width + offset);
-	auto videoHeight = static_cast<unsigned int>(height + offset);
+	auto videoWidth = static_cast<unsigned>(width + offset);
+	auto videoHeight = static_cast<unsigned>(height + offset);
 
 	sf::RectangleShape backgroundRect;
 	sf::CircleShape greenCircle(circleRadius);
