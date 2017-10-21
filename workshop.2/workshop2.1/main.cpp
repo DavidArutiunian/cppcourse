@@ -83,9 +83,10 @@ void Ball::init(std::vector<Ball>& balls)
 		{ WINDOW_WIDTH - sizes.at(3), WINDOW_HEIGHT - sizes.at(3) },
 	};
 
-	for (auto iterator = balls.begin(); iterator != balls.end(); ++iterator)
+	const auto size = static_cast<unsigned int>(std::distance(balls.begin(), balls.end()));
+
+	for (size_t i = 0; i < size; ++i)
 	{
-		const auto i = static_cast<std::size_t>(std::distance(balls.begin(), iterator));
 		balls.at(i).color = colors.at(i);
 		balls.at(i).size = sizes.at(i);
 		balls.at(i).speed = speeds.at(i);
