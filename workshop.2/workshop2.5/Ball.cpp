@@ -25,24 +25,43 @@ void Ball::updatePosition(float deltaTime)
 
 void Ball::checkIntersection(std::vector<Ball>& balls, Ball& ball)
 {
-	bool shouldAdd = true;
+	constexpr unsigned windowArea = WINDOW_WIDTH * WINDOW_HEIGHT;
+	auto squareArea = static_cast<float>(std::pow(ball.size * 2, 2));
+
+	if (ball.position.x + ball.size >= WINDOW_WIDTH)
+	{
+		return;
+	}
+	if (ball.position.x - ball.size < 0)
+	{
+		return;
+	}
+	if (ball.position.y + ball.size >= WINDOW_HEIGHT)
+	{
+		return;
+	}
+	if (ball.position.y - ball.size < 0)
+	{
+		return;
+	}
 
 	for (auto&& item : balls)
 	{
 		const float currentDistance = Ball::length((item.position - ball.position));
 		const float collisionDistance = item.size + ball.size;
 
-		if (currentDistance <= collisionDistance)
+		squareArea += std::pow(item.size * 2, 2);
+
+		const bool doesIntersect = currentDistance <= collisionDistance;
+		const bool doesNotFit = squareArea > windowArea;
+
+		if (doesIntersect || doesNotFit)
 		{
-			shouldAdd = false;
-			break;
+			return;
 		}
 	}
 
-	if (shouldAdd)
-	{
-		balls.push_back(ball);
-	}
+	balls.push_back(ball);
 }
 
 void Ball::addBall(std::vector<Ball>& balls, sf::Vector2f& mousePosition)
