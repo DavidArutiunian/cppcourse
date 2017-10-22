@@ -15,8 +15,6 @@ int main()
 
 	std::vector<Ball> balls(BALLS_COUNT, Ball());
 
-	Ball::init(balls);
-
 	init(balls);
 
 	while (window.isOpen())
@@ -30,11 +28,7 @@ int main()
 
 void init(std::vector<Ball>& balls)
 {
-	for (auto&& ball : balls)
-	{
-		ball.shape.setRadius(ball.size);
-		ball.shape.setFillColor(ball.color);
-	}
+	Ball::init(balls);
 }
 
 void pollEvents(sf::RenderWindow& window)
