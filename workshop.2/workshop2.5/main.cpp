@@ -20,7 +20,7 @@ int main()
 	while (window.isOpen())
 	{
 		pollEvents(window, balls);
-		float deltaTime = 0.016;
+		float deltaTime = clock.restart().asSeconds();
 		update(balls, deltaTime);
 		redrawFrame(window, balls);
 	}
