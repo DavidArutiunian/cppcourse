@@ -1,8 +1,8 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
-#include <string>
 #include <cmath>
+#include <string>
 #include <windows.h>
 
 static const unsigned WINDOW_WIDTH = 800;

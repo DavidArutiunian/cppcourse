@@ -25,15 +25,15 @@ void Ball::updatePosition(float deltaTime)
 
 void Ball::checkCollisions(std::vector<Ball>& balls, float deltaTime)
 {
-	constexpr auto length = [&](sf::Vector2f vector) -> float {
+	constexpr auto length = [](sf::Vector2f vector) -> float {
 		return static_cast<float>(std::sqrt(std::pow(vector.x, 2) + std::pow(vector.y, 2)));
 	};
 
-	constexpr auto dot = [&](sf::Vector2f left, sf::Vector2f right) -> float {
+	constexpr auto dot = [](sf::Vector2f left, sf::Vector2f right) -> float {
 		return left.x * right.x + left.y * right.y;
 	};
 
-	constexpr auto reflect = [&](Ball& a, Ball& b) -> sf::Vector2f {
+	const auto reflect = [&length, &dot](Ball& a, Ball& b) -> sf::Vector2f {
 		const sf::Vector2f deltaPosition = a.position - b.position;
 		const sf::Vector2f deltaSpeed = a.speed - b.speed;
 		const auto squareLength = static_cast<float>(std::pow(length((deltaPosition)), 2));
@@ -41,7 +41,7 @@ void Ball::checkCollisions(std::vector<Ball>& balls, float deltaTime)
 		return a.speed - leftSide * deltaPosition;
 	};
 
-	const auto size = static_cast<unsigned int>(std::distance(balls.begin(), balls.end()));
+	const auto size = static_cast<unsigned>(std::distance(balls.begin(), balls.end()));
 
 	for (size_t i = 0; i < size; ++i)
 	{

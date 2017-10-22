@@ -83,7 +83,7 @@ void Ball::init(std::vector<Ball>& balls)
 		{ WINDOW_WIDTH - sizes.at(3), WINDOW_HEIGHT - sizes.at(3) },
 	};
 
-	const auto size = static_cast<unsigned int>(std::distance(balls.begin(), balls.end()));
+	const auto size = static_cast<unsigned>(std::distance(balls.begin(), balls.end()));
 
 	for (size_t i = 0; i < size; ++i)
 	{

@@ -41,7 +41,7 @@ void Ball::checkCollisions(std::vector<Ball>& balls, float deltaTime)
 		return a.speed - leftSide * deltaPosition;
 	};
 
-	const auto size = static_cast<unsigned int>(std::distance(balls.begin(), balls.end()));
+	const auto size = static_cast<unsigned>(std::distance(balls.begin(), balls.end()));
 
 	for (size_t i = 0; i < size; ++i)
 	{
