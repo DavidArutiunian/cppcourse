@@ -64,9 +64,9 @@ void Ball::init(std::vector<Ball>& balls)
 	};
 	const std::vector<sf::Vector2f> speeds = {
 		{ 100.f, 100.f },
-		{ 150.f, 150.f },
+		{ -150.f, -150.f },
 		{ 200.f, 200.f },
-		{ 250.f, 250.f },
+		{ -250.f, -250.f },
 	};
 	const std::vector<float> sizes = {
 		40,

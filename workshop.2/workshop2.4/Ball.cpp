@@ -47,11 +47,6 @@ void Ball::checkCollisions(std::vector<Ball>& balls, float deltaTime)
 	{
 		for (size_t j = i + 1; j < size; ++j)
 		{
-			if (balls.at(i) == balls.at(j))
-			{
-				continue;
-			}
-
 			const float currentDistance = length((balls.at(i).position - balls.at(j).position));
 			const float collisionDistance = balls.at(i).size + balls.at(j).size;
 
@@ -108,10 +103,10 @@ void Ball::init(std::vector<Ball>& balls)
 		sf::Color(153, 102, 0),
 	};
 	const std::vector<sf::Vector2f> speeds = {
-		{ random_float(generator, 0.f, 500.f), random_float(generator, 0.f, 500.f) },
-		{ random_float(generator, 0.f, 500.f), random_float(generator, 0.f, 500.f) },
-		{ random_float(generator, 0.f, 500.f), random_float(generator, 0.f, 500.f) },
-		{ random_float(generator, 0.f, 500.f), random_float(generator, 0.f, 500.f) },
+		{ random_float(generator, -500.f, 500.f), random_float(generator, -500.f, 500.f) },
+		{ random_float(generator, -500.f, 500.f), random_float(generator, -500.f, 500.f) },
+		{ random_float(generator, -500.f, 500.f), random_float(generator, -500.f, 500.f) },
+		{ random_float(generator, -500.f, 500.f), random_float(generator, -500.f, 500.f) },
 	};
 	const std::vector<float> sizes = {
 		static_cast<float>(random_int(generator, 40, 70)),

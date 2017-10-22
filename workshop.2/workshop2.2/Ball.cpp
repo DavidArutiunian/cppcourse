@@ -47,11 +47,6 @@ void Ball::checkCollisions(std::vector<Ball>& balls, float deltaTime)
 	{
 		for (size_t j = i + 1; j < size; ++j)
 		{
-			if (balls.at(i) == balls.at(j))
-			{
-				continue;
-			}
-
 			const float currentDistance = length((balls.at(i).position - balls.at(j).position));
 			const float collisionDistance = balls.at(i).size + balls.at(j).size;
 
@@ -85,9 +80,9 @@ void Ball::init(std::vector<Ball>& balls)
 	};
 	const std::vector<sf::Vector2f> speeds = {
 		{ 50.f, 100.f },
-		{ 150.f, 200.f },
+		{ -150.f, -200.f },
 		{ 250.f, 300.f },
-		{ 350.f, 400.f },
+		{ -350.f, -400.f },
 	};
 	const std::vector<float> sizes = {
 		40,
