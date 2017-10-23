@@ -42,7 +42,7 @@ void update(const sf::Vector2f& mousePosition, sf::ConvexShape& pointer, float d
 	{
 		if (angle > previousRotation)
 		{
-			if (std::ceil(angle - 180) > previousRotation)
+			if (angle - 180 > previousRotation)
 			{
 				pointer.setRotation(previousRotation - std::min(degreesPerFrame, maxDegreesPerFrame));
 			}
@@ -53,7 +53,7 @@ void update(const sf::Vector2f& mousePosition, sf::ConvexShape& pointer, float d
 		}
 		else
 		{
-			if (std::ceil(angle + 180) < previousRotation)
+			if (angle + 180 < previousRotation)
 			{
 				pointer.setRotation(previousRotation + std::min(degreesPerFrame, maxDegreesPerFrame));
 			}
