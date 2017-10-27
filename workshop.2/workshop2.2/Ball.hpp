@@ -20,7 +20,7 @@ struct Ball
 
 	static void init(std::vector<Ball>& balls);
 
-	static void checkCollisions(std::vector<Ball>& balls, float deltaTime);
+	static void checkCollisions(std::vector<Ball>& balls);
 
 	bool operator==(Ball& toCompare);
 };

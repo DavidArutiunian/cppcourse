@@ -23,7 +23,7 @@ void Ball::updatePosition(float deltaTime)
 	}
 }
 
-void Ball::checkCollisions(std::vector<Ball>& balls, float deltaTime)
+void Ball::checkCollisions(std::vector<Ball>& balls)
 {
 	constexpr auto length = [&](sf::Vector2f vector) -> float {
 		return static_cast<float>(std::sqrt(std::pow(vector.x, 2) + std::pow(vector.y, 2)));
@@ -56,10 +56,6 @@ void Ball::checkCollisions(std::vector<Ball>& balls, float deltaTime)
 				const sf::Vector2f childSpeed = reflect(balls.at(j), balls.at(i));
 				balls.at(i).speed = parentSpeed;
 				balls.at(j).speed = childSpeed;
-				balls.at(i).updatePosition(deltaTime);
-				balls.at(j).updatePosition(deltaTime);
-				balls.at(i).updateElement();
-				balls.at(j).updateElement();
 			}
 		}
 	}

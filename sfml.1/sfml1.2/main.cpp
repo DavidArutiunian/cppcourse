@@ -5,8 +5,8 @@
 
 static const float OFFSET = 20;
 static const sf::Color COLOR = sf::Color(0xFF, 0xFF, 0xFF);
-static const unsigned WINDOW_WIDTH = (270 + 2 * OFFSET);
-static const unsigned WINDOW_HEIGHT = (170 + 2 * OFFSET);
+static const auto WINDOW_WIDTH = static_cast<unsigned>(270 + 2 * OFFSET);
+static const auto WINDOW_HEIGHT = static_cast<unsigned>(170 + 2 * OFFSET);
 
 std::vector<sf::Vector2f> calcCubicBezier(
 	const sf::Vector2f& start,

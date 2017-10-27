@@ -19,7 +19,7 @@ int main()
 
 	while (window.isOpen())
 	{
-		pollEvents(window);
+		pollEvents(window, balls);
 		float deltaTime = clock.restart().asSeconds();
 		update(balls, deltaTime);
 		redrawFrame(window, balls);
@@ -31,7 +31,13 @@ void init(std::vector<Ball>& balls)
 	Ball::init(balls);
 }
 
-void pollEvents(sf::RenderWindow& window)
+void onMouseClick(const sf::Event::MouseButtonEvent& event, std::vector<Ball>& balls)
+{
+	sf::Vector2f mousePosition = { static_cast<float>(event.x), static_cast<float>(event.y) };
+	Ball::addBall(balls, mousePosition);
+}
+
+void pollEvents(sf::RenderWindow& window, std::vector<Ball>& balls)
 {
 	sf::Event event{};
 	while (window.pollEvent(event))
@@ -40,6 +46,9 @@ void pollEvents(sf::RenderWindow& window)
 		{
 		case sf::Event::Closed:
 			window.close();
+			break;
+		case sf::Event::MouseButtonPressed:
+			onMouseClick(event.mouseButton, balls);
 			break;
 		default:
 			break;
@@ -52,9 +61,11 @@ void update(std::vector<Ball>& balls, float deltaTime)
 	Ball::checkCollisions(balls);
 	for (auto&& ball : balls)
 	{
+		ball.updateBallLifetimes(deltaTime);
 		ball.updatePosition(deltaTime);
 		ball.updateElement();
 	}
+	Ball::removeDeathBalls(balls);
 }
 
 void redrawFrame(sf::RenderWindow& window, std::vector<Ball>& balls)

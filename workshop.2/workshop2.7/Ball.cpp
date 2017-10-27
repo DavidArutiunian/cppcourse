@@ -198,3 +198,16 @@ float Ball::length(sf::Vector2f vector)
 {
 	return static_cast<float>(std::sqrt(std::pow(vector.x, 2) + std::pow(vector.y, 2)));
 }
+
+void Ball::updateBallLifetimes(float deltaTime)
+{
+	this->lifeTime += deltaTime;
+}
+
+void Ball::removeDeathBalls(std::vector<Ball>& balls)
+{
+	constexpr auto shouldRemove = [](const Ball& ball) -> bool {
+		return ball.lifeTime >= MAX_LIFETIME;
+	};
+	balls.erase(std::remove_if(balls.begin(), balls.end(), shouldRemove), balls.end());
+}

@@ -14,6 +14,7 @@ struct Ball
 	size_t id;
 	sf::Vector2f speed;
 	sf::Color color;
+	float lifeTime;
 
 	void updatePosition(float deltaTime);
 
@@ -28,6 +29,10 @@ struct Ball
 	static void checkIntersection(std::vector<Ball>& balls, Ball& ball);
 
 	static float length(sf::Vector2f vector);
+
+	void updateBallLifetimes(float deltaTime);
+
+	static void removeDeathBalls(std::vector<Ball>& balls);
 
 	bool operator==(Ball& toCompare);
 };

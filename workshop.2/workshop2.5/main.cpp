@@ -58,9 +58,9 @@ void pollEvents(sf::RenderWindow& window, std::vector<Ball>& balls)
 
 void update(std::vector<Ball>& balls, float deltaTime)
 {
+	Ball::checkCollisions(balls);
 	for (auto&& ball : balls)
 	{
-		Ball::checkCollisions(balls, deltaTime);
 		ball.updatePosition(deltaTime);
 		ball.updateElement();
 	}

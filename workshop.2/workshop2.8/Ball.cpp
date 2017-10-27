@@ -87,6 +87,23 @@ void Ball::addBall(std::vector<Ball>& balls, sf::Vector2f& mousePosition)
 
 void Ball::checkCollisions(std::vector<Ball>& balls)
 {
+	constexpr auto areCloseAbsolute = [](float a, float b, float tolerance = 0.001f) -> bool {
+		return std::abs(a - b) < tolerance;
+	};
+
+	constexpr auto areCloseRelative = [](float a, float b, float tolerance = 0.001f) -> bool {
+		return std::abs((a - b) / b) < tolerance;
+	};
+
+	const auto areFuzzyEqual = [&areCloseAbsolute, &areCloseRelative](float a, float b) -> bool {
+		constexpr float tolerance = 0.001f;
+		if (std::abs(b) > 1.f)
+		{
+			return areCloseRelative(a, b, tolerance);
+		}
+		return areCloseAbsolute(a, b, tolerance);
+	};
+
 	constexpr auto dot = [](sf::Vector2f left, sf::Vector2f right) -> float {
 		return left.x * right.x + left.y * right.y;
 	};
@@ -110,10 +127,18 @@ void Ball::checkCollisions(std::vector<Ball>& balls)
 
 			if (currentDistance <= collisionDistance)
 			{
-				const sf::Vector2f first = getSpeedAfterCollision(balls.at(fi), balls.at(si));
-				const sf::Vector2f second = getSpeedAfterCollision(balls.at(si), balls.at(fi));
-				balls.at(fi).speed = first;
-				balls.at(si).speed = second;
+				const sf::Vector2f prevFirstSpeed = balls.at(fi).speed;
+				const sf::Vector2f prevSecondSpeed = balls.at(si).speed;
+				const sf::Vector2f nextFirstSpeed = getSpeedAfterCollision(balls.at(fi), balls.at(si));
+				const sf::Vector2f nextSecondSpeed = getSpeedAfterCollision(balls.at(si), balls.at(fi));
+				const auto prevE = static_cast<float>(std::pow(length(prevFirstSpeed), 2) + std::pow(length(prevSecondSpeed), 2));
+				const auto nextE = static_cast<float>(std::pow(length(nextFirstSpeed), 2) + std::pow(length(nextSecondSpeed), 2));
+				const float prevI = length(prevFirstSpeed + prevSecondSpeed);
+				const float nextI = length(nextFirstSpeed + nextSecondSpeed);
+				assert(areFuzzyEqual(prevE, nextE));
+				assert(areFuzzyEqual(prevI, nextI));
+				balls.at(fi).speed = nextFirstSpeed;
+				balls.at(si).speed = nextSecondSpeed;
 			}
 		}
 	}
@@ -197,4 +222,17 @@ bool Ball::operator==(Ball& toCompare)
 float Ball::length(sf::Vector2f vector)
 {
 	return static_cast<float>(std::sqrt(std::pow(vector.x, 2) + std::pow(vector.y, 2)));
+}
+
+void Ball::updateBallLifetimes(float deltaTime)
+{
+	this->lifeTime += deltaTime;
+}
+
+void Ball::removeDeathBalls(std::vector<Ball>& balls)
+{
+	constexpr auto shouldRemove = [](const Ball& ball) -> bool {
+		return ball.lifeTime >= MAX_LIFETIME;
+	};
+	balls.erase(std::remove_if(balls.begin(), balls.end(), shouldRemove), balls.end());
 }

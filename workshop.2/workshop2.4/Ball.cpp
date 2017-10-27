@@ -23,7 +23,7 @@ void Ball::updatePosition(float deltaTime)
 	}
 }
 
-void Ball::checkCollisions(std::vector<Ball>& balls, float deltaTime)
+void Ball::checkCollisions(std::vector<Ball>& balls)
 {
 	constexpr auto length = [](sf::Vector2f vector) -> float {
 		return static_cast<float>(std::sqrt(std::pow(vector.x, 2) + std::pow(vector.y, 2)));
@@ -56,10 +56,6 @@ void Ball::checkCollisions(std::vector<Ball>& balls, float deltaTime)
 				const sf::Vector2f childSpeed = reflect(balls.at(j), balls.at(i));
 				balls.at(i).speed = parentSpeed;
 				balls.at(j).speed = childSpeed;
-				balls.at(i).updatePosition(deltaTime);
-				balls.at(j).updatePosition(deltaTime);
-				balls.at(i).updateElement();
-				balls.at(j).updateElement();
 			}
 		}
 	}
@@ -103,16 +99,16 @@ void Ball::init(std::vector<Ball>& balls)
 		sf::Color(153, 102, 0),
 	};
 	const std::vector<sf::Vector2f> speeds = {
-		{ random_float(generator, -500.f, 500.f), random_float(generator, -500.f, 500.f) },
-		{ random_float(generator, -500.f, 500.f), random_float(generator, -500.f, 500.f) },
-		{ random_float(generator, -500.f, 500.f), random_float(generator, -500.f, 500.f) },
-		{ random_float(generator, -500.f, 500.f), random_float(generator, -500.f, 500.f) },
+		{ random_float(generator, MIN_SPEED, MAX_SPEED), random_float(generator, MIN_SPEED, MAX_SPEED) },
+		{ random_float(generator, MIN_SPEED, MAX_SPEED), random_float(generator, MIN_SPEED, MAX_SPEED) },
+		{ random_float(generator, MIN_SPEED, MAX_SPEED), random_float(generator, MIN_SPEED, MAX_SPEED) },
+		{ random_float(generator, MIN_SPEED, MAX_SPEED), random_float(generator, MIN_SPEED, MAX_SPEED) },
 	};
 	const std::vector<float> sizes = {
-		static_cast<float>(random_int(generator, 40, 70)),
-		static_cast<float>(random_int(generator, 40, 70)),
-		static_cast<float>(random_int(generator, 40, 70)),
-		static_cast<float>(random_int(generator, 40, 70)),
+		static_cast<float>(random_int(generator, MIN_SIZE, MAX_SIZE)),
+		static_cast<float>(random_int(generator, MIN_SIZE, MAX_SIZE)),
+		static_cast<float>(random_int(generator, MIN_SIZE, MAX_SIZE)),
+		static_cast<float>(random_int(generator, MIN_SIZE, MAX_SIZE)),
 	};
 	const std::vector<sf::Vector2f> positions = {
 		{ sizes.at(0), sizes.at(0) },

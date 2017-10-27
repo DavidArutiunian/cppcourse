@@ -8,6 +8,10 @@
 #include <vector>
 #include <windows.h>
 
+static const unsigned MIN_SIZE = 40;
+static const unsigned MAX_SIZE = 70;
+static const float MIN_SPEED = -500.f;
+static const float MAX_SPEED = 500.f;
 static const unsigned BALLS_COUNT = 4;
 static const std::string WINDOW_TITLE = "Moving Balls v2.1";
 static const unsigned ANTIALIASING_LEVEL = 8;
