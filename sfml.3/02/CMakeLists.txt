@@ -2,8 +2,9 @@ set(SOURCES main.cpp)
 
 add_executable(sfml.3.02 ${SOURCES})
 
-target_include_directories(sfml.3.02 PRIVATE ${SFML_INCLUDE_DIR})
-target_compile_features(sfml.3.02 PUBLIC cxx_std_17)
-target_compile_definitions(sfml.3.02 PRIVATE SFML_STATIC)
+if (${SFML_FOUND})
+    target_include_directories(sfml.3.02 PRIVATE ${SFML_INCLUDE_DIR})
+    target_link_libraries(sfml.3.02 ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
+endif ()
 
-target_link_libraries(sfml.3.02 ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
+target_compile_definitions(sfml.3.02 PRIVATE SFML_STATIC)

@@ -2,11 +2,7 @@
 
 void initGenerator(PRNG& generator)
 {
-	using clock = std::chrono::high_resolution_clock;
-	const std::chrono::time_point now = clock::now();
-	const std::chrono::time_point epochTime = clock::from_time_t(0);
-	const clock::duration duration = now - epochTime;
-	const auto seed = static_cast<unsigned>(duration.count());
+	const auto seed = static_cast<unsigned>(std::time(nullptr));
 	generator.engine.seed(seed);
 }
 

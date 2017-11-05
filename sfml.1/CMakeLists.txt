@@ -1,8 +1,4 @@
-cmake_minimum_required(VERSION 3.8 FATAL_ERROR)
-
 project(sfml.1)
-
-include_directories(${SFML_INCLUDE_DIR})
 
 add_subdirectory(00)
 add_subdirectory(01)

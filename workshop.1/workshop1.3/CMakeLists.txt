@@ -2,8 +2,9 @@ set(SOURCES main.cpp main.hpp img)
 
 add_executable(workshop1.3 ${SOURCES})
 
-target_include_directories(workshop1.3 PRIVATE ${SFML_INCLUDE_DIR})
-target_compile_features(workshop1.3 PUBLIC cxx_std_17)
-target_compile_definitions(workshop1.3 PRIVATE SFML_STATIC)
+if (${SFML_FOUND})
+    target_include_directories(workshop1.3 PRIVATE ${SFML_INCLUDE_DIR})
+    target_link_libraries(workshop1.3 ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
+endif ()
 
-target_link_libraries(workshop1.3 ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
+target_compile_definitions(workshop1.3 PRIVATE SFML_STATIC)
