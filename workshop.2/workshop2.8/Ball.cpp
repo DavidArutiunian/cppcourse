@@ -66,9 +66,10 @@ void Ball::checkIntersection(std::vector<Ball>& balls, Ball& ball)
 
 void Ball::addBall(std::vector<Ball>& balls, sf::Vector2f& mousePosition)
 {
-	const auto size = static_cast<unsigned>(std::distance(balls.begin(), balls.end()));
+	const auto size = static_cast<size_t>(std::distance(balls.begin(), balls.end()));
 
 	Ball ball;
+
 	ball.id = size + 1;
 	ball.color = sf::Color(
 		static_cast<sf::Uint8>(random_int(generator, 0, 255)),
@@ -108,37 +109,40 @@ void Ball::checkCollisions(std::vector<Ball>& balls)
 		return left.x * right.x + left.y * right.y;
 	};
 
-	const auto getSpeedAfterCollision = [&dot](Ball& a, Ball& b) -> sf::Vector2f {
-		const sf::Vector2f deltaPosition = a.position - b.position;
-		const sf::Vector2f deltaSpeed = a.speed - b.speed;
+	const auto getSpeedAfterCollision = [&dot](Ball* a, Ball* b) -> sf::Vector2f {
+		const sf::Vector2f deltaPosition = a->position - b->position;
+		const sf::Vector2f deltaSpeed = a->speed - b->speed;
 		const auto squareLength = static_cast<float>(std::pow(Ball::length((deltaPosition)), 2));
 		const float leftSide = dot(deltaSpeed, deltaPosition) / squareLength;
-		return a.speed - leftSide * deltaPosition;
+		return a->speed - leftSide * deltaPosition;
 	};
 
-	const auto size = static_cast<unsigned>(std::distance(balls.begin(), balls.end()));
+	const auto size = static_cast<size_t>(std::distance(balls.begin(), balls.end()));
 
 	for (size_t fi = 0; fi < size; ++fi)
 	{
+		Ball* firstBall = &balls.at(fi);
 		for (size_t si = fi + 1; si < size; ++si)
 		{
-			const float currentDistance = Ball::length((balls.at(fi).position - balls.at(si).position));
-			const float collisionDistance = balls.at(fi).size + balls.at(si).size;
+			Ball* secondBall = &balls.at(si);
+
+			const float currentDistance = Ball::length((firstBall->position - balls.at(si).position));
+			const float collisionDistance = firstBall->size + balls.at(si).size;
 
 			if (currentDistance <= collisionDistance)
 			{
-				const sf::Vector2f prevFirstSpeed = balls.at(fi).speed;
-				const sf::Vector2f prevSecondSpeed = balls.at(si).speed;
-				const sf::Vector2f nextFirstSpeed = getSpeedAfterCollision(balls.at(fi), balls.at(si));
-				const sf::Vector2f nextSecondSpeed = getSpeedAfterCollision(balls.at(si), balls.at(fi));
+				const sf::Vector2f prevFirstSpeed = firstBall->speed;
+				const sf::Vector2f prevSecondSpeed = secondBall->speed;
+				const sf::Vector2f nextFirstSpeed = getSpeedAfterCollision(firstBall, secondBall);
+				const sf::Vector2f nextSecondSpeed = getSpeedAfterCollision(secondBall, firstBall);
 				const auto prevE = static_cast<float>(std::pow(length(prevFirstSpeed), 2) + std::pow(length(prevSecondSpeed), 2));
 				const auto nextE = static_cast<float>(std::pow(length(nextFirstSpeed), 2) + std::pow(length(nextSecondSpeed), 2));
 				const float prevI = length(prevFirstSpeed + prevSecondSpeed);
 				const float nextI = length(nextFirstSpeed + nextSecondSpeed);
 				assert(areFuzzyEqual(prevE, nextE));
 				assert(areFuzzyEqual(prevI, nextI));
-				balls.at(fi).speed = nextFirstSpeed;
-				balls.at(si).speed = nextSecondSpeed;
+				firstBall->speed = nextFirstSpeed;
+				secondBall->speed = nextSecondSpeed;
 			}
 		}
 	}
@@ -163,8 +167,8 @@ void Ball::init(std::vector<Ball>& balls)
 
 	const auto getRandomColor = [&getMixedColor](const std::vector<sf::Color>& colors) -> sf::Color {
 		const auto length = static_cast<unsigned>(std::distance(colors.begin(), colors.end())) - 1;
-		const unsigned i = random_int(generator, 0, length);
-		const unsigned j = random_int(generator, 0, length);
+		const auto i = static_cast<unsigned long long>(random_int(generator, 0, length));
+		const auto j = static_cast<unsigned long long>(random_int(generator, 0, length));
 		const sf::Color first = colors.at(i);
 		const sf::Color second = colors.at(j);
 		return getMixedColor(first, second);
@@ -201,16 +205,17 @@ void Ball::init(std::vector<Ball>& balls)
 
 	for (auto iterator = balls.begin(); iterator != balls.end(); ++iterator)
 	{
-		const auto i = static_cast<size_t>(std::distance(balls.begin(), iterator));
-		balls.at(i).id = i;
-		balls.at(i).color = getRandomColor(colors);
-		balls.at(i).size = sizes.at(i);
-		balls.at(i).speed = speeds.at(i);
-		balls.at(i).position = positions.at(i);
-		balls.at(i).shape.setPosition(balls.at(i).position);
-		balls.at(i).shape.setOrigin(balls.at(i).size, balls.at(i).size);
-		balls.at(i).shape.setRadius(balls.at(i).size);
-		balls.at(i).shape.setFillColor(balls.at(i).color);
+		const auto i = static_cast<unsigned long long>(std::distance(balls.begin(), iterator));
+		Ball* ball = &balls.at(i);
+		ball->id = i;
+		ball->color = getRandomColor(colors);
+		ball->size = sizes.at(i);
+		ball->speed = speeds.at(i);
+		ball->position = positions.at(i);
+		ball->shape.setPosition(ball->position);
+		ball->shape.setOrigin(ball->size, ball->size);
+		ball->shape.setRadius(ball->size);
+		ball->shape.setFillColor(balls.at(i).color);
 	}
 }
 
@@ -219,7 +224,7 @@ bool Ball::operator==(Ball& toCompare)
 	return this->id == toCompare.id;
 }
 
-float Ball::length(sf::Vector2f vector)
+float Ball::length(const sf::Vector2f& vector)
 {
 	return static_cast<float>(std::sqrt(std::pow(vector.x, 2) + std::pow(vector.y, 2)));
 }
