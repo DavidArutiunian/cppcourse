@@ -81,18 +81,19 @@ void Ball::init(std::vector<Ball>& balls)
 		{ WINDOW_WIDTH - sizes.at(3), WINDOW_HEIGHT - sizes.at(3) },
 	};
 
-	const auto size = static_cast<unsigned>(std::distance(balls.begin(), balls.end()));
+	const auto size = static_cast<size_t>(std::distance(balls.begin(), balls.end()));
 
 	for (size_t i = 0; i < size; ++i)
 	{
-		balls.at(i).color = colors.at(i);
-		balls.at(i).size = sizes.at(i);
-		balls.at(i).speed = speeds.at(i);
-		balls.at(i).position = positions.at(i);
-		balls.at(i).shape.setPosition(balls.at(i).position);
-		balls.at(i).shape.setOrigin(balls.at(i).size, balls.at(i).size);
-		balls.at(i).shape.setRadius(balls.at(i).size);
-		balls.at(i).shape.setFillColor(balls.at(i).color);
+		Ball* ball = &balls.at(i);
+		ball->color = colors.at(i);
+		ball->size = sizes.at(i);
+		ball->speed = speeds.at(i);
+		ball->position = positions.at(i);
+		ball->shape.setPosition(ball->position);
+		ball->shape.setOrigin(ball->size, ball->size);
+		ball->shape.setRadius(ball->size);
+		ball->shape.setFillColor(ball->color);
 	}
 }
 

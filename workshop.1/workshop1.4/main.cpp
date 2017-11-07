@@ -38,7 +38,7 @@ void update(sf::Vector2f& mousePosition, Kitty& kitty, Pointer& pointer, float d
 	pointer.updateElement();
 }
 
-void Kitty::updatePosition(sf::Vector2f delta, float deltaTime)
+void Kitty::updatePosition(const sf::Vector2f& delta, float deltaTime)
 {
 	auto angle = static_cast<float>(atan2(delta.x, delta.y));
 

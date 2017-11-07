@@ -2,6 +2,7 @@
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 #include <cmath>
+
 #include <string>
 
 #ifdef _WIN32
@@ -41,7 +42,7 @@ struct Kitty
 	sf::Vector2f position;
 	sf::Vector2f scale;
 
-	void updatePosition(sf::Vector2f delta, float deltaTime);
+	void updatePosition(const sf::Vector2f& delta, float deltaTime);
 
 	void updateElement();
 };

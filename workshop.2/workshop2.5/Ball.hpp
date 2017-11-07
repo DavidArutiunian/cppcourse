@@ -27,7 +27,7 @@ struct Ball
 
 	static void checkIntersection(std::vector<Ball>& balls, Ball& ball);
 
-	static float length(sf::Vector2f vector);
+	static float length(const sf::Vector2f& vector);
 
 	bool operator==(Ball& toCompare);
 };

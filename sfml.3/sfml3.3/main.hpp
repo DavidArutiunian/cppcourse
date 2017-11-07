@@ -21,7 +21,7 @@ struct Eye
 	sf::ConvexShape back;
 	sf::ConvexShape orb;
 
-	const unsigned pointCount = 200;
+	const size_t pointCount = 200;
 	const sf::Vector2f radius = { 50.f, 80.f };
 	const sf::Color eyeColor = sf::Color(255, 255, 255);
 	const sf::Color orbColor = sf::Color(0, 0, 0);
@@ -35,8 +35,6 @@ struct Eye
 };
 
 void init(Eye& leftEye, Eye& rightEye);
-
-float toDegrees(float radians);
 
 double checkElipseIntersection(const sf::Vector2f& mousePosition, const sf::Vector2f& position, float a, float b);
 

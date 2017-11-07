@@ -126,8 +126,8 @@ void Ball::checkCollisions(std::vector<Ball>& balls)
 		{
 			Ball* secondBall = &balls.at(si);
 
-			const float currentDistance = Ball::length((firstBall->position - balls.at(si).position));
-			const float collisionDistance = firstBall->size + balls.at(si).size;
+			const float currentDistance = Ball::length((firstBall->position - secondBall->position));
+			const float collisionDistance = firstBall->size + secondBall->size;
 
 			if (currentDistance <= collisionDistance)
 			{
@@ -215,7 +215,7 @@ void Ball::init(std::vector<Ball>& balls)
 		ball->shape.setPosition(ball->position);
 		ball->shape.setOrigin(ball->size, ball->size);
 		ball->shape.setRadius(ball->size);
-		ball->shape.setFillColor(balls.at(i).color);
+		ball->shape.setFillColor(ball->color);
 	}
 }
 

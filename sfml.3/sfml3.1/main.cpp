@@ -101,7 +101,7 @@ void init(sf::ConvexShape& pointer)
 	pointer.setPointCount(POINTS_SET.size());
 	for (auto iterator = POINTS_SET.begin(); iterator != POINTS_SET.end(); ++iterator)
 	{
-		const auto index = static_cast<int>(std::distance(POINTS_SET.begin(), iterator));
+		const auto index = static_cast<size_t>(std::distance(POINTS_SET.begin(), iterator));
 		if (index < POINTS_SET.size())
 		{
 			pointer.setPoint((size_t)index, POINTS_SET.at(static_cast<unsigned long long>(index)));

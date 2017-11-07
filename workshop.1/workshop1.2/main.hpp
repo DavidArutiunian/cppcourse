@@ -21,17 +21,17 @@ struct Arrow
 {
 	sf::ConvexShape shape;
 
-	const unsigned pointCount = 7;
-	const unsigned outlineThickness = 2;
+	const size_t pointCount = 7;
+	const size_t outlineThickness = 2;
 	sf::Color outlineColor = sf::Color(0, 0, 0);
 	sf::Color arrowColor = sf::Color(255, 255, 0);
 
 	float rotation = 0;
 	sf::Vector2f position;
 
-	void updateRotation(Arrow& arrow, sf::Vector2f delta, float deltaTime);
+	void updateRotation(Arrow& arrow, const sf::Vector2f& delta, float deltaTime);
 
-	void updatePosition(Arrow& arrow, sf::Vector2f delta, float deltaTime);
+	void updatePosition(Arrow& arrow, const sf::Vector2f& delta, float deltaTime);
 
 	void setPoints();
 

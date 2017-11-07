@@ -25,37 +25,40 @@ void Ball::updatePosition(float deltaTime)
 
 void Ball::checkCollisions(std::vector<Ball>& balls)
 {
-	constexpr auto length = [](sf::Vector2f vector) -> float {
+	constexpr auto getVectorLength = [](sf::Vector2f vector) -> float {
 		return static_cast<float>(std::sqrt(std::pow(vector.x, 2) + std::pow(vector.y, 2)));
 	};
 
-	constexpr auto dot = [](sf::Vector2f left, sf::Vector2f right) -> float {
+	constexpr auto getDotProduct = [](sf::Vector2f left, sf::Vector2f right) -> float {
 		return left.x * right.x + left.y * right.y;
 	};
 
-	const auto reflect = [&dot, &length](Ball& a, Ball& b) -> sf::Vector2f {
-		const sf::Vector2f deltaPosition = a.position - b.position;
-		const sf::Vector2f deltaSpeed = a.speed - b.speed;
-		const auto squareLength = static_cast<float>(std::pow(length((deltaPosition)), 2));
-		const float leftSide = dot(deltaSpeed, deltaPosition) / squareLength;
-		return a.speed - leftSide * deltaPosition;
+	const auto getSpeedAfterCollision = [&getDotProduct](Ball* a, Ball* b) -> sf::Vector2f {
+		const sf::Vector2f deltaPosition = a->position - b->position;
+		const sf::Vector2f deltaSpeed = a->speed - b->speed;
+		const auto squareLength = static_cast<float>(std::pow(getVectorLength((deltaPosition)), 2));
+		const float leftSide = getDotProduct(deltaSpeed, deltaPosition) / squareLength;
+		return a->speed - leftSide * deltaPosition;
 	};
 
-	const auto size = static_cast<unsigned>(std::distance(balls.begin(), balls.end()));
+	const auto size = static_cast<size_t>(std::distance(balls.begin(), balls.end()));
 
-	for (size_t i = 0; i < size; ++i)
+	for (size_t fi = 0; fi < size; ++fi)
 	{
-		for (size_t j = i + 1; j < size; ++j)
+		Ball* firstBall = &balls.at(fi);
+		for (size_t si = fi + 1; si < size; ++si)
 		{
-			const float currentDistance = length((balls.at(i).position - balls.at(j).position));
-			const float collisionDistance = balls.at(i).size + balls.at(j).size;
+			Ball* secondBall = &balls.at(si);
+
+			const float currentDistance = getVectorLength((firstBall->position - secondBall->position));
+			const float collisionDistance = firstBall->size + secondBall->size;
 
 			if (currentDistance <= collisionDistance)
 			{
-				const sf::Vector2f parentSpeed = reflect(balls.at(i), balls.at(j));
-				const sf::Vector2f childSpeed = reflect(balls.at(j), balls.at(i));
-				balls.at(i).speed = parentSpeed;
-				balls.at(j).speed = childSpeed;
+				const sf::Vector2f first = getSpeedAfterCollision(firstBall, secondBall);
+				const sf::Vector2f second = getSpeedAfterCollision(secondBall, firstBall);
+				firstBall->speed = first;
+				secondBall->speed = second;
 			}
 		}
 	}
@@ -79,10 +82,10 @@ void Ball::init(std::vector<Ball>& balls)
 		return color;
 	};
 
-	const auto getRandomColor = [&generator, &getMixedColor](const std::vector<sf::Color>& colors) -> sf::Color {
+	const auto getRandomColor = [&getMixedColor, &generator](const std::vector<sf::Color>& colors) -> sf::Color {
 		const auto length = static_cast<unsigned>(std::distance(colors.begin(), colors.end())) - 1;
-		const unsigned i = random_int(generator, 0, length);
-		const unsigned j = random_int(generator, 0, length);
+		const auto i = static_cast<unsigned long long>(random_int(generator, 0, length));
+		const auto j = static_cast<unsigned long long>(random_int(generator, 0, length));
 		const sf::Color first = colors.at(i);
 		const sf::Color second = colors.at(j);
 		return getMixedColor(first, second);
@@ -119,16 +122,17 @@ void Ball::init(std::vector<Ball>& balls)
 
 	for (auto iterator = balls.begin(); iterator != balls.end(); ++iterator)
 	{
-		const auto i = static_cast<size_t>(std::distance(balls.begin(), iterator));
-		balls.at(i).id = i;
-		balls.at(i).color = getRandomColor(colors);
-		balls.at(i).size = sizes.at(i);
-		balls.at(i).speed = speeds.at(i);
-		balls.at(i).position = positions.at(i);
-		balls.at(i).shape.setPosition(balls.at(i).position);
-		balls.at(i).shape.setOrigin(balls.at(i).size, balls.at(i).size);
-		balls.at(i).shape.setRadius(balls.at(i).size);
-		balls.at(i).shape.setFillColor(balls.at(i).color);
+		const auto i = static_cast<unsigned long long>(std::distance(balls.begin(), iterator));
+		Ball* ball = &balls.at(i);
+		ball->id = i;
+		ball->color = getRandomColor(colors);
+		ball->size = sizes.at(i);
+		ball->speed = speeds.at(i);
+		ball->position = positions.at(i);
+		ball->shape.setPosition(ball->position);
+		ball->shape.setOrigin(ball->size, ball->size);
+		ball->shape.setRadius(ball->size);
+		ball->shape.setFillColor(ball->color);
 	}
 }
 

@@ -34,7 +34,7 @@ void update(sf::Vector2f& mousePosition, Arrow& arrow, float deltaTime)
 	arrow.updateElement();
 }
 
-void Arrow::updateRotation(Arrow& arrow, const sf::Vector2f delta, float deltaTime)
+void Arrow::updateRotation(Arrow& arrow, const sf::Vector2f& delta, float deltaTime)
 {
 	auto angle = static_cast<float>(atan2(delta.y, delta.x));
 	if (angle < 0)
@@ -72,7 +72,7 @@ void Arrow::updateRotation(Arrow& arrow, const sf::Vector2f delta, float deltaTi
 	}
 }
 
-void Arrow::updatePosition(Arrow& arrow, const sf::Vector2f delta, float deltaTime)
+void Arrow::updatePosition(Arrow& arrow, const sf::Vector2f& delta, float deltaTime)
 {
 	const auto deltaLength = static_cast<float>(std::sqrt(std::pow(delta.x, 2) + std::pow(delta.y, 2)));
 	sf::Vector2f direction = { 0, 0 };

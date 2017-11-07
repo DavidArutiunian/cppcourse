@@ -106,26 +106,21 @@ void init(Eye& leftEye, Eye& rightEye)
 
 void Eye::setPoints()
 {
-	const auto backPointCount = this->back.getPointCount();
-	for (int i = 0; i < backPointCount; ++i)
+	const auto backPointCount = static_cast<size_t>(this->back.getPointCount());
+	for (size_t i = 0; i < backPointCount; ++i)
 	{
-		const auto angle = static_cast<float>((2 * M_PI * i) / backPointCount);
+		const auto angle = static_cast<float>((2 * M_PI * static_cast<float>(i)) / static_cast<float>(backPointCount));
 		sf::Vector2f point = { this->radius.x * std::sin(angle), this->radius.y * std::cos(angle) };
-		this->back.setPoint(static_cast<size_t>(i), point);
+		this->back.setPoint(i, point);
 	}
 
-	const auto orbPointCount = this->orb.getPointCount();
-	for (int j = 0; j < orbPointCount; ++j)
+	const auto orbPointCount = static_cast<size_t>(this->orb.getPointCount());
+	for (size_t j = 0; j < orbPointCount; ++j)
 	{
-		const auto angle = static_cast<float>((2 * M_PI * j) / orbPointCount);
+		const auto angle = static_cast<float>((2 * M_PI * static_cast<float>(j)) / static_cast<float>(orbPointCount));
 		sf::Vector2f point = { (this->radius.x / 4) * std::sin(angle), (this->radius.y / 4) * std::cos(angle) };
-		this->orb.setPoint(static_cast<size_t>(j), point);
+		this->orb.setPoint(j, point);
 	}
-}
-
-float toDegrees(float radians)
-{
-	return static_cast<float>(static_cast<double>(radians) * 180 / M_PI);
 }
 
 sf::Vector2f toEuclidian(float a, float b, float angle)
