@@ -12,7 +12,7 @@ int main()
 	constexpr float AMPLITUDE = 80.f;
 	constexpr float PERIOD = 2.f;
 
-	float time = 0;
+	float time = 0.f;
 
 	sf::ContextSettings settings;
 	settings.antialiasingLevel = 8;

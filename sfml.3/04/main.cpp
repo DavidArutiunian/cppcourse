@@ -9,7 +9,7 @@ struct Arrow
 	sf::ConvexShape head;
 	sf::RectangleShape stem;
 	sf::Vector2f position;
-	float rotation = 0;
+	float rotation = 0.f;
 };
 
 sf::Vector2f toEuclidian(float radius, float angle)

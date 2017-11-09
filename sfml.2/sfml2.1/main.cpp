@@ -7,13 +7,13 @@ int main()
 {
 	constexpr unsigned WINDOW_WIDTH = 800;
 	constexpr unsigned WINDOW_HEIGHT = 600;
-	constexpr float BALL_SIZE = 40;
+	constexpr float BALL_SIZE = 40.f;
 	constexpr float AMPLITUDE = 80.f;
 	constexpr float PERIOD = 1.f;
 
 	float speed = 500.f;
-	float time = 0;
-	float x = 0;
+	float time = 0.f;
+	float x = 0.f;
 
 	sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Wave Moving Ball 2");
 	sf::Clock clock;

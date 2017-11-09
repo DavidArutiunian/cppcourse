@@ -6,7 +6,7 @@ int main()
 {
 	constexpr unsigned WINDOW_WIDTH = 800;
 	constexpr unsigned WINDOW_HEIGHT = 600;
-	constexpr float BALL_SIZE = 40;
+	constexpr float BALL_SIZE = 40.f;
 
 	sf::Vector2f speed = { 50.f, 15.f };
 

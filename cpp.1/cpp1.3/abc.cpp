@@ -2,9 +2,9 @@
 
 int main()
 {
-	float a = 0;
-	float b = 0;
-	float c = 0;
+	float a = 0.f;
+	float b = 0.f;
+	float c = 0.f;
 
 	std::cout << "Enter a, b and c: ";
 	std::cin >> a >> b >> c;

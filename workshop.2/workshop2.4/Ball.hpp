@@ -9,8 +9,8 @@ struct Ball
 	sf::CircleShape shape;
 	sf::Vector2f position;
 
-	float size;
-	size_t id;
+	float size = 0.f;
+	size_t id = 0;
 	sf::Vector2f speed;
 	sf::Color color;
 

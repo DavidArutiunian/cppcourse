@@ -3,7 +3,7 @@
 #include <SFML/Window.hpp>
 #include <cmath>
 
-static const float OFFSET = 20;
+static const float OFFSET = 20.f;
 static const sf::Color COLOR = sf::Color(0xFF, 0xFF, 0xFF);
 static const auto WINDOW_WIDTH = static_cast<unsigned>(270 + 2 * OFFSET);
 static const auto WINDOW_HEIGHT = static_cast<unsigned>(170 + 2 * OFFSET);

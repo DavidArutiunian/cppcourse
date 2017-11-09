@@ -3,7 +3,7 @@
 #include <SFML/Window.hpp>
 #include <cmath>
 
-static const float OFFSET = 20;
+static const float OFFSET = 20.f;
 static const unsigned WINDOW_WIDTH = 800;
 static const unsigned WINDOW_HEIGHT = 600;
 
@@ -11,25 +11,25 @@ struct Shape
 {
 	sf::RectangleShape shape;
 	sf::Color color;
-	float width{};
-	float height{};
-	float x{};
-	float y{};
+	float width = 0.f;
+	float height = 0.f;
+	float x = 0.f;
+	float y = 0.f;
 };
 
 struct CircleShape
 {
 	sf::CircleShape shape;
 	sf::Color color;
-	float x{};
-	float y{};
-	float r{};
+	float x = 0.f;
+	float y = 0.f;
+	float r = 0.f;
 };
 
 struct ConvexShape : Shape
 {
 	sf::ConvexShape shape;
-	float offset{};
+	float offset = 0.f;
 };
 
 Shape drawWalls(sf::RenderWindow* window)

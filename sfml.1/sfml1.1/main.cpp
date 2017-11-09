@@ -4,8 +4,8 @@
 
 int main()
 {
-	float offset = 20;
-	float circleRadius = 80;
+	float offset = 20.f;
+	float circleRadius = 80.f;
 
 	float width = (2 * circleRadius + 2 * offset);
 	float height = (6 * circleRadius + 4 * offset);

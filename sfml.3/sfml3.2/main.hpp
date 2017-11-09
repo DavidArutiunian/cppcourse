@@ -25,8 +25,7 @@ struct Eye
 	const sf::Vector2f radius = { 50.f, 80.f };
 	const sf::Color eyeColor = sf::Color(255, 255, 255);
 	const sf::Color orbColor = sf::Color(0, 0, 0);
-
-	float rotation = 0;
+	float rotation = 0.f;
 	sf::Vector2f position;
 
 	void setPoints();
