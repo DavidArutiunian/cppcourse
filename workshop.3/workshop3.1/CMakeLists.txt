@@ -1,6 +1,8 @@
 set(SOURCES main.cpp main.h resources Ball.cpp Ball.h)
 set(EXECUTABLE_NAME workshop3.1)
 
+file(COPY resources DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+
 add_executable(${EXECUTABLE_NAME} ${SOURCES})
 
 if (${SFML_FOUND})
