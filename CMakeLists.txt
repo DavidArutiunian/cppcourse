@@ -2,7 +2,9 @@ cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
 
 project(cppcourse)
 
-set(SFML_ROOT "${CMAKE_SOURCE_DIR}/lib/sfml/")
+if (EXISTS ${CMAKE_SOURCE_DIR}/lib/sfml/)
+    set(SFML_ROOT "${CMAKE_SOURCE_DIR}/lib/sfml/")
+endif ()
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
 
@@ -10,7 +12,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_STANDARD 17)
 
 set(SFML_STATIC_LIBRARIES TRUE)
-set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
+
+if (EXISTS ${CMAKE_SOURCE_DIR}/cmake_modules)
+    set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
+endif ()
 
 find_package(Freetype REQUIRED)
 find_package(JPEG REQUIRED)

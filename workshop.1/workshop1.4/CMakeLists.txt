@@ -1,4 +1,6 @@
-set(SOURCES main.cpp main.hpp img)
+set(SOURCES main.cpp main.hpp resources)
+
+file(COPY resources DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 
 add_executable(workshop1.4 ${SOURCES})
 

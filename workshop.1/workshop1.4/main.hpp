@@ -19,7 +19,7 @@ static const sf::Color BACKGROUND_COLOR = sf::Color(255, 255, 255);
 
 struct Pointer
 {
-	const std::string SPRITE_PATH = "./img/pointer.png";
+	const std::string SPRITE_PATH = "./resources/pointer.png";
 
 	sf::Texture texture;
 	sf::Sprite sprite;
@@ -34,7 +34,7 @@ struct Pointer
 
 struct Kitty
 {
-	const std::string SPRITE_PATH = "./img/kitty.png";
+	const std::string SPRITE_PATH = "./resources/kitty.png";
 
 	sf::Texture texture;
 	sf::Sprite sprite;

@@ -82,6 +82,7 @@ install_manifest.txt
 compile_commands.json
 CTestTestfile.cmake
 build
+cmake_modules/*.cmake
 bin
 
 ### Linux ###
