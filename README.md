@@ -9,6 +9,8 @@
 
 ## Требования
 
+Библиотека `SFML`  должна находиться в папке `lib/sfml`
+
 [Clang](https://clang.llvm.org/) - содержит `clang-format`
 
 [CMake](https://cmake.org/) - система автоматизации сборки

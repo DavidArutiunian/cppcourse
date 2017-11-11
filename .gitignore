@@ -8,7 +8,6 @@
 # Object files
 *.o
 *.ko
-*.obj
 *.elf
 
 # Linker output
@@ -25,6 +24,8 @@
 *.a
 *.la
 *.lo
+lib/*
+!lib/.gitkeep
 
 # Shared objects (inc. Windows DLLs)
 *.dll
@@ -75,12 +76,8 @@ dkms.conf
 # Executables
 
 ### CMake ###
-CMakeCache.txt
-CMakeFiles
 CMakeScripts
 Testing
-Makefile
-cmake_install.cmake
 install_manifest.txt
 compile_commands.json
 CTestTestfile.cmake
@@ -162,7 +159,6 @@ $RECYCLE.BIN/
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
 # User-specific stuff:
-.idea/**/workspace.xml
 .idea/**/tasks.xml
 .idea/dictionaries
 
@@ -212,8 +208,5 @@ fabric.properties
 
 # IntelliJ project files
 .idea
-*.iml
 out
 gen
-
-*.cbp
