@@ -1,13 +1,13 @@
 set(SOURCES main.cpp main.h resources Ball.cpp Ball.h)
 set(EXECUTABLE_NAME workshop3.1)
 
-file(COPY resources DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+copy_resources(resources)
 
 add_executable(${EXECUTABLE_NAME} ${SOURCES})
 
-if (${SFML_FOUND})
-    target_include_directories(${EXECUTABLE_NAME} PRIVATE ${SFML_INCLUDE_DIR})
-    target_link_libraries(${EXECUTABLE_NAME} ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
-endif ()
+include_sfml(${EXECUTABLE_NAME})
+include_zlib(${EXECUTABLE_NAME})
+include_bzip2(${EXECUTABLE_NAME})
 
+target_compile_features(${EXECUTABLE_NAME} PUBLIC cxx_std_17)
 target_compile_definitions(${EXECUTABLE_NAME} PRIVATE SFML_STATIC)

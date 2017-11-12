@@ -8,43 +8,60 @@
 class Ball : public sf::Drawable
 {
 private:
+	/// \brief Shape object params
+	sf::CircleShape circle;
 	float radius = 0;
-	float thickness = 0;
-	unsigned fontSize = 0;
-	size_t pointCount = 128;
+	float outlineThickness = 0;
 	sf::Color backgroundColor;
 	sf::Color outlineColor;
-	std::string string;
-	sf::CircleShape* shape;
-	sf::Text* text;
+
+	/// \brief Text object params
+	sf::Text text;
+	unsigned fontSize = 0;
+	std::string initials;
+
+	/// \brief Physics params
+	float deltaTime = 0;
 
 	/// \brief Initialize sf::CircleShape object
-	void initShape();
+	void initCircle();
 
 	/// \brief Initialize sf::Text object
 	void initText();
 
+	/// \brief Update circle position
+	void updateCircle();
+
+	/// \brief Update text position
+	void updateText();
+
 public:
-	Ball();
+	Ball() = default;
+
+	~Ball() override = default;
 
 	/// \brief Draw the object to a render target
 	/// \param target
 	/// \param states
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
+	/// \brief Initialize update of components
+	/// \param deltaTime
+	void updatePosition(float deltaTime);
+
 	/// \brief Initialize the object
 	/// \param radius
-	/// \param string
+	/// \param outlineThickness
+	/// \param fontSize
+	/// \param initials
 	/// \param backgroundColor
 	/// \param outlineColor
-	/// \param thickness
-	/// \param fontSize
 	void init(float radius,
-		std::string string,
+		float outlineThickness,
+		unsigned fontSize,
+		std::string initials,
 		sf::Color backgroundColor,
-		sf::Color outlineColor,
-		float thickness,
-		unsigned int fontSize);
+		sf::Color outlineColor);
 };
 
 #endif //CPPCOURSE_BALL_H

@@ -6,16 +6,11 @@ int main()
 	ShowWindow(GetConsoleWindow(), SW_HIDE);
 #endif
 
-	sf::ContextSettings settings;
-	settings.antialiasingLevel = ANTIALIASING_LEVEL;
-	sf::VideoMode videoMode = sf::VideoMode((unsigned)WINDOW_WIDTH, (unsigned)WINDOW_HEIGHT);
-	sf::RenderWindow window(videoMode, WINDOW_TITLE, sf::Style::Default, settings);
-	window.setFramerateLimit(MAX_FPS);
-
+	sf::RenderWindow window;
 	sf::Clock clock;
-
 	Ball ball;
 
+	createWindow(window);
 	init(ball);
 
 	while (window.isOpen())
@@ -27,7 +22,7 @@ int main()
 
 void init(Ball& ball)
 {
-	ball.init(BALL_SIZE, BALL_TEXT, BALL_BACKGROUND_COLOR, BALL_OUTLINE_COLOR, BALL_THICKNESS, BALL_FONT_SIZE);
+	ball.init(BALL_RADIUS, BALL_THICKNESS, BALL_FONT_SIZE, BALL_TEXT, BALL_BACKGROUND_COLOR, BALL_OUTLINE_COLOR);
 }
 
 void pollEvents(sf::RenderWindow& window)
@@ -51,4 +46,17 @@ void redrawFrame(sf::RenderWindow& window, Ball& ball)
 	window.clear(BACKGROUND_COLOR);
 	window.draw(ball);
 	window.display();
+}
+
+void update(Ball& ball, float deltaTime)
+{
+}
+
+void createWindow(sf::RenderWindow& window)
+{
+	sf::ContextSettings settings;
+	settings.antialiasingLevel = ANTIALIASING_LEVEL;
+	sf::VideoMode videoMode = sf::VideoMode((unsigned)WINDOW_WIDTH, (unsigned)WINDOW_HEIGHT);
+	window.create(videoMode, WINDOW_TITLE, sf::Style::Default, settings);
+	window.setFramerateLimit(MAX_FPS);
 }

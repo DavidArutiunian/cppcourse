@@ -8,7 +8,6 @@ endif ()
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
 
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_STANDARD 17)
 
 set(SFML_STATIC_LIBRARIES TRUE)
@@ -20,10 +19,37 @@ endif ()
 find_package(Freetype REQUIRED)
 find_package(JPEG REQUIRED)
 find_package(SFML 2 COMPONENTS window graphics system)
+find_package(ZLIB REQUIRED)
+find_package(BZip2 REQUIRED)
 
 if (${SFML_FOUND})
     include_directories(${SFML_INCLUDE_DIR})
 endif ()
+
+function(include_sfml executable)
+    if (${SFML_FOUND})
+        target_include_directories(${executable} PRIVATE ${SFML_INCLUDE_DIR})
+        target_link_libraries(${executable} ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
+    endif ()
+endfunction()
+
+function(include_zlib executable)
+    if (${ZLIB_FOUND})
+        target_include_directories(${executable} PRIVATE ${ZLIB_INCLUDE_DIRS})
+        target_link_libraries(${executable} ${ZLIB_LIBRARIES})
+    endif ()
+endfunction()
+
+function(include_bzip2 executable)
+    if (${BZIP2_FOUND})
+        target_include_directories(${executable} PRIVATE ${BZIP2_INCLUDE_DIR})
+        target_link_libraries(${executable} ${BZIP2_LIBRARIES})
+    endif ()
+endfunction()
+
+function(copy_resources path)
+    file(COPY ${path} DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+endfunction()
 
 add_subdirectory(cpp.1)
 add_subdirectory(sfml.1)
