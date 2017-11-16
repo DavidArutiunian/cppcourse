@@ -30,6 +30,7 @@ void Ball::initCircle()
 	assert(radius > 0);
 
 	circle.setRadius(radius);
+	circle.setPointCount(pointCount);
 	circle.setFillColor(backgroundColor);
 	circle.setOutlineColor(outlineColor);
 	circle.setOutlineThickness(outlineThickness);
@@ -39,8 +40,6 @@ void Ball::initCircle()
 
 void Ball::initText()
 {
-	sf::Font font;
-
 	assert(initials.length() > 0);
 	assert(font.loadFromFile(FONT_PATH));
 
@@ -48,17 +47,39 @@ void Ball::initText()
 	text.setString(initials);
 	text.setCharacterSize(fontSize);
 	text.setFillColor(sf::Color::Black);
-	text.setPosition({ circle.getPosition().x, circle.getPosition().y });
+	const sf::FloatRect textLocalBounds = text.getLocalBounds();
+	text.setOrigin({ textLocalBounds.width / 2, textLocalBounds.height - outlineThickness });
+	const sf::Vector2f circlePosition = circle.getPosition();
+	text.setPosition({ circlePosition.x, circlePosition.y });
+	initialPosition = circlePosition.y;
 }
 
 void Ball::updatePosition(float deltaTime)
 {
+	time += deltaTime * timeAccelerator;
+	checkCollision();
+	auto nextY = static_cast<float>(initialPosition - initialSpeed * time + 0.5 * G * std::pow(time, 2));
+	const sf::Vector2f nextPosition = { circle.getPosition().x, nextY };
+	updateCirclePosition(nextPosition);
+	updateTextPosition(nextPosition);
 }
 
-void Ball::updateText()
+void Ball::updateTextPosition(const sf::Vector2f& nextPosition)
 {
+	text.setPosition(nextPosition);
 }
 
-void Ball::updateCircle()
+void Ball::updateCirclePosition(const sf::Vector2f& nextPosition)
 {
+	circle.setPosition(nextPosition);
+}
+
+void Ball::checkCollision()
+{
+	const float currentBottomPosition = circle.getPosition().y + radius + outlineThickness;
+	const bool isAtZeroLevel = currentBottomPosition > WINDOW_HEIGHT;
+	if (isAtZeroLevel)
+	{
+		time = 0;
+	}
 }

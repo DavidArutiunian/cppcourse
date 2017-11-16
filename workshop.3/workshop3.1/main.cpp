@@ -15,8 +15,10 @@ int main()
 
 	while (window.isOpen())
 	{
+		const float deltaTime = clock.restart().asSeconds();
 		pollEvents(window);
 		redrawFrame(window, ball);
+		update(ball, deltaTime);
 	}
 }
 
@@ -50,6 +52,7 @@ void redrawFrame(sf::RenderWindow& window, Ball& ball)
 
 void update(Ball& ball, float deltaTime)
 {
+	ball.updatePosition(deltaTime);
 }
 
 void createWindow(sf::RenderWindow& window)

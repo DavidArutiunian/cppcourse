@@ -1,4 +1,4 @@
-set(SOURCES main.cpp main.h resources Ball.cpp Ball.h)
+set(SOURCES main.cpp main.h resources Ball.cpp Ball.h consts.h)
 set(EXECUTABLE_NAME workshop3.1)
 
 copy_resources(resources)
