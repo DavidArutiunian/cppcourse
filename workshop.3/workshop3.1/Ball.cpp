@@ -1,5 +1,4 @@
 #include "Ball.h"
-#include "main.h"
 
 void Ball::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
@@ -10,12 +9,12 @@ void Ball::draw(sf::RenderTarget& target, sf::RenderStates states) const
 void Ball::init(float radius,
 	float outlineThickness,
 	unsigned fontSize,
-	std::string initials,
+	std::string_view initials,
 	sf::Color backgroundColor,
 	sf::Color outlineColor)
 {
 	this->radius = radius;
-	this->initials = std::move(initials);
+	this->initials = initials;
 	this->backgroundColor = backgroundColor;
 	this->outlineColor = outlineColor;
 	this->outlineThickness = outlineThickness;
@@ -41,10 +40,10 @@ void Ball::initCircle()
 void Ball::initText()
 {
 	assert(initials.length() > 0);
-	assert(font.loadFromFile(FONT_PATH));
+	assert(font.loadFromFile(FONT_PATH.data()));
 
 	text.setFont(font);
-	text.setString(initials);
+	text.setString(initials.data());
 	text.setCharacterSize(fontSize);
 	text.setFillColor(sf::Color::Black);
 	const sf::FloatRect textLocalBounds = text.getLocalBounds();

@@ -8,7 +8,8 @@ int main()
 
 	sf::RenderWindow window;
 	sf::Clock clock;
-	Ball ball;
+
+	std::shared_ptr<Ball> ball(std::make_shared<Ball>());
 
 	createWindow(window);
 	init(ball);
@@ -22,9 +23,14 @@ int main()
 	}
 }
 
-void init(Ball& ball)
+void init(std::shared_ptr<Ball> ball)
 {
-	ball.init(BALL_RADIUS, BALL_THICKNESS, BALL_FONT_SIZE, BALL_TEXT, BALL_BACKGROUND_COLOR, BALL_OUTLINE_COLOR);
+	ball->init(BALL_RADIUS,
+		BALL_THICKNESS,
+		BALL_FONT_SIZE,
+		BALL_TEXT.data(),
+		BALL_BACKGROUND_COLOR,
+		BALL_OUTLINE_COLOR);
 }
 
 void pollEvents(sf::RenderWindow& window)
@@ -43,16 +49,16 @@ void pollEvents(sf::RenderWindow& window)
 	}
 }
 
-void redrawFrame(sf::RenderWindow& window, Ball& ball)
+void redrawFrame(sf::RenderWindow& window, std::shared_ptr<Ball> ball)
 {
 	window.clear(BACKGROUND_COLOR);
-	window.draw(ball);
+	window.draw(*ball.get());
 	window.display();
 }
 
-void update(Ball& ball, float deltaTime)
+void update(std::shared_ptr<Ball> ball, float deltaTime)
 {
-	ball.updatePosition(deltaTime);
+	ball->updatePosition(deltaTime);
 }
 
 void createWindow(sf::RenderWindow& window)
@@ -60,6 +66,6 @@ void createWindow(sf::RenderWindow& window)
 	sf::ContextSettings settings;
 	settings.antialiasingLevel = ANTIALIASING_LEVEL;
 	sf::VideoMode videoMode = sf::VideoMode((unsigned)WINDOW_WIDTH, (unsigned)WINDOW_HEIGHT);
-	window.create(videoMode, WINDOW_TITLE, sf::Style::Default, settings);
+	window.create(videoMode, WINDOW_TITLE.data(), sf::Style::Default, settings);
 	window.setFramerateLimit(MAX_FPS);
 }
