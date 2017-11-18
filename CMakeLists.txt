@@ -30,6 +30,7 @@ function(include_sfml executable)
     if (${SFML_FOUND})
         target_include_directories(${executable} PRIVATE ${SFML_INCLUDE_DIR})
         target_link_libraries(${executable} ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
+        target_compile_definitions(${executable} PRIVATE SFML_STATIC)
     endif ()
 endfunction()
 
