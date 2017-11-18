@@ -1,37 +1,37 @@
 #ifndef CPPCOURSE_MAIN_H
 #define CPPCOURSE_MAIN_H
 
-#include "Ball.h"
 #include "consts.h"
+
+////////////////////////////////////////////////////////////
+/// \brief Run initializing of balls
+///
+/// \param balls Vector of nullptr of unsigned length
+////////////////////////////////////////////////////////////
+void init(std::vector<std::shared_ptr<Ball>>& balls);
 
 ////////////////////////////////////////////////////////////
 /// \brief Create window object
 ///
-/// \param window Window object
+/// \param window
 ////////////////////////////////////////////////////////////
 void createWindow(sf::RenderWindow& window);
-
-////////////////////////////////////////////////////////////
-/// \brief Initialize object
-///
-/// \param ball Pointer to the ball object
-////////////////////////////////////////////////////////////
-void init(std::shared_ptr<Ball> ball);
 
 ////////////////////////////////////////////////////////////
 /// \brief Process window events
 ///
 /// \param window Window object
+/// \param balls Vector of balls to dispatch an event on
 ////////////////////////////////////////////////////////////
-void pollEvents(sf::RenderWindow& window);
+void pollEvents(sf::RenderWindow& window, std::vector<std::shared_ptr<Ball>>& balls);
 
 ////////////////////////////////////////////////////////////
 /// \brief Update object position
 ///
-/// \param ball Pointer to the ball object
+/// \param balls Vector of balls
 /// \param deltaTime Difference in time between frames
 ////////////////////////////////////////////////////////////
-void update(std::shared_ptr<Ball> ball, float deltaTime);
+void update(std::vector<std::shared_ptr<Ball>>& balls, float deltaTime);
 
 ////////////////////////////////////////////////////////////
 /// \brief Update frame
@@ -39,6 +39,14 @@ void update(std::shared_ptr<Ball> ball, float deltaTime);
 /// \param window Window object
 /// \param ball Pointer to the ball object
 ////////////////////////////////////////////////////////////
-void redrawFrame(sf::RenderWindow& window, std::shared_ptr<Ball> ball);
+void redrawFrame(sf::RenderWindow& window, std::vector<std::shared_ptr<Ball>>& balls);
+
+////////////////////////////////////////////////////////////
+/// \brief Dispatch event to vector of balls
+///
+/// \param event Event object
+/// \param balls Vector of balls
+////////////////////////////////////////////////////////////
+void onMouseClick(const sf::Event::MouseButtonEvent& event, std::vector<std::shared_ptr<Ball>>& balls);
 
 #endif //CPPCOURSE_MAIN_H

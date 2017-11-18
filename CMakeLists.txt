@@ -2,6 +2,14 @@ cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
 
 project(cppcourse)
 
+if (NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Release)
+endif ()
+
+set(CMAKE_CXX_FLAGS "-Wall -Wextra")
+set(CMAKE_CXX_FLAGS_DEBUG "-Og -g")
+set(CMAKE_CXX_FLAGS_RELEASE "-O3")
+
 if (EXISTS ${CMAKE_SOURCE_DIR}/lib/sfml/)
     set(SFML_ROOT "${CMAKE_SOURCE_DIR}/lib/sfml/")
 endif ()
