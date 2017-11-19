@@ -5,19 +5,19 @@ void Ball::updatePosition(const float deltaTime)
 	position = shape.getPosition();
 	position += speed * deltaTime;
 
-	if ((position.x + size >= WINDOW_WIDTH) && (speed.x > 0))
+	if ((position.x + size >= GAME_FIELD_WIDTH / 2) && (speed.x > 0))
 	{
 		speed.x = -speed.x;
 	}
-	if ((position.x - size < 0) && (speed.x < 0))
+	if ((position.x - size < -GAME_FIELD_WIDTH / 2) && (speed.x < 0))
 	{
 		speed.x = -speed.x;
 	}
-	if ((position.y + size >= WINDOW_HEIGHT) && (speed.y > 0))
+	if ((position.y + size >= GAME_FIELD_HEIGHT / 2) && (speed.y > 0))
 	{
 		speed.y = -speed.y;
 	}
-	if ((position.y - size < 0) && (speed.y < 0))
+	if ((position.y - size < -GAME_FIELD_HEIGHT / 2) && (speed.y < 0))
 	{
 		speed.y = -speed.y;
 	}
@@ -25,24 +25,24 @@ void Ball::updatePosition(const float deltaTime)
 
 void Ball::checkIntersection(std::vector<std::shared_ptr<Ball>>& balls, std::shared_ptr<Ball> ball)
 {
-	constexpr unsigned windowArea = WINDOW_WIDTH * WINDOW_HEIGHT;
+	constexpr unsigned windowArea = GAME_FIELD_WIDTH * GAME_FIELD_HEIGHT;
 	auto squareArea = static_cast<float>(std::pow(ball->size * 2, 2));
 	const sf::Vector2f position = ball->position;
 	const float size = ball->size;
 
-	if (position.x + size >= WINDOW_WIDTH)
+	if (position.x + size >= GAME_FIELD_WIDTH / 2)
 	{
 		return;
 	}
-	if (position.x - size < 0)
+	if (position.x - size < -GAME_FIELD_WIDTH / 2)
 	{
 		return;
 	}
-	if (position.y + size >= WINDOW_HEIGHT)
+	if (position.y + size >= GAME_FIELD_HEIGHT / 2)
 	{
 		return;
 	}
-	if (position.y - size < 0)
+	if (position.y - size < -GAME_FIELD_HEIGHT / 2)
 	{
 		return;
 	}
@@ -203,9 +203,9 @@ void Ball::init(std::vector<std::shared_ptr<Ball>>& balls)
 	};
 	const std::vector<sf::Vector2f> positions = {
 		{ sizes.at(0), sizes.at(0) },
-		{ WINDOW_WIDTH - sizes.at(1), sizes.at(1) },
-		{ sizes.at(2), WINDOW_HEIGHT - sizes.at(2) },
-		{ WINDOW_WIDTH - sizes.at(3), WINDOW_HEIGHT - sizes.at(3) },
+		{ GAME_FIELD_WIDTH - sizes.at(1), sizes.at(1) },
+		{ sizes.at(2), GAME_FIELD_WIDTH - sizes.at(2) },
+		{ GAME_FIELD_WIDTH - sizes.at(3), GAME_FIELD_WIDTH - sizes.at(3) },
 	};
 
 	const auto applyForEach = [&](std::shared_ptr<Ball> ball) -> void {
