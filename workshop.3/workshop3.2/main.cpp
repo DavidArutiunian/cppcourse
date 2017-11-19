@@ -8,17 +8,19 @@ int main()
 
 	sf::RenderWindow window;
 	sf::Clock clock;
-	std::vector<std::shared_ptr<Ball>> balls(BALLS_COUNT, nullptr);
+	std::shared_ptr<FPS> fps(std::make_shared<FPS>(FPS()));
+	std::vector<std::shared_ptr<Ball>> balls(BALLS_COUNT, std::make_shared<Ball>(Ball()));
 
 	createWindow(window);
 	init(balls);
 
 	while (window.isOpen())
 	{
+		const float frameRate = 1.f / clock.getElapsedTime().asSeconds();
 		const float deltaTime = clock.restart().asSeconds();
 		pollEvents(window, balls);
-		update(balls, deltaTime);
-		redrawFrame(window, balls);
+		update(balls, fps, deltaTime, frameRate);
+		redrawFrame(window, balls, fps);
 	}
 }
 
@@ -52,29 +54,29 @@ void pollEvents(sf::RenderWindow& window, std::vector<std::shared_ptr<Ball>>& ba
 	}
 }
 
-void update(std::vector<std::shared_ptr<Ball>>& balls, float deltaTime)
+void update(std::vector<std::shared_ptr<Ball>>& balls, std::shared_ptr<FPS> FPS, float deltaTime, float frameRate)
 {
 	const float dtPhysics = deltaTime / MAX_PRECISION_COUNT;
 	for (unsigned i = 0; i < MAX_PRECISION_COUNT; ++i)
 	{
 		Ball::checkCollisions(balls);
-		for (auto&& ball : balls)
-		{
+		std::for_each(balls.begin(), balls.end(), [&dtPhysics](std::shared_ptr<Ball> ball) -> void {
 			ball->updateBallLifetimes(dtPhysics);
 			ball->updatePosition(dtPhysics);
 			ball->updateElement();
-		}
+		});
 		Ball::removeDeathBalls(balls);
 	}
+	FPS->updateFps(frameRate);
 }
 
-void redrawFrame(sf::RenderWindow& window, std::vector<std::shared_ptr<Ball>>& balls)
+void redrawFrame(sf::RenderWindow& window, std::vector<std::shared_ptr<Ball>>& balls, const std::shared_ptr<FPS>& fps)
 {
 	window.clear();
-	for (auto&& ball : balls)
-	{
+	std::for_each(balls.begin(), balls.end(), [&window](std::shared_ptr<Ball> ball) -> void {
 		window.draw(*ball.get());
-	}
+	});
+	window.draw(*fps.get());
 	window.display();
 }
 

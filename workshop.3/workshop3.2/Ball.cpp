@@ -1,6 +1,6 @@
-#include "Ball.h"
+#include "consts.h"
 
-void Ball::updatePosition(float deltaTime)
+void Ball::updatePosition(const float deltaTime)
 {
 	position = shape.getPosition();
 	position += speed * deltaTime;
@@ -27,41 +27,42 @@ void Ball::checkIntersection(std::vector<std::shared_ptr<Ball>>& balls, std::sha
 {
 	constexpr unsigned windowArea = WINDOW_WIDTH * WINDOW_HEIGHT;
 	auto squareArea = static_cast<float>(std::pow(ball->size * 2, 2));
+	const sf::Vector2f position = ball->position;
+	const float size = ball->size;
 
-	if (ball->position.x + ball->size >= WINDOW_WIDTH)
+	if (position.x + size >= WINDOW_WIDTH)
 	{
 		return;
 	}
-	if (ball->position.x - ball->size < 0)
+	if (position.x - size < 0)
 	{
 		return;
 	}
-	if (ball->position.y + ball->size >= WINDOW_HEIGHT)
+	if (position.y + size >= WINDOW_HEIGHT)
 	{
 		return;
 	}
-	if (ball->position.y - ball->size < 0)
+	if (position.y - size < 0)
 	{
 		return;
 	}
 
-	for (auto&& item : balls)
-	{
-		const float currentDistance = Ball::length((item->position - ball->position));
-		const float collisionDistance = item->size + ball->size;
+	const auto doNotIntersect = [&squareArea, &position, &size](std::shared_ptr<Ball> ball) -> bool {
+		const float currentDistance = Ball::length((ball->position - position));
+		const float collisionDistance = ball->size + size;
 
-		squareArea += std::pow(item->size * 2, 2);
+		squareArea += std::pow(ball->size * 2, 2);
 
 		const bool doesIntersect = currentDistance <= collisionDistance;
 		const bool doesNotFit = squareArea > windowArea;
 
-		if (doesIntersect || doesNotFit)
-		{
-			return;
-		}
-	}
+		return !(doesIntersect || doesNotFit);
+	};
 
-	balls.push_back(ball);
+	if (std::all_of(balls.begin(), balls.end(), doNotIntersect))
+	{
+		balls.push_back(ball);
+	}
 }
 
 void Ball::addBall(std::vector<std::shared_ptr<Ball>>& balls, sf::Vector2f& mousePosition)
@@ -106,17 +107,23 @@ void Ball::checkCollisions(std::vector<std::shared_ptr<Ball>>& balls)
 		return left.x * right.x + left.y * right.y;
 	};
 
-	const auto getSpeedAfterCollision = [&dot](std::shared_ptr<Ball> a, std::shared_ptr<Ball> b) -> sf::Vector2f {
+	const auto getSpeedAfterCollision = [&dot, &areFuzzyEqual](std::shared_ptr<Ball> a,
+											std::shared_ptr<Ball> b) -> sf::Vector2f {
 		sf::Vector2f deltaPosition = a->position - b->position;
 		sf::Vector2f deltaSpeed = a->speed - b->speed;
 		const auto squareLength = static_cast<float>(std::pow(Ball::length((deltaPosition)), 2));
-		assert(squareLength != 0);
+		assert(!areFuzzyEqual(squareLength, 0.f));
 		const float leftSide = dot(deltaSpeed, deltaPosition) / squareLength;
 		return a->speed - leftSide * deltaPosition;
 	};
 
+	constexpr auto getFullEnergy = [](const sf::Vector2f& lhs, const sf::Vector2f& rhs) -> float {
+		return static_cast<float>(std::pow(length(lhs), 2) + std::pow(length(rhs), 2));
+	};
+
 	const auto size = static_cast<size_t>(std::distance(balls.begin(), balls.end()));
 
+	/// Iterate though std::vector<Ball> without duplicates
 	for (size_t fi = 0; fi < size; ++fi)
 	{
 		std::shared_ptr<Ball> firstBall = balls.at(fi);
@@ -133,14 +140,14 @@ void Ball::checkCollisions(std::vector<std::shared_ptr<Ball>>& balls)
 				const sf::Vector2f prevSecondSpeed = secondBall->speed;
 				const sf::Vector2f nextFirstSpeed = getSpeedAfterCollision(firstBall, secondBall);
 				const sf::Vector2f nextSecondSpeed = getSpeedAfterCollision(secondBall, firstBall);
-				const auto prevE = static_cast<float>(std::pow(length(prevFirstSpeed), 2) + std::pow(length(prevSecondSpeed), 2));
-				const auto nextE = static_cast<float>(std::pow(length(nextFirstSpeed), 2) + std::pow(length(nextSecondSpeed), 2));
+				const float prevEnergy = getFullEnergy(prevFirstSpeed, prevSecondSpeed);
+				const float nextEnergy = getFullEnergy(nextFirstSpeed, nextSecondSpeed);
 				const float prevI = length(prevFirstSpeed + prevSecondSpeed);
 				const float nextI = length(nextFirstSpeed + nextSecondSpeed);
-				assert(areFuzzyEqual(prevE, nextE));
+				assert(areFuzzyEqual(prevEnergy, nextEnergy));
 				assert(areFuzzyEqual(prevI, nextI));
-				firstBall->speed = nextFirstSpeed;
-				secondBall->speed = nextSecondSpeed;
+				firstBall->setSpeed(nextFirstSpeed);
+				secondBall->setSpeed(nextSecondSpeed);
 			}
 		}
 	}
@@ -201,20 +208,22 @@ void Ball::init(std::vector<std::shared_ptr<Ball>>& balls)
 		{ WINDOW_WIDTH - sizes.at(3), WINDOW_HEIGHT - sizes.at(3) },
 	};
 
-	for (auto iterator = balls.begin(); iterator != balls.end(); ++iterator)
-	{
+	const auto applyForEach = [&](std::shared_ptr<Ball> ball) -> void {
+		const auto iterator = std::find(balls.begin(), balls.end(), ball);
 		const auto i = static_cast<unsigned long long>(std::distance(balls.begin(), iterator));
-		std::shared_ptr<Ball> ball = std::make_shared<Ball>(Ball(positions.at(i),
-			speeds.at(i),
-			getRandomColor(colors),
-			sizes.at(i)));
-		ball->shape.setPosition(ball->position);
-		ball->shape.setOrigin(ball->size, ball->size);
-		ball->shape.setRadius(ball->size);
-		ball->shape.setFillColor(ball->color);
 
+		ball = std::make_shared<Ball>(Ball(positions.at(i), speeds.at(i), getRandomColor(colors), sizes.at(i)));
+
+		sf::CircleShape& shape = ball->shape;
+
+		shape.setPosition(ball->position);
+		shape.setOrigin(ball->size, ball->size);
+		shape.setRadius(ball->size);
+		shape.setFillColor(ball->color);
 		balls.at(i) = ball;
-	}
+	};
+
+	std::for_each(balls.begin(), balls.end(), applyForEach);
 }
 
 bool Ball::operator==(Ball& toCompare) const
@@ -227,7 +236,7 @@ float Ball::length(const sf::Vector2f& vector)
 	return static_cast<float>(std::sqrt(std::pow(vector.x, 2) + std::pow(vector.y, 2)));
 }
 
-void Ball::updateBallLifetimes(float deltaTime)
+void Ball::updateBallLifetimes(const float deltaTime)
 {
 	lifeTime += deltaTime;
 }
@@ -240,7 +249,7 @@ void Ball::removeDeathBalls(std::vector<std::shared_ptr<Ball>>& balls)
 	balls.erase(std::remove_if(balls.begin(), balls.end(), shouldRemove), balls.end());
 }
 
-void Ball::draw(sf::RenderTarget& target, sf::RenderStates states) const
+void Ball::draw(sf::RenderTarget& target, const sf::RenderStates states) const
 {
 	target.draw(shape, states);
 }
@@ -251,4 +260,9 @@ Ball::Ball(sf::Vector2f position, sf::Vector2f speed, sf::Color color, float siz
 	, color(color)
 	, size(size)
 {
+}
+
+void Ball::setSpeed(const sf::Vector2f& nextSpeed)
+{
+	speed = nextSpeed;
 }
