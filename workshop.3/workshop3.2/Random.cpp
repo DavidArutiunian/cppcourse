@@ -1,3 +1,5 @@
+#include <cassert>
+
 #include "consts.h"
 
 void initGenerator(PRNG& generator)

@@ -1,7 +1,11 @@
 #ifndef CPPCOURSE_MAIN_H
 #define CPPCOURSE_MAIN_H
 
-#include "consts.h"
+#include <SFML/Graphics.hpp>
+#include <memory>
+
+#include "Ball.h"
+#include "Overlay.h"
 
 ////////////////////////////////////////////////////////////
 /// \brief Run initializing of balls
@@ -31,7 +35,10 @@ void pollEvents(sf::RenderWindow& window, std::vector<std::shared_ptr<Ball>>& ba
 /// \param balls Vector of balls
 /// \param deltaTime Difference in time between frames
 ////////////////////////////////////////////////////////////
-void update(std::vector<std::shared_ptr<Ball>>& balls, std::shared_ptr<FPS> fps, float deltaTime, float frameRate);
+void update(std::vector<std::shared_ptr<Ball>>& balls,
+            std::shared_ptr<Overlay> fps,
+            float deltaTime,
+            float frameRate);
 
 ////////////////////////////////////////////////////////////
 /// \brief Update frame
@@ -39,7 +46,9 @@ void update(std::vector<std::shared_ptr<Ball>>& balls, std::shared_ptr<FPS> fps,
 /// \param window Window object
 /// \param ball Pointer to the ball object
 ////////////////////////////////////////////////////////////
-void redrawFrame(sf::RenderWindow& window, std::vector<std::shared_ptr<Ball>>& balls, const std::shared_ptr<FPS>& fps);
+void redrawFrame(sf::RenderWindow& window,
+                 std::vector<std::shared_ptr<Ball>>& balls,
+                 const std::shared_ptr<Overlay>& fps);
 
 ////////////////////////////////////////////////////////////
 /// \brief Dispatch event to vector of balls

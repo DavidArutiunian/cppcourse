@@ -1,9 +1,10 @@
 #ifndef CPPCOURSE_FPS_H
 #define CPPCOURSE_FPS_H
 
-#include "consts.h"
+#include <SFML/Graphics.hpp>
+#include <memory>
 
-class FPS : public sf::Drawable
+class Overlay : public sf::Drawable
 {
 private:
 	std::shared_ptr<sf::Font> font = std::make_shared<sf::Font>(sf::Font());
@@ -13,17 +14,17 @@ private:
 	////////////////////////////////////////////////////////////
 	/// \brief Load fonts from FONT_PATH
 	////////////////////////////////////////////////////////////
-	void initFont();
+	void initFont() const;
 
 	////////////////////////////////////////////////////////////
 	/// \brief Set text properties
 	////////////////////////////////////////////////////////////
-	void initText();
+	void initText() const;
 
 public:
-	FPS();
+	Overlay();
 
-	~FPS() override = default;
+	~Overlay() override = default;
 
 	////////////////////////////////////////////////////////////
 	/// \brief Draw the object to a render target
@@ -34,11 +35,11 @@ public:
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 	////////////////////////////////////////////////////////////
-	/// \brief Update FPS counter
+	/// \brief Update Overlay counter
 	///
-	/// \param nextFps Next FPS counter
+	/// \param value Next Overlay counter
 	////////////////////////////////////////////////////////////
-	void updateFps(float nextFps);
+	void updateOverlay(float value) const;
 };
 
 #endif //CPPCOURSE_FPS_H

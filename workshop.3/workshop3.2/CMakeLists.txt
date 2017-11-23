@@ -1,4 +1,4 @@
-set(SOURCES main.cpp Ball.cpp Random.cpp consts.h Ball.h main.h Random.h resources FPS.cpp FPS.h)
+set(SOURCES main.cpp Ball.cpp Random.cpp consts.h Ball.h main.h Random.h resources Overlay.cpp Overlay.h)
 
 set(EXECUTABLE_NAME workshop3.2)
 

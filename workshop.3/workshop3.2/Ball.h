@@ -1,18 +1,18 @@
 #ifndef CPPCOURSE_BALL_H
 #define CPPCOURSE_BALL_H
 
-#include "consts.h"
+#include <SFML/Graphics.hpp>
 
 class Ball : public sf::Drawable
 {
 private:
-	sf::CircleShape shape; /// Object shape
+	sf::CircleShape shape{}; /// Object shape
 
-	sf::Vector2f position; /// Object current position
+	sf::Vector2f position{}; /// Object current position
 
-	sf::Vector2f speed; /// Speed of object
+	sf::Vector2f speed{}; /// Speed of object
 
-	sf::Color color; /// Color ob object
+	sf::Color color{}; /// Color ob object
 
 	float lifeTime = 0.f; /// Object current lifetime
 

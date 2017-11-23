@@ -1,6 +1,8 @@
 #ifndef CPPCOURSE_RANDOM_H
 #define CPPCOURSE_RANDOM_H
 
+#include <random>
+
 struct PRNG
 {
 	std::mt19937 engine;

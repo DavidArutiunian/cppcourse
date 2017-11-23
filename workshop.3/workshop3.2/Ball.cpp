@@ -1,3 +1,9 @@
+#include <cassert>
+#include <cmath>
+#include <memory>
+
+#include "Ball.h"
+#include "Random.h"
 #include "consts.h"
 
 void Ball::updatePosition(const float deltaTime)
@@ -23,9 +29,9 @@ void Ball::updatePosition(const float deltaTime)
 	}
 }
 
-void Ball::checkIntersection(std::vector<std::shared_ptr<Ball>>& balls, std::shared_ptr<Ball> ball)
+void Ball::checkIntersection(std::vector<std::shared_ptr<Ball>>& balls, const std::shared_ptr<Ball> ball)
 {
-	constexpr unsigned windowArea = GAME_FIELD_WIDTH * GAME_FIELD_HEIGHT;
+	constexpr int windowArea = GAME_FIELD_WIDTH * GAME_FIELD_HEIGHT;
 	auto squareArea = static_cast<float>(std::pow(ball->size * 2, 2));
 	const sf::Vector2f position = ball->position;
 	const float size = ball->size;
@@ -86,11 +92,11 @@ void Ball::addBall(std::vector<std::shared_ptr<Ball>>& balls, sf::Vector2f& mous
 
 void Ball::checkCollisions(std::vector<std::shared_ptr<Ball>>& balls)
 {
-	constexpr auto areCloseAbsolute = [](float a, float b, float tolerance = 0.001f) -> bool {
+	const auto areCloseAbsolute = [](float a, float b, float tolerance = 0.001f) -> bool {
 		return std::abs(a - b) < tolerance;
 	};
 
-	constexpr auto areCloseRelative = [](float a, float b, float tolerance = 0.001f) -> bool {
+	const auto areCloseRelative = [](float a, float b, float tolerance = 0.001f) -> bool {
 		return std::abs((a - b) / b) < tolerance;
 	};
 
@@ -103,7 +109,7 @@ void Ball::checkCollisions(std::vector<std::shared_ptr<Ball>>& balls)
 		return areCloseAbsolute(a, b, tolerance);
 	};
 
-	constexpr auto dot = [](sf::Vector2f& left, sf::Vector2f& right) -> float {
+	const auto dot = [](sf::Vector2f& left, sf::Vector2f& right) -> float {
 		return left.x * right.x + left.y * right.y;
 	};
 
@@ -117,7 +123,7 @@ void Ball::checkCollisions(std::vector<std::shared_ptr<Ball>>& balls)
 		return a->speed - leftSide * deltaPosition;
 	};
 
-	constexpr auto getFullEnergy = [](const sf::Vector2f& lhs, const sf::Vector2f& rhs) -> float {
+	const auto getFullEnergy = [](const sf::Vector2f& lhs, const sf::Vector2f& rhs) -> float {
 		return static_cast<float>(std::pow(length(lhs), 2) + std::pow(length(rhs), 2));
 	};
 
@@ -162,7 +168,7 @@ void Ball::init(std::vector<std::shared_ptr<Ball>>& balls)
 {
 	initGenerator(generator);
 
-	constexpr auto getMixedColor = [](const sf::Color& a, const sf::Color& b) -> sf::Color {
+	const auto getMixedColor = [](const sf::Color& a, const sf::Color& b) -> sf::Color {
 		sf::Color color;
 		color.r = static_cast<sf::Uint8>((a.r + b.r) / 2);
 		color.g = static_cast<sf::Uint8>((a.g + b.g) / 2);
@@ -243,7 +249,7 @@ void Ball::updateBallLifetimes(const float deltaTime)
 
 void Ball::removeDeathBalls(std::vector<std::shared_ptr<Ball>>& balls)
 {
-	constexpr auto shouldRemove = [](const std::shared_ptr<Ball> ball) -> bool {
+	const auto shouldRemove = [](const std::shared_ptr<Ball> ball) -> bool {
 		return ball->lifeTime >= MAX_LIFETIME;
 	};
 	balls.erase(std::remove_if(balls.begin(), balls.end(), shouldRemove), balls.end());
