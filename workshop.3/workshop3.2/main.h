@@ -6,13 +6,14 @@
 
 #include "Ball.h"
 #include "Overlay.h"
+#include "consts.h"
 
 ////////////////////////////////////////////////////////////
 /// \brief Run initializing of balls
 ///
 /// \param balls Vector of nullptr of unsigned length
 ////////////////////////////////////////////////////////////
-void init(std::vector<std::shared_ptr<Ball>>& balls);
+void init(std::vector<std::shared_ptr<Ball>>& balls, sf::View& view);
 
 ////////////////////////////////////////////////////////////
 /// \brief Create window object
@@ -27,7 +28,7 @@ void createWindow(sf::RenderWindow& window);
 /// \param window Window object
 /// \param balls Vector of balls to dispatch an event on
 ////////////////////////////////////////////////////////////
-void pollEvents(sf::RenderWindow& window, std::vector<std::shared_ptr<Ball>>& balls);
+void pollEvents(sf::RenderWindow& window, std::vector<std::shared_ptr<Ball>>& balls, sf::View& view);
 
 ////////////////////////////////////////////////////////////
 /// \brief Update object position
@@ -36,9 +37,10 @@ void pollEvents(sf::RenderWindow& window, std::vector<std::shared_ptr<Ball>>& ba
 /// \param deltaTime Difference in time between frames
 ////////////////////////////////////////////////////////////
 void update(std::vector<std::shared_ptr<Ball>>& balls,
-            std::shared_ptr<Overlay> fps,
-            float deltaTime,
-            float frameRate);
+	const std::shared_ptr<Overlay>& overlay,
+	sf::RenderWindow& window,
+	float deltaTime,
+	float frameRate);
 
 ////////////////////////////////////////////////////////////
 /// \brief Update frame
@@ -47,15 +49,24 @@ void update(std::vector<std::shared_ptr<Ball>>& balls,
 /// \param ball Pointer to the ball object
 ////////////////////////////////////////////////////////////
 void redrawFrame(sf::RenderWindow& window,
-                 std::vector<std::shared_ptr<Ball>>& balls,
-                 const std::shared_ptr<Overlay>& fps);
+	std::vector<std::shared_ptr<Ball>>& balls,
+	const std::shared_ptr<Overlay>& fps,
+	sf::View& view);
 
 ////////////////////////////////////////////////////////////
 /// \brief Dispatch event to vector of balls
 ///
-/// \param event Event object
+/// \param mousePosition Event object
 /// \param balls Vector of balls
 ////////////////////////////////////////////////////////////
-void onMouseClick(const sf::Event::MouseButtonEvent& event, std::vector<std::shared_ptr<Ball>>& balls);
+void onMouseClick(sf::Vector2f& mousePosition, std::vector<std::shared_ptr<Ball>>& balls);
+
+////////////////////////////////////////////////////////////
+/// \brief Dispatch key event
+///
+/// \param event Key event
+/// \param view Window view
+////////////////////////////////////////////////////////////
+void onKeyPress(const sf::Event::KeyEvent& event, sf::View& view);
 
 #endif //CPPCOURSE_MAIN_H

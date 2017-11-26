@@ -12,8 +12,7 @@ void Overlay::initText() const
 {
 	text->setFont(*font.get());
 	text->setCharacterSize(FONT_SIZE);
-	text->setFillColor(sf::Color::White);
-	text->setPosition(FPS_MARGIN.x, FPS_MARGIN.y);
+	text->setFillColor(sf::Color::Black);
 }
 
 Overlay::Overlay()
@@ -27,7 +26,16 @@ void Overlay::draw(sf::RenderTarget& target, const sf::RenderStates states) cons
 	target.draw(*text.get(), states);
 }
 
-void Overlay::updateOverlay(const float value) const
+void Overlay::updateOverlay(sf::RenderWindow& window, const float value) const
 {
 	text->setString(std::to_string(static_cast<int>(value)));
+	sf::Vector2f absolutePosition = window.mapPixelToCoords({ static_cast<int>(FPS_MARGIN.x),
+		static_cast<int>(FPS_MARGIN.y) });
+	// Prevent rendering overlay in center of viewport of first frame
+	if (absolutePosition.x == FPS_MARGIN.x && absolutePosition.y == FPS_MARGIN.y)
+	{
+		absolutePosition.x -= WINDOW_WIDTH / 2;
+		absolutePosition.y -= WINDOW_HEIGHT / 2;
+	}
+	text->setPosition(absolutePosition);
 }

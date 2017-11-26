@@ -84,7 +84,7 @@ public:
 	/// \param balls Vector of balls
 	/// \param ball New ball
 	////////////////////////////////////////////////////////////
-	static void checkIntersection(std::vector<std::shared_ptr<Ball>>& balls, std::shared_ptr<Ball> ball);
+	static void checkIntersection(std::vector<std::shared_ptr<Ball>>& balls, const std::shared_ptr<Ball>& ball);
 
 	////////////////////////////////////////////////////////////
 	/// \brief Update ball lifetime

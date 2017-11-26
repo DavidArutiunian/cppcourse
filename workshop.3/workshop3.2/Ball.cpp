@@ -11,44 +11,44 @@ void Ball::updatePosition(const float deltaTime)
 	position = shape.getPosition();
 	position += speed * deltaTime;
 
-	if ((position.x + size >= GAME_FIELD_WIDTH / 2) && (speed.x > 0))
+	if ((position.x + size >= GAME_FIELD_WIDTH) && (speed.x > 0))
 	{
 		speed.x = -speed.x;
 	}
-	if ((position.x - size < -GAME_FIELD_WIDTH / 2) && (speed.x < 0))
+	if ((position.x - size < -1.f * GAME_FIELD_WIDTH) && (speed.x < 0))
 	{
 		speed.x = -speed.x;
 	}
-	if ((position.y + size >= GAME_FIELD_HEIGHT / 2) && (speed.y > 0))
+	if ((position.y + size >= GAME_FIELD_HEIGHT) && (speed.y > 0))
 	{
 		speed.y = -speed.y;
 	}
-	if ((position.y - size < -GAME_FIELD_HEIGHT / 2) && (speed.y < 0))
+	if ((position.y - size < -1.f * GAME_FIELD_HEIGHT) && (speed.y < 0))
 	{
 		speed.y = -speed.y;
 	}
 }
 
-void Ball::checkIntersection(std::vector<std::shared_ptr<Ball>>& balls, const std::shared_ptr<Ball> ball)
+void Ball::checkIntersection(std::vector<std::shared_ptr<Ball>>& balls, const std::shared_ptr<Ball>& ball)
 {
-	constexpr int windowArea = GAME_FIELD_WIDTH * GAME_FIELD_HEIGHT;
+	constexpr unsigned windowArea = GAME_FIELD_WIDTH * GAME_FIELD_HEIGHT;
 	auto squareArea = static_cast<float>(std::pow(ball->size * 2, 2));
 	const sf::Vector2f position = ball->position;
 	const float size = ball->size;
 
-	if (position.x + size >= GAME_FIELD_WIDTH / 2)
+	if (position.x + size >= GAME_FIELD_WIDTH)
 	{
 		return;
 	}
-	if (position.x - size < -GAME_FIELD_WIDTH / 2)
+	if (position.x - size < -1.f * GAME_FIELD_WIDTH)
 	{
 		return;
 	}
-	if (position.y + size >= GAME_FIELD_HEIGHT / 2)
+	if (position.y + size >= GAME_FIELD_HEIGHT)
 	{
 		return;
 	}
-	if (position.y - size < -GAME_FIELD_HEIGHT / 2)
+	if (position.y - size < -1.f * GAME_FIELD_HEIGHT)
 	{
 		return;
 	}
@@ -82,10 +82,14 @@ void Ball::addBall(std::vector<std::shared_ptr<Ball>>& balls, sf::Vector2f& mous
 			static_cast<sf::Uint8>(randomInt(generator, 0, 255))),
 		randomInt(generator, MIN_SIZE, MAX_SIZE))));
 
-	ball->shape.setPosition(ball->position);
-	ball->shape.setOrigin(ball->size, ball->size);
-	ball->shape.setRadius(ball->size);
-	ball->shape.setFillColor(ball->color);
+	sf::CircleShape& shape = ball->shape;
+
+	shape.setPosition(ball->position);
+	shape.setOrigin(ball->size, ball->size);
+	shape.setRadius(ball->size);
+	shape.setFillColor(ball->color);
+	shape.setOutlineColor(sf::Color::Black);
+	shape.setOutlineThickness(ball->size / 10);
 
 	Ball::checkIntersection(balls, ball);
 }
@@ -226,6 +230,8 @@ void Ball::init(std::vector<std::shared_ptr<Ball>>& balls)
 		shape.setOrigin(ball->size, ball->size);
 		shape.setRadius(ball->size);
 		shape.setFillColor(ball->color);
+		shape.setOutlineColor(sf::Color::Black);
+		shape.setOutlineThickness(ball->size / 10);
 		balls.at(i) = ball;
 	};
 
@@ -249,7 +255,7 @@ void Ball::updateBallLifetimes(const float deltaTime)
 
 void Ball::removeDeathBalls(std::vector<std::shared_ptr<Ball>>& balls)
 {
-	const auto shouldRemove = [](const std::shared_ptr<Ball> ball) -> bool {
+	const auto shouldRemove = [](const std::shared_ptr<Ball>& ball) -> bool {
 		return ball->lifeTime >= MAX_LIFETIME;
 	};
 	balls.erase(std::remove_if(balls.begin(), balls.end(), shouldRemove), balls.end());

@@ -22,12 +22,16 @@ static const unsigned ANTIALIASING_LEVEL = 8;
 static const unsigned MAX_FPS = 60;
 static const unsigned WINDOW_WIDTH = 800;
 static const unsigned WINDOW_HEIGHT = 600;
-static const int GAME_FIELD_WIDTH = WINDOW_WIDTH * 3;
-static const int GAME_FIELD_HEIGHT = WINDOW_HEIGHT * 3;
+
+/// Game params
+static const unsigned GAME_FIELD_MULTIPLIER = 3;
+static const unsigned GAME_FIELD_WIDTH = WINDOW_WIDTH * GAME_FIELD_MULTIPLIER;
+static const unsigned GAME_FIELD_HEIGHT = WINDOW_HEIGHT * GAME_FIELD_MULTIPLIER;
+static const unsigned MOVE_SPEED = 50;
 
 /// Overlay pbject params
 static const std::string FONT_PATH = "./resources/arial.ttf";
-static const sf::Vector2f FPS_MARGIN = {5, 5};
+static const sf::Vector2f FPS_MARGIN = { 5, 5 };
 static const unsigned FONT_SIZE = 24;
 
 /// Random generator object

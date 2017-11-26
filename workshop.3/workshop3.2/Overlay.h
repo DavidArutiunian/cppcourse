@@ -39,7 +39,7 @@ public:
 	///
 	/// \param value Next Overlay counter
 	////////////////////////////////////////////////////////////
-	void updateOverlay(float value) const;
+	void updateOverlay(sf::RenderWindow& window, float value) const;
 };
 
 #endif //CPPCOURSE_FPS_H
