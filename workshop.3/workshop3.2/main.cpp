@@ -51,10 +51,8 @@ void pollEvents(sf::RenderWindow& window, std::vector<std::shared_ptr<Ball>>& ba
 		switch (event.type)
 		{
 		case sf::Event::Closed:
-		{
 			window.close();
 			break;
-		}
 		case sf::Event::MouseButtonPressed:
 		{
 			const sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
@@ -63,13 +61,10 @@ void pollEvents(sf::RenderWindow& window, std::vector<std::shared_ptr<Ball>>& ba
 			break;
 		}
 		case sf::Event::KeyPressed:
-		{
 			onKeyPress(event.key, view);
-		}
-		default:
-		{
 			break;
-		}
+		default:
+			break;
 		}
 	}
 }
@@ -121,40 +116,30 @@ void onKeyPress(const sf::Event::KeyEvent& event, sf::View& view)
 	switch (event.code)
 	{
 	case sf::Keyboard::Left:
-	{
 		if (center.x > -1.f * GAME_FIELD_WIDTH + WINDOW_WIDTH / 2)
 		{
 			view.move(-1.f * MOVE_SPEED, 0);
 		}
 		break;
-	}
 	case sf::Keyboard::Right:
-	{
 		if (center.x < GAME_FIELD_WIDTH - WINDOW_WIDTH / 2)
 		{
 			view.move(MOVE_SPEED, 0);
 		}
 		break;
-	}
 	case sf::Keyboard::Up:
-	{
 		if (center.y > -1.f * GAME_FIELD_HEIGHT + WINDOW_HEIGHT / 2)
 		{
 			view.move(0, -1.f * MOVE_SPEED);
 		}
 		break;
-	}
 	case sf::Keyboard::Down:
-	{
 		if (center.y < GAME_FIELD_HEIGHT - WINDOW_HEIGHT / 2)
 		{
 			view.move(0, MOVE_SPEED);
 		}
 		break;
-	}
 	default:
-	{
 		break;
-	}
 	}
 }
