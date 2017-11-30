@@ -16,14 +16,14 @@ using KeysMap = std::map<sf::Keyboard::Key, bool>;
 ///
 /// \param balls Vector of nullptr of unsigned length
 ////////////////////////////////////////////////////////////
-void init(std::vector<std::shared_ptr<Ball>> &balls, sf::View &view);
+void init(std::vector<std::shared_ptr<Ball>>& balls, sf::View& view);
 
 ////////////////////////////////////////////////////////////
 /// \brief Create window object
 ///
 /// \param window
 ////////////////////////////////////////////////////////////
-void createWindow(sf::RenderWindow &window);
+void createWindow(sf::RenderWindow& window);
 
 ////////////////////////////////////////////////////////////
 /// \brief Process window events
@@ -31,7 +31,7 @@ void createWindow(sf::RenderWindow &window);
 /// \param window Window object
 /// \param balls Vector of balls to dispatch an event on
 ////////////////////////////////////////////////////////////
-void pollEvents(sf::RenderWindow &window, KeysMap &pressedKeys, std::vector<std::shared_ptr<Ball>> &balls);
+void pollEvents(sf::RenderWindow& window, KeysMap& pressedKeys, std::vector<std::shared_ptr<Ball>>& balls);
 
 ////////////////////////////////////////////////////////////
 /// \brief Update object position
@@ -39,12 +39,12 @@ void pollEvents(sf::RenderWindow &window, KeysMap &pressedKeys, std::vector<std:
 /// \param balls Vector of balls
 /// \param deltaTime Difference in time between frames
 ////////////////////////////////////////////////////////////
-void update(std::vector<std::shared_ptr<Ball>> &balls,
-            const std::shared_ptr<Overlay> &overlay,
-            const KeysMap &pressedKeys,
-            sf::RenderWindow &window,
-            sf::View &view,
-            float deltaTime, float frameRate);
+void update(std::vector<std::shared_ptr<Ball>>& balls,
+	const std::shared_ptr<Overlay>& overlay,
+	const KeysMap& pressedKeys,
+	sf::RenderWindow& window,
+	sf::View& view,
+	float deltaTime, float frameRate);
 
 ////////////////////////////////////////////////////////////
 /// \brief Update frame
@@ -52,10 +52,10 @@ void update(std::vector<std::shared_ptr<Ball>> &balls,
 /// \param window Window object
 /// \param ball Pointer to the ball object
 ////////////////////////////////////////////////////////////
-void redrawFrame(sf::RenderWindow &window,
-                 std::vector<std::shared_ptr<Ball>> &balls,
-                 const std::shared_ptr<Overlay> &fps,
-                 sf::View &view);
+void redrawFrame(sf::RenderWindow& window,
+	std::vector<std::shared_ptr<Ball>>& balls,
+	const std::shared_ptr<Overlay>& fps,
+	sf::View& view);
 
 ////////////////////////////////////////////////////////////
 /// \brief Dispatch event to vector of balls
@@ -63,7 +63,7 @@ void redrawFrame(sf::RenderWindow &window,
 /// \param mousePosition Event object
 /// \param balls Vector of balls
 ////////////////////////////////////////////////////////////
-void onMouseClick(sf::Vector2f &mousePosition, std::vector<std::shared_ptr<Ball>> &balls);
+void onMouseClick(sf::Vector2f& mousePosition, std::vector<std::shared_ptr<Ball>>& balls);
 
 ////////////////////////////////////////////////////////////
 /// \brief Dispatch press key event
@@ -71,7 +71,7 @@ void onMouseClick(sf::Vector2f &mousePosition, std::vector<std::shared_ptr<Ball>
 /// \param event Key event
 /// \param view Window view
 ////////////////////////////////////////////////////////////
-void onKeyPress(const sf::Event::KeyEvent &event, KeysMap &pressedKeys);
+void onKeyPress(const sf::Event::KeyEvent& event, KeysMap& pressedKeys);
 
 ////////////////////////////////////////////////////////////
 /// \brief Dispatch release key event
@@ -79,6 +79,6 @@ void onKeyPress(const sf::Event::KeyEvent &event, KeysMap &pressedKeys);
 /// \param event Key event
 /// \param view Window view
 ////////////////////////////////////////////////////////////
-void onKeyRelease(const sf::Event::KeyEvent &event, KeysMap &pressedKeys);
+void onKeyRelease(const sf::Event::KeyEvent& event, KeysMap& pressedKeys);
 
 #endif //CPPCOURSE_MAIN_H
