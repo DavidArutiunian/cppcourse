@@ -27,9 +27,9 @@ static const unsigned WINDOW_HEIGHT = 600;
 static const unsigned GAME_FIELD_MULTIPLIER = 3;
 static const unsigned GAME_FIELD_WIDTH = WINDOW_WIDTH * GAME_FIELD_MULTIPLIER;
 static const unsigned GAME_FIELD_HEIGHT = WINDOW_HEIGHT * GAME_FIELD_MULTIPLIER;
-static const unsigned MOVE_SPEED = 50;
+static const unsigned MOVE_SPEED = 1000;
 
-/// Overlay pbject params
+/// Overlay object params
 static const std::string FONT_PATH = "./resources/arial.ttf";
 static const sf::Vector2f FPS_MARGIN = { 5, 5 };
 static const unsigned FONT_SIZE = 24;

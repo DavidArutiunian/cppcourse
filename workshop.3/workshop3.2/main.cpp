@@ -12,6 +12,12 @@ int main()
 	ShowWindow(GetConsoleWindow(), SW_HIDE);
 #endif
 
+	KeysMap pressedKeys;
+	pressedKeys[sf::Keyboard::Key::Left] = false;
+	pressedKeys[sf::Keyboard::Key::Right] = false;
+	pressedKeys[sf::Keyboard::Key::Up] = false;
+	pressedKeys[sf::Keyboard::Key::Down] = false;
+
 	sf::View view;
 	sf::RenderWindow window;
 	sf::Clock clock;
@@ -25,8 +31,8 @@ int main()
 	{
 		const float deltaTime = clock.restart().asSeconds();
 		const float fps = 1.f / deltaTime;
-		pollEvents(window, balls, view);
-		update(balls, overlay, window, deltaTime, fps);
+		pollEvents(window, pressedKeys, balls);
+		update(balls, overlay, pressedKeys, window, view, deltaTime, fps);
 		redrawFrame(window, balls, overlay, view);
 	}
 }
@@ -43,7 +49,7 @@ void onMouseClick(sf::Vector2f& mousePosition, std::vector<std::shared_ptr<Ball>
 	Ball::addBall(balls, mousePosition);
 }
 
-void pollEvents(sf::RenderWindow& window, std::vector<std::shared_ptr<Ball>>& balls, sf::View& view)
+void pollEvents(sf::RenderWindow& window, KeysMap& pressedKeys, std::vector<std::shared_ptr<Ball>>& balls)
 {
 	sf::Event event{};
 	while (window.pollEvent(event))
@@ -61,7 +67,10 @@ void pollEvents(sf::RenderWindow& window, std::vector<std::shared_ptr<Ball>>& ba
 			break;
 		}
 		case sf::Event::KeyPressed:
-			onKeyPress(event.key, view);
+			onKeyPress(event.key, pressedKeys);
+			break;
+		case sf::Event::KeyReleased:
+			onKeyRelease(event.key, pressedKeys);
 			break;
 		default:
 			break;
@@ -69,10 +78,46 @@ void pollEvents(sf::RenderWindow& window, std::vector<std::shared_ptr<Ball>>& ba
 	}
 }
 
-void update(std::vector<std::shared_ptr<Ball>>& balls, const std::shared_ptr<Overlay>& overlay,
+void update(
+	std::vector<std::shared_ptr<Ball>>& balls,
+	const std::shared_ptr<Overlay>& overlay,
+	const KeysMap& pressedKeys,
 	sf::RenderWindow& window,
-	float deltaTime, float frameRate)
+	sf::View& view,
+	const float deltaTime,
+	const float frameRate)
 {
+	const sf::Vector2f center = view.getCenter();
+
+	if (pressedKeys.at(sf::Keyboard::Left))
+	{
+		if (center.x > -1.f * GAME_FIELD_WIDTH + WINDOW_WIDTH / 2)
+		{
+			view.move(-1.f * MOVE_SPEED * deltaTime, 0);
+		}
+	}
+	if (pressedKeys.at(sf::Keyboard::Right))
+	{
+		if (center.x < GAME_FIELD_WIDTH - WINDOW_WIDTH / 2)
+		{
+			view.move(MOVE_SPEED * deltaTime, 0);
+		}
+	}
+	if (pressedKeys.at(sf::Keyboard::Up))
+	{
+		if (center.y > -1.f * GAME_FIELD_HEIGHT + WINDOW_HEIGHT / 2)
+		{
+			view.move(0, -1.f * MOVE_SPEED * deltaTime);
+		}
+	}
+	if (pressedKeys.at(sf::Keyboard::Down))
+	{
+		if (center.y < GAME_FIELD_HEIGHT - WINDOW_HEIGHT / 2)
+		{
+			view.move(0, MOVE_SPEED * deltaTime);
+		}
+	}
+
 	const float dtPhysics = deltaTime / MAX_PRECISION_COUNT;
 	for (unsigned i = 0; i < MAX_PRECISION_COUNT; ++i)
 	{
@@ -110,36 +155,12 @@ void createWindow(sf::RenderWindow& window)
 	window.setFramerateLimit(MAX_FPS);
 }
 
-void onKeyPress(const sf::Event::KeyEvent& event, sf::View& view)
+void onKeyPress(const sf::Event::KeyEvent& event, KeysMap& pressedKeys)
 {
-	const sf::Vector2f center = view.getCenter();
-	switch (event.code)
-	{
-	case sf::Keyboard::Left:
-		if (center.x > -1.f * GAME_FIELD_WIDTH + WINDOW_WIDTH / 2)
-		{
-			view.move(-1.f * MOVE_SPEED, 0);
-		}
-		break;
-	case sf::Keyboard::Right:
-		if (center.x < GAME_FIELD_WIDTH - WINDOW_WIDTH / 2)
-		{
-			view.move(MOVE_SPEED, 0);
-		}
-		break;
-	case sf::Keyboard::Up:
-		if (center.y > -1.f * GAME_FIELD_HEIGHT + WINDOW_HEIGHT / 2)
-		{
-			view.move(0, -1.f * MOVE_SPEED);
-		}
-		break;
-	case sf::Keyboard::Down:
-		if (center.y < GAME_FIELD_HEIGHT - WINDOW_HEIGHT / 2)
-		{
-			view.move(0, MOVE_SPEED);
-		}
-		break;
-	default:
-		break;
-	}
+	pressedKeys[event.code] = true;
+}
+
+void onKeyRelease(const sf::Event::KeyEvent& event, KeysMap& pressedKeys)
+{
+	pressedKeys[event.code] = false;
 }

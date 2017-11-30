@@ -113,12 +113,12 @@ void Ball::checkCollisions(std::vector<std::shared_ptr<Ball>>& balls)
 		return areCloseAbsolute(a, b, tolerance);
 	};
 
-	const auto dot = [](sf::Vector2f& left, sf::Vector2f& right) -> float {
+	const auto dot = [](const sf::Vector2f& left, const sf::Vector2f& right) -> float {
 		return left.x * right.x + left.y * right.y;
 	};
 
-	const auto getSpeedAfterCollision = [&dot, &areFuzzyEqual](std::shared_ptr<Ball> a,
-											std::shared_ptr<Ball> b) -> sf::Vector2f {
+	const auto getSpeedAfterCollision = [&dot, &areFuzzyEqual](const std::shared_ptr<Ball> a,
+											const std::shared_ptr<Ball> b) -> sf::Vector2f {
 		sf::Vector2f deltaPosition = a->position - b->position;
 		sf::Vector2f deltaSpeed = a->speed - b->speed;
 		const auto squareLength = static_cast<float>(std::pow(Ball::length((deltaPosition)), 2));
