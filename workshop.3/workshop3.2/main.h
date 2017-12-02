@@ -3,11 +3,11 @@
 
 #include <SFML/Graphics.hpp>
 #include <memory>
+#include <map>
 
 #include "Ball.h"
 #include "Overlay.h"
 #include "consts.h"
-#include <map>
 
 using KeysMap = std::map<sf::Keyboard::Key, bool>;
 
