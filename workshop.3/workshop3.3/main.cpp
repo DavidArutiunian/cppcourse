@@ -1,11 +1,10 @@
 #include <SFML/Graphics.hpp>
 
 #include "EventLoop.h"
-#include "Line.h"
 
 int main()
 {
-	sf::Vertex vertex[2];
+	VertexArray vertex;
 	Line line(vertex);
 
 	EventLoop eventLoop(line);

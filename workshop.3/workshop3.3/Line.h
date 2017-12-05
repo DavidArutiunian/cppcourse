@@ -2,12 +2,15 @@
 #define CPPCOURSE_LINE_H
 
 #include <SFML/Graphics.hpp>
-#include <cmath>
+
+#include "consts.h"
+
+using VertexArray = std::array<sf::Vertex, VERTEX_SIZE>;
 
 class Line : public sf::Drawable
 {
 private:
-  sf::Vertex vertex[2];
+  VertexArray vertex; // Array of two vertexes
 
 public:
   ////////////////////////////////////////////////////////////
@@ -15,19 +18,40 @@ public:
   ///
   /// \param vertex sf::Vertex object
   ////////////////////////////////////////////////////////////
-  explicit Line(sf::Vertex vertex[2]);
+  explicit Line(VertexArray &vertex);
 
   ////////////////////////////////////////////////////////////
   /// \brief Default constructor
   ////////////////////////////////////////////////////////////
   ~Line() override = default;
 
+  ////////////////////////////////////////////////////////////
+  /// \brief Draw the object to a render target
+  ///
+  /// \param target Render target to draw to
+  /// \param states Current render states
+  ////////////////////////////////////////////////////////////
   void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
-  sf::Vertex *getVertex();
+  ////////////////////////////////////////////////////////////
+  /// \brief Vertex getter
+  ///
+  /// \return Vertex
+  ////////////////////////////////////////////////////////////
+  VertexArray *getVertex();
 
+  ////////////////////////////////////////////////////////////
+  /// \brief Set end position of line
+  ///
+  /// \param nextPosition Current mouse position
+  ////////////////////////////////////////////////////////////
   void setEndPosition(const sf::Vector2f &nextPosition);
 
+  ////////////////////////////////////////////////////////////
+  /// \brief Get length of line
+  ///
+  /// \return Length
+  ////////////////////////////////////////////////////////////
   float length();
 
 };

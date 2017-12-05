@@ -1,30 +1,34 @@
 #include <cassert>
+#include <cmath>
 
 #include "Line.h"
 
-void Line::draw(sf::RenderTarget& target, sf::RenderStates states) const
+void Line::draw(sf::RenderTarget& target, const sf::RenderStates states) const
 {
-	target.draw(vertex, 2, sf::LineStrip, states);
+	sf::Vertex buffer[std::size(vertex)] = { vertex.front(), vertex.back() };
+	target.draw(buffer, std::size(vertex), sf::Lines, states);
 }
 
-Line::Line(sf::Vertex line[2])
+Line::Line(VertexArray& line)
+	: vertex(line)
 {
-	vertex[0].position = line[0].position;
-	vertex[1].position = line[1].position;
+	assert(std::size(line) == std::size(vertex));
 }
 
 float Line::length()
 {
-	const sf::Vector2f delta = vertex[1].position - vertex[0].position;
-	return static_cast<float>(std::pow(std::pow(delta.x, 2) + std::pow(delta.y, 2), 0.5));
+	const sf::Vector2f delta = vertex.back().position - vertex.front().position;
+	auto length = static_cast<float>(std::pow(std::pow(delta.x, 2) + std::pow(delta.y, 2), 0.5));
+	assert(length > 0);
+	return length;
 }
 
-sf::Vertex* Line::getVertex()
+VertexArray* Line::getVertex()
 {
-	return vertex;
+	return &vertex;
 }
 
 void Line::setEndPosition(const sf::Vector2f& nextPosition)
 {
-	vertex[1] = nextPosition;
+	vertex.back().position = nextPosition;
 }

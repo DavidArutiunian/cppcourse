@@ -1,16 +1,18 @@
-#include <utility>
+#include <cassert>
 
 #include "EventLoop.h"
 
 void EventLoop::init()
 {
-	sf::Vertex* vertex = line.getVertex();
+	VertexArray* vertex = line.getVertex();
 
-	vertex[0].position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 };
-	vertex[1].position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 };
+	assert(vertex != nullptr);
 
-	vertex[0].color = sf::Color::Black;
-	vertex[1].color = sf::Color::Black;
+	vertex->front().position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 };
+	vertex->back().position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 };
+
+	vertex->front().color = sf::Color::Black;
+	vertex->back().color = sf::Color::Black;
 }
 
 sf::RenderWindow& EventLoop::createWindow()
