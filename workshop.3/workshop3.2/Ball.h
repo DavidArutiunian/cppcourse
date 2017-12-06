@@ -18,6 +18,14 @@ private:
 
 	float size = 0.f; /// Object size
 
+	////////////////////////////////////////////////////////////
+	/// \brief Draw the object to a render target
+	///
+	/// \param target Render target to draw to
+	/// \param states Current render states
+	////////////////////////////////////////////////////////////
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
 public:
 	Ball() = default;
 
@@ -35,14 +43,6 @@ public:
 	/// \brief Default constructor
 	////////////////////////////////////////////////////////////
 	~Ball() override = default;
-
-	////////////////////////////////////////////////////////////
-	/// \brief Draw the object to a render target
-	///
-	/// \param target Render target to draw to
-	/// \param states Current render states
-	////////////////////////////////////////////////////////////
-	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 	////////////////////////////////////////////////////////////
 	/// \brief Update ball object position

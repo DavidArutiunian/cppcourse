@@ -12,6 +12,14 @@ class Line : public sf::Drawable
 private:
   VertexArray vertex; // Array of two vertexes
 
+  ////////////////////////////////////////////////////////////
+  /// \brief Draw the object to a render target
+  ///
+  /// \param target Render target to draw to
+  /// \param states Current render states
+  ////////////////////////////////////////////////////////////
+  void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
+
 public:
   ////////////////////////////////////////////////////////////
   /// \brief Construct new line
@@ -24,14 +32,6 @@ public:
   /// \brief Default constructor
   ////////////////////////////////////////////////////////////
   ~Line() override = default;
-
-  ////////////////////////////////////////////////////////////
-  /// \brief Draw the object to a render target
-  ///
-  /// \param target Render target to draw to
-  /// \param states Current render states
-  ////////////////////////////////////////////////////////////
-  void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
   ////////////////////////////////////////////////////////////
   /// \brief Vertex getter

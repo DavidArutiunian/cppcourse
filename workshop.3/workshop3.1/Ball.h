@@ -51,11 +51,6 @@ private:
 	////////////////////////////////////////////////////////////
 	void checkCollision();
 
-public:
-	Ball() = default;
-
-	~Ball() override = default;
-
 	////////////////////////////////////////////////////////////
 	/// \brief Draw the object to a render target
 	///
@@ -63,6 +58,11 @@ public:
 	/// \param states states Current render states
 	////////////////////////////////////////////////////////////
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
+public:
+	Ball() = default;
+
+	~Ball() override = default;
 
 	////////////////////////////////////////////////////////////
 	/// \brief Initialize update of components

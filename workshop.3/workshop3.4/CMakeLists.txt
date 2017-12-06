@@ -1,6 +1,6 @@
-set(SOURCES main.cpp Ball.cpp Random.cpp consts.h Ball.h main.h Random.h resources Overlay.cpp Overlay.h)
+set(SOURCES main.cpp EventLoop.cpp EventLoop.h consts.h Ship.cpp Ship.h resources)
 
-set(EXECUTABLE_NAME workshop3.2)
+set(EXECUTABLE_NAME workshop3.4)
 
 copy_resources(resources)
 
