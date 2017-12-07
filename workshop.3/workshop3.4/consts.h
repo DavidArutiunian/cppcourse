@@ -6,8 +6,8 @@
 /// Ship params
 static const unsigned SHIP_POINT_COUNT = 4;
 static const unsigned OUTLINE_THICKNESS = 1;
-static const float ANGULAR_VELOCITY = 3.f;
-static const float THRUST = 0.05f;
+static const float ANGULAR_VELOCITY = 150.f;
+static const float THRUST = 500.f;
 
 /// Window params
 static const std::string WINDOW_TITLE = "Space Ship";

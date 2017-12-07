@@ -2,7 +2,7 @@
 
 #include "Ship.h"
 
-void Ship::update()
+void Ship::update(float deltaTime)
 {
 	if (showFlame)
 	{
@@ -13,14 +13,14 @@ void Ship::update()
 		burnShape.setScale(0.f, 0.f);
 	}
 
-	rotation += direction;
+	rotation += direction * deltaTime;
 	shipShape.setRotation(rotation);
 	burnShape.setRotation(rotation);
 
 	const auto angle = static_cast<float>(rotation * M_PI / 180);
 	const sf::Vector2f deltaVelocity = { std::cos(angle) * thrust, std::sin(angle) * thrust };
-	velocity += deltaVelocity;
-	position += velocity;
+	velocity += deltaVelocity * deltaTime;
+	position += velocity * deltaTime;
 
 	checkCollision();
 

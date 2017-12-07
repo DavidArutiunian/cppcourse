@@ -77,9 +77,9 @@ EventLoop& EventLoop::pollEvents()
 	return *this;
 }
 
-EventLoop& EventLoop::update()
+EventLoop& EventLoop::update(const float deltaTime)
 {
-	ship.update();
+	ship.update(deltaTime);
 	return *this;
 }
 

@@ -4,6 +4,7 @@
 
 int main()
 {
+	sf::Clock clock;
 	Ship ship;
 	EventLoop eventLoop(ship);
 	eventLoop.init();
@@ -12,8 +13,9 @@ int main()
 
 	while (window.isOpen())
 	{
+		const float deltaTime = clock.restart().asSeconds();
 		eventLoop
-			.update()
+			.update(deltaTime)
 			.pollEvents()
 			.redrawFrame();
 	}
