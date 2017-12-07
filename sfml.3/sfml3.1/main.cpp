@@ -2,10 +2,6 @@
 
 int main()
 {
-#ifdef _WIN32
-	ShowWindow(GetConsoleWindow(), SW_HIDE);
-#endif
-
 	sf::ContextSettings settings;
 	settings.antialiasingLevel = ANTIALIASING_LEVEL;
 	sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), WINDOW_TITLE, sf::Style::Default, settings);

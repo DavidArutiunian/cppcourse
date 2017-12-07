@@ -2,10 +2,6 @@
 
 int main()
 {
-#ifdef _WIN32
-	ShowWindow(GetConsoleWindow(), SW_HIDE);
-#endif
-
 	sf::RenderWindow window;
 	sf::Clock clock;
 

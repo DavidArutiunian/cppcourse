@@ -4,12 +4,6 @@
 #include <cmath>
 #include <string>
 
-#ifdef _WIN32
-
-#include <windows.h>
-
-#endif
-
 static const unsigned WINDOW_WIDTH = 800;
 static const unsigned WINDOW_HEIGHT = 600;
 static const std::string WINDOW_TITLE = "Looking Eyes v2.0";

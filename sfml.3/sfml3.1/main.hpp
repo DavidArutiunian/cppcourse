@@ -6,12 +6,6 @@
 #include <string>
 #include <vector>
 
-#ifdef _WIN32
-
-#include <windows.h>
-
-#endif
-
 static const float MAX_ANGULAR_VELOCITY = 15.f;
 static const unsigned WINDOW_WIDTH = 800;
 static const unsigned WINDOW_HEIGHT = 600;

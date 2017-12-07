@@ -6,12 +6,6 @@
 #include <numeric>
 #include <vector>
 
-#ifdef _WIN32
-
-#include <windows.h>
-
-#endif
-
 static const unsigned BALLS_COUNT = 4;
 static const std::string WINDOW_TITLE = "Moving Balls v2.0";
 static const unsigned ANTIALIASING_LEVEL = 8;

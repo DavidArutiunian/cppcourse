@@ -9,7 +9,6 @@ int main()
 	constexpr unsigned WINDOW_HEIGHT = 600;
 	constexpr unsigned DEFAULT_RADIUS = 150;
 	constexpr unsigned POINT_COUNT = 200;
-	constexpr float AMPLITUDE = 80.f;
 	constexpr float PERIOD = 2.f;
 
 	float time = 0.f;
@@ -26,7 +25,7 @@ int main()
 	shape.setFillColor(sf::Color(0xFF, 0x9, 0x80));
 
 	shape.setPointCount(POINT_COUNT);
-	for (int i = 0; i < POINT_COUNT; ++i)
+	for (unsigned i = 0; i < POINT_COUNT; ++i)
 	{
 		float angle = static_cast<float>(2 * M_PI * i) / static_cast<float>(POINT_COUNT);
 		float RADIUS = DEFAULT_RADIUS * std::sin(6 * angle);

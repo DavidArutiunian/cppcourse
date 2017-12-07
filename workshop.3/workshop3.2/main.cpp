@@ -1,17 +1,7 @@
 #include "main.h"
 
-#ifdef _WIN32
-
-#include <windows.h>
-
-#endif
-
 int main()
 {
-#ifdef _WIN32
-	ShowWindow(GetConsoleWindow(), SW_HIDE);
-#endif
-
 	KeysMap pressedKeys;
 	pressedKeys[sf::Keyboard::Key::Left] = false;
 	pressedKeys[sf::Keyboard::Key::Right] = false;

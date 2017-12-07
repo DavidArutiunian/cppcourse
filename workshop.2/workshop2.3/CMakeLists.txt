@@ -1,10 +1,7 @@
 set(SOURCES main.cpp main.hpp Ball.cpp Ball.hpp Random.cpp Random.hpp)
 
-add_executable(workshop2.3 ${SOURCES})
+set(EXECUTABLE_NAME workshop2.3)
 
-if (${SFML_FOUND})
-    target_include_directories(workshop2.3 PRIVATE ${SFML_INCLUDE_DIR})
-    target_link_libraries(workshop2.3 ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
-endif ()
+executable(${EXECUTABLE_NAME} "${SOURCES}")
 
-target_compile_definitions(workshop2.3 PRIVATE SFML_STATIC)
+include_sfml(${EXECUTABLE_NAME})

@@ -18,7 +18,7 @@ int main()
 	elipse.setFillColor(sf::Color(0xFF, 0xFF, 0xFF));
 
 	elipse.setPointCount(pointCount);
-	for (int pointNo = 0; pointNo < pointCount; ++pointNo)
+	for (unsigned pointNo = 0; pointNo < pointCount; ++pointNo)
 	{
 		float angle = static_cast<float>(2 * M_PI * pointNo) / static_cast<float>(pointCount);
 		sf::Vector2f point = sf::Vector2f{

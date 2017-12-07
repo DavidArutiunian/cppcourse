@@ -7,12 +7,6 @@
 #include <numeric>
 #include <vector>
 
-#ifdef _WIN32
-
-#include <windows.h>
-
-#endif
-
 static const unsigned MAX_LIFETIME = 10;
 static const unsigned MIN_SIZE = 40;
 static const unsigned MAX_SIZE = 70;

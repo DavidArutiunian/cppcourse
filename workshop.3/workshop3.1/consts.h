@@ -11,12 +11,6 @@
 #include <stdexcept>
 #include <utility>
 
-#ifdef _WIN32
-
-#include <windows.h>
-
-#endif
-
 /// Window object params
 static const float WINDOW_WIDTH = 800.f;
 static const float WINDOW_HEIGHT = 600.f;
